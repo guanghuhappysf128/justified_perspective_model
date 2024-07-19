@@ -1,0 +1,62 @@
+collection_name: 001_all_instance
+figure_type: stacked_bar # box violin barplot
+# stack plot
+
+
+filters:
+  -
+    name : domain_name
+    value : bbl
+  # -
+  #   name : total_goal_size
+  #   value : 1
+  # -
+  #   name: num_of_agents
+  #   value: 2
+
+subplot_x:
+  name: total_goal_size
+  values: []
+
+subplot_y:
+  name: num_of_agents
+  values:
+  -
+    2
+  -
+    3
+
+bar_x:
+    name: search
+    values: 
+    - bfs
+    - bfsdc
+    - bfsdcu
+    - astar
+    - greedy
+
+# total_key:
+#   name: domain_name
+#   value: bbl
+
+stack_keys:
+  -
+    name: solvable
+    value: True
+  # -
+  #   name: solvable
+  #   value: False
+  -
+    -
+      name: solvable
+      value: False
+    -
+      name: running
+      value: SUCC
+
+  -
+    name: running
+    value: TIMEOUT
+  -
+    name: running
+    value: MEMORYOUT

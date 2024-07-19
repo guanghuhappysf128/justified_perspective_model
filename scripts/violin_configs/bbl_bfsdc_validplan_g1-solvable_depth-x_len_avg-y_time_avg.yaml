@@ -1,10 +1,12 @@
+collection_name: 001_all_instance
+figure_type: violin # boxplot violin barplot
 filters:
   -
     name : domain_name
     value : bbl
-  # -
-  #   name: solvable
-  #   value: True
+  -
+    name: solvable
+    value: True
   -
     name: search
     value: bfsdc
@@ -37,5 +39,4 @@ keys:
     values: []
   
 x_axis: epistemic_call_length_avg
-
 y_axis: epistemic_call_time_avg

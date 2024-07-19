@@ -78,7 +78,7 @@ if __name__ == '__main__':
     password = mdb_config.get("password")
     db_name = mdb_config.get("db_name")
     # main_collection_name = mdb_config.get("main_collection_name")
-    job_index_collection_name = mdb_config.get("job_index")
+    job_index_collection_name = mdb_config.get("job_index_collection_name")
     job_record_collection_name = mdb_config.get("job_record_collection_name")
     job_record_backup_collection_name = mdb_config.get("job_record_backup_collection_name")
     
@@ -100,6 +100,8 @@ if __name__ == '__main__':
     
     # let's find all job for now.
     query = {'num_of_agent':num_of_agent,'domain_name':domain_name,'goal_size':{'$in':goal_size_list},'goal_depth':{'$in':goal_depth_list}}
+    
+    print(query)
     
     for item in job_index_collection.find(query):
         

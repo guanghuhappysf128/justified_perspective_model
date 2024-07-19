@@ -76,7 +76,7 @@ if __name__ == '__main__':
     password = mdb_config.get("password")
     db_name = mdb_config.get("db_name")
     # main_collection_name = mdb_config.get("main_collection_name")
-    job_index_collection_name = mdb_config.get("job_index")
+    job_index_collection_name = mdb_config.get("job_index_collection_name")
     # job_record_collection_name = mdb_config.get("job_record_collection_name")
     
     my_client = pymongo.MongoClient(url,username=username,password=password)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         for goal_depth in goal_depth_list:
             # instance_dict = dict() 
             instance_list = list()
-            goal_set_size = goal_depth_info[str(goal_size)][str(goal_depth)]
+            goal_set_size = goal_depth_info[str(goal_depth)][str(goal_size)]
             max_instances = goal_set_size*num_of_init
             if max_instances < num_of_instances:
                 # it means the test cases is not enough

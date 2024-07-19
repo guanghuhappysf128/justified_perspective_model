@@ -1,9 +1,9 @@
 url: 'mongodb://localhost:27017'
 username: admin
 password: '90054'
-db_name: final_result
+db_name: new_final_result
 main_collection_name: 001_all_instance
-job_index_name: 001_job_index
+job_index_collection_name: 001_job_index
 job_record_collection_name: 001_job_record
 job_record_backup_collection_name: 001_job_record_backup
 

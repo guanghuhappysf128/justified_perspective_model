@@ -1,0 +1,55 @@
+collection_name: 001_all_instance
+figure_type: box # boxplot violin barplot
+
+
+filters:
+  -
+    name : domain_name
+    value : bbl
+  # -
+  #   name : total_goal_size
+  #   value : 1
+  -
+    name: solvable
+    value: True
+  # -
+  #   name: search
+  #   value: bfsdcu
+  # -
+  #   name: num_of_agents
+  #   value: 2
+  # -
+  #   name: expanded
+  #   value: {'$gt':10}
+  - 
+    name: plan
+    value: {'$ne':[]}
+
+subplot_x:
+  name: total_goal_size
+  values: []
+
+subplot_y:
+  name: num_of_agents
+  values:
+  -
+    2
+  -
+    3
+
+
+
+box_x:
+    name: search
+    values: 
+    - bfs
+    - bfsdc
+    - bfsdcu
+    - astar
+    - greedy
+
+  
+
+box_key: bfs_ratio_expanded
+# box_key: bfs_ratio_generated
+# box_key: bfs_ratio_search_time
