@@ -211,21 +211,25 @@ class Search:
                 return self.result
 
             all_legal_actions,sgp_p_dict = problem.get_all_legal_actions(state,path,sg_p_dict)
+            
             all_legal_action_name = list(all_legal_actions.keys())
-            filtered_action_name = self.action_filter(problem,all_legal_action_name)
+            all_legal_action_name.sort()
+            # filtered_action_name = self.action_filter(problem,all_legal_action_name)
+
             
             self.logger.debug(sgp_p_dict.keys())
             self.logger.debug(sgp_p_dict)
-            self.logger.debug("action generated: %s",all_legal_actions.keys())
+            self.logger.debug(all_legal_actions.keys())
+            self.logger.debug("action generated: %s",all_legal_action_name)
             
             if self._duplication_check(state,sgp_p_dict):
                 # self.logger.debug("path [%s] get in visited",actions)
                 # self.logger.debug("ep_state_str is [%s]",ep_state_str)
                 self.expanded +=1
-                self.branch_factors.append(len(list(all_legal_actions.keys())))
+                self.branch_factors.append(len(all_legal_action_name))
                 temp_successor = 0
                 temp_actions = []
-                for action_name in filtered_action_name:
+                for action_name in all_legal_action_name:
                     action :Action = all_legal_actions[action_name]
                 # for action_name,action in all_legal_actions.items():
                     self.logger.debug("action [%s] passed the precondition check", action_name)
@@ -249,6 +253,7 @@ class Search:
                             g = self._gn(succ_node)
                             self.logger.debug("gn is: %d" % (g))
                             self.logger.debug("remaining is: %d" % (succ_node.remaining_goal))
+                            self.logger.debug("fn is: %d" % (fn))
                             
                             open_list.push(item=succ_node, priority=fn)
                             temp_successor +=1
