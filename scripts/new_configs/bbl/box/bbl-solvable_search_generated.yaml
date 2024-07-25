@@ -18,9 +18,9 @@ filters:
   # -
   #   name: num_of_agents
   #   value: 2
-  # -
-  #   name: expanded
-  #   value: {'$gt':10}
+  -
+    name: problem_name
+    value: {'$ne': 'bbl_a2_g4_d3_34074'}
   - 
     name: plan
     value: {'$ne':[]}
