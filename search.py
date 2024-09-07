@@ -38,8 +38,9 @@ class Search:
         self.max_goal_num = 0
         self.timeout = None
         self.memoryout = None
-        self.unknown_goal_name = []
-    # Do i need to reset here?
+        self.unknown_goal_name = list()
+        self.novelty_dict = dict()
+        self.sorted_goal_list = list()
 
     class SearchNode:
         def __init__(self,state,remaining_goal_num,perspective_dict,path):
@@ -108,6 +109,7 @@ class Search:
         start_time = datetime.datetime.now()
 
         self.max_goal_num = len(list(problem.goals.keys()))
+        self.sorted_goal_list = list(problem.goals.keys())
         # intitalise unknown goal name
         for key,item in problem.goals.items():
             goal_condition: Condition = item
@@ -445,19 +447,6 @@ class Search:
     def goal_counting(self,node,goal_dict,problem):
 
         remain_goal_number = list(goal_dict.values()).count(False)
-
-
-
-
-        # for key,value in goal_dict.items():
-
-                
-        #     if key in problem.goals.epistemic_dict.keys() \
-        #         and problem.goals.epistemic_dict[key].query_prefix[0] == "$" \
-        #             and not value:
-        #         self.logger.debug('Unknown been updated, goal is impossible')
-        #         self.logger.debug('goal is impossible')
-        #         return 9999
         return remain_goal_number
         heuristic_value = remain_goal_number
         
@@ -469,13 +458,7 @@ class Search:
                     temp_v_name_list.append(v_name)
                     # heuristic_value +=1
                     break
-        
-        # for v_name in temp_v_name_list:
-        #     temp_pair_dict = {}
-        #     for ep_str,value in group_eg_dict[v_name]:
-        #         ep_value = ep_str.split(v_name)[1][3:-2]
-        #         ep_front = ep_str.split(v_name)[0]
-        #         ep_header = format_ep(ep_value,value)
+
         temp_landmark = set()
                 
         for temp_v_name in temp_v_name_list:
@@ -492,29 +475,28 @@ class Search:
                         heuristic_value +=1
                         temp_landmark.add(str(sorted(temp_state)))
                         break
-                
-            # if flag:
-            #     heuristic_value +=1
-                
-                
-        
-        
-        # if 'secret-a' in temp_v_name_list:
-        #     landmark_constrain.append(('agent_at-b','agent_at-d'))
-        # elif 'secret-c' in temp_v_name_list:
-        #     landmark_constrain.append(('agent_at-b','agent_at-d'))
-        # if 'secret-b' in temp_v_name_list:
-        #     landmark_constrain.append(('agent_at-c','agent_at-a'))
-        # elif 'secret-d' in temp_v_name_list:
-        #     landmark_constrain.append(('agent_at-c','agent_at-a'))
-            
-        # for v1,v2 in landmark_constrain:
-        #     if state[v1] == state[v2]:
-        #         heuristic_value +=1
-        
+
 
         return heuristic_value,epistemic_dict
 
+    def iw_gc(self,node,goal_dict,problem):
+        # remain_goal_number = list(goal_dict.values()).count(False)
+        novelty_str = ""
+        for goal_key in self.sorted_goal_list:
+            if goal_dict[goal_key]:
+                novelty_str += "1"
+            else:
+                novelty_str += "0"
+        if not novelty_str in self.novelty_dict:
+            self.novelty_dict.update({novelty_str:dict()})
+        novelty_items = state_to_dictkeys(node.state)
+        for item in novelty_items:
+            if not item in self.novelty_dict[novelty_str].keys():
+                self.novelty_dict[novelty_str].update({item:1})
+            else:
+                self.novelty_dict[novelty_str][item] +=1
+        h_value = max(self.novelty_dict[novelty_str].values())
+        return h_value
 
 
 def state_to_string(dicts):
@@ -523,3 +505,10 @@ def state_to_string(dicts):
         output.append(f'{key}:{value}')
     output.sort() 
     return str(output)
+
+def state_to_dictkeys(state):
+    output = []
+    for key,value in state.items():
+        novelty_key = key+ SPLIT_KEY_WORD + str(value)
+        output.append(novelty_key)
+    return output
