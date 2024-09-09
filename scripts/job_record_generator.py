@@ -39,13 +39,13 @@ def loadParameter():
 
 def create_unique_index(collection):
     collection.create_index(
-        [("domain_name", 1), ("num_of_agent", 1), ("goal_index", 1), ("init_name", 1), ("goal_size", 1), ("designed_goal_depth", 1), ("search_name", 1)],
+        [("domain_name", 1), ("num_of_agent", 1), ("goal_index", 1), ("init_name", 1), ("goal_size", 1), ("designed_goal_depth", 1), ("search", 1)],
         unique=True
     )
     
 def delete_unique_index(collection):
     collection.drop_index(
-        [("domain_name", 1), ("num_of_agent", 1), ("goal_index", 1), ("init_name", 1), ("goal_size", 1), ("designed_goal_depth", 1), ("search_name", 1)],
+        [("domain_name", 1), ("num_of_agent", 1), ("goal_index", 1), ("init_name", 1), ("goal_size", 1), ("designed_goal_depth", 1), ("search", 1)],
     )
 
 
@@ -88,7 +88,8 @@ if __name__ == '__main__':
     job_index_collection = my_db[job_index_collection_name]
     job_record_collection = my_db[job_record_collection_name]
     job_record_backup_collection = my_db[job_record_backup_collection_name]
-    
+    # delete_unique_index(job_record_backup_collection)
+    # exit()
     create_unique_index(job_record_backup_collection)
 
 

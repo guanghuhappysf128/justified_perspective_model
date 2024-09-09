@@ -64,8 +64,8 @@
                 ; (= (@ep ("+ b [b] $ b [c]") (= (secret_value as) 't')) ep.true)
                 (= (@jp ("b [b] b [a]") (secret_value as)) 't')
                 (= (@ep ("! s [b] $ s [c]") (= (secret_value as) 't')) ep.true)
-                seeing -> knowing whether
-                K observer S action box1
+                ;seeing -> knowing whether
+                ;K observer S action box1
             )
         )
 

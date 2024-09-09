@@ -24,6 +24,10 @@ filters:
   # - 
   #   name: plan
   #   value: {'$ne':[]}
+  -
+    name: problem_name
+    value: {'$ne':"bbl_a2_g4_d3_34074"}
+
 
 subplot_x:
   name: total_goal_size

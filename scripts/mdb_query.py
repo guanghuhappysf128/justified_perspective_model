@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
 
     bfs_query = {'search': 'bfs', "num_of_agents": { "$in": [2, 3] }}
-    bfs_query = {'search': 'bfs', "num_of_agents": 3}
+    bfs_query = {'search': 'bfs', "num_of_agents": 4}
     
     # bfs_update_query = {'search': 'bfs', "num_of_agents": { "$in": [2, 3] }, 'bfs_ratio_search_time': {'$exists': False}}
     # bfs_update = {'$set': {'bfs_ratio_search_time': 1}}
@@ -111,7 +111,7 @@ if __name__ == "__main__":
         
         
     other_query = {'search': 'greedy',"num_of_agents": { "$in": [2, 3] }}
-    other_query = {'search': 'greedy',"num_of_agents": 3}
+    other_query = {'search': 'greedy',"num_of_agents": 4}
     for item in main_collection.find(other_query):
         problem_name = item['problem_name']
         init_name = item['init_name']

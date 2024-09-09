@@ -1,4 +1,4 @@
-collection_name: 001_all_instance
+collection_name: all_instance
 figure_type: stacked_bar # box violin barplot
 # stack plot
 
@@ -25,6 +25,8 @@ subplot_y:
     2
   -
     3
+  -
+    4 
 
 bar_x:
     name: search
@@ -34,6 +36,7 @@ bar_x:
     - bfsdcu
     - astar
     - greedy
+    - ngreedy
 
 # total_key:
 #   name: domain_name
