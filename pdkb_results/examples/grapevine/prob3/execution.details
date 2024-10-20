@@ -1,0 +1,9 @@
+Plan found with cost: 5
+1. (MOVE_A_L1_L2 )
+2. (SHARE_B_B_L1 )
+3. (MOVE_B_L1_L2 )
+4. (MOVE_A_L2_L1 )
+5. (SHARE_C_B_L1 )
+Time: 0.0026
+Generated: 1616
+Expanded: 214

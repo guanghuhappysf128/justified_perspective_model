@@ -1,0 +1,12 @@
+Plan found with cost: 8
+1. (RIGHT_L1_L2 )
+2. (SENSE )
+3. (LEFT_L1_L2 )
+4. (FIB-1 )
+5. (RIGHT_L1_L2 )
+6. (RIGHT_L2_L3 )
+7. (RIGHT_L3_L4 )
+8. (SHOUT-4 )
+Time: 0.029304
+Generated: 34
+Expanded: 16
