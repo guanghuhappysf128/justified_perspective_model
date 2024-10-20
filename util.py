@@ -617,6 +617,7 @@ def updateEffect(logger,effect_type:EffectType,value1,value2,function_schema: Fu
                     return value2
         elif function_schema.value_type == VALUE_TYPE.ENUMERATE:
             if not value2 in function_schema.value_range:
+                # self.logger.debug(value2,function_schema.value_range)
                 raise ValueError("Effect Error: the second value in Assign should be in the value range")
             else:
                 return value2
@@ -812,9 +813,13 @@ def global_state_evaluation(logger,operator,value1,value2):
 
 def evaluation(logger,operator,value1,value2):
     # logger.debug("operator: %s, value1: %s, value2: %s",operator,value1,value2)
-    if value1 == special_value.UNSEEN or value2 == special_value.UNSEEN:
+    # self.logger.debug("operator: %s, value1: %s, value2: %s",operator,value1,value2)
+    if operator == ConditionOperatorType.NOT_EQUAL:
+        return bool2Ternary_dict[value1 != value2]
+    
+    if value1 == special_value.UNSEEN and value2 != special_value.UNSEEN:
         return Ternary.UNKNOWN
-    if value1 == special_value.HAVENT_SEEN or value2 == special_value.HAVENT_SEEN:
+    if value1 == special_value.HAVENT_SEEN and value2 != special_value.HAVENT_SEEN:
         return Ternary.UNKNOWN
     if operator == ConditionOperatorType.EQUAL:
         return bool2Ternary_dict[value1 == value2]

@@ -88,7 +88,9 @@ LOGGER_LEVEL = logging.INFO
 # LOGGER_LEVEL = logging.DEBUG
 from util import setup_logger,find_each_section
 from util import Type,FunctionSchema,Parameters,EffectType,Effect,UpdateType,ActionSchema,EntityType,Entity
-from util import VALUE_TYPE,value_type_dict,RULE_TYPE,rule_type_dict,Function,Rule,EP_formula,EPFType,Condition,ConditionType,Ternary,condition_operator_dict
+from util import VALUE_TYPE,value_type_dict,RULE_TYPE,rule_type_dict
+from util import Function,Rule,EP_formula,EPFType,Condition,ConditionType,Ternary,condition_operator_dict
+from util import special_value
 
 EFFECT_TYPE_DICT = {
     "increase": EffectType.INCREASE,
@@ -923,9 +925,15 @@ class PDDLParser:
     
     def str2value(self,value_type,value_str):
         if value_type == VALUE_TYPE.ENUMERATE:
-            value = value_str.replace("'",str())
+            if value_str == 'jp.none':##################################
+                value = special_value.HAVENT_SEEN################
+            else:
+                value = value_str.replace("'",str())
         elif value_type == VALUE_TYPE.INTEGER:
-            value = int(value_str)
+            if value_str == 'jp.none':##################################
+                value = special_value.HAVENT_SEEN################
+            else:
+                value = int(value_str)
         else:
             raise ValueError("value type %s does not exist %s",value_type,value_str)
         

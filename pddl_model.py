@@ -18,7 +18,7 @@ LOGGER_LEVEL = logging.INFO
 from util import setup_logger
 from util import Ternary
 from util import Condition,ConditionType,Effect,EffectType,EP_formula,EPFType,Action,UpdateType
-from util import extract_v_from_s,evaluation,multiple_parameter_replace,multiple_parameter_replace_with_ep,updateEffect,global_state_evaluation
+from util import extract_v_from_s,evaluation,multiple_parameter_replace,multiple_parameter_replace_with_ep,updateEffect,global_state_evaluation,special_value
 from util import ActionSchema,Type,Function,FunctionSchema
 from util import VARIABLE_FILLER
 # Class of the problem
@@ -100,7 +100,13 @@ class Problem:
                 # going to handle the constent update first
             elif effect.update_type == UpdateType.ONTIC:
                 ontic_name_list.append(effect_name)
-                
+
+        ################################################################################
+        path = previous_path+[(new_state,action.name)]
+        # new_state = self.external.update_state(new_state, path, self)  #.rules###############
+        if new_state == None:
+            return None
+
         for ontic_effect_name in ontic_name_list:
             
             effect : Effect = action.effects[ontic_effect_name]
@@ -117,10 +123,17 @@ class Problem:
             else:
                 # going to handle the constent update first
                 pass
-        path = previous_path+[(new_state,action.name)]
+        # path = previous_path+[(new_state,action.name)]
 
+        # self.logger.debug("new_state {new_state}")
         # updating jp effect
         if not jp_dictionary == {}:
+            for effect_name, item in jp_dictionary.items():
+                variable_name = action.effects[effect_name].target_variable_name
+                new_state[variable_name] = special_value.UNSEEN
+            path = previous_path+[(new_state,action.name)]
+            # self.logger.debug(f"new_state1 {new_state}")
+
             self.epistemic_calls +=1
             start_time = datetime.now()
             result_dict,p_dict = self.epistemic_model.epistemicEffectHandler(jp_dictionary, path,p_dict)
@@ -131,6 +144,9 @@ class Problem:
                 self.epistemic_call_length_max = len(path)
             self.epistemic_call_time += delta_time
             self.epistemic_call_length += len(path)
+            
+            # self.logger.debug("result dict")
+            # self.logger.debug(result_dict)
 
             for effect_name, value2 in result_dict.items():
                 variable_name = action.effects[effect_name].target_variable_name
@@ -139,8 +155,9 @@ class Problem:
                 new_value =  updateEffect(self.logger,effect.effect_type,value1,value2,self.function_schemas[function_schema_name])
                 if new_value == None:
                     raise ValueError("New Value if out of range when updating",effect_name,state)
+                    return None
                 new_state[variable_name] = value2
-
+            # self.logger.debug(f"new_state2 {new_state}")
         return new_state
 
     def is_goal(self,path):
