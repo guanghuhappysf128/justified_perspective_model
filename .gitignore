@@ -151,3 +151,6 @@ overview/
 scripts/configs/
 scripts/unused_config/
 scripts/figs_sharedyF/
+
+
+*.png
