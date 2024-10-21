@@ -6,8 +6,7 @@
     ;remove requirements that are not needed
     ; (:requirements :strips)
 
-    ; (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
-    ; )
+z
 
     ; un-comment following line if constants are needed
     ;(:constants )
