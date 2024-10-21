@@ -230,6 +230,7 @@ class PDDLParser:
         self.logger.debug(rules)
 
 
+
         # extract the range first
         ranges_str,len_holder = self.keyWordParser("ranges",RANGE_REG_PREFIX,RANGE_REG,RANGE_REG_SURFIX,problem_str)
         problem_str = problem_str[:len(len_holder)]
@@ -289,6 +290,13 @@ class PDDLParser:
                     function_name = f"{function_schema.name} {' '.join(entity)}"
                     functions.update({function_name:Function(function_name,function_schema.name,entity)})
         self.logger.debug(functions)
+
+        # intialise static rule for all functions that does not have a rule
+        for function_name in functions.keys():
+            if not function_name in rules.keys():
+                rules.update({function_name:Rule(function_name,RULE_TYPE.STATIC,[])})
+        print(len(functions))
+        print(len(rules))
 
 
         # update the action_schema
