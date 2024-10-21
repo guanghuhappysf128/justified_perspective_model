@@ -85,11 +85,11 @@
         :precondition (
             (= (own ?a ?s) 0)
             (= (sharing) 0)
-            (!= (@jp ("b [?a]") (secret_value ?s)) jp.none)
+            (!= (@jp ("b [?a]") (shared_value ?s)) jp.none)
         )
         :effect (
             (assign (shared_loc ?s) (agent_loc ?a))
-            (assign (shared_value ?s) (@jp ("b [?a]") (secret_value ?s)))
+            (assign (shared_value ?s) (@jp ("b [?a]") (shared_value ?s)))
             (assign (sharing) 1)
         )
     )

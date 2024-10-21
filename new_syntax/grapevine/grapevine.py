@@ -42,6 +42,8 @@ class ExternalFunction:
         elif 'shared_loc'  == function_schemas_name:
             # it means this is a location variable
             # agent will know the secret is been shared if they are in the same room where the secret shared
+            if state[var_name] == 0:
+                return True
             return state[var_name] == state[f'agent_loc {agent_index}']
         elif 'own'  == function_schemas_name:
             # all agents sees ownship of secrets

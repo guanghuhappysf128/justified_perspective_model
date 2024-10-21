@@ -1,5 +1,5 @@
 (define 
-        (problem grapevine1_t_00000) 
+        (problem grapevine03) 
         (:domain grapevine)
 
         (:agents
@@ -62,8 +62,20 @@
     
         (:goal (and 
                 ; (= (@ep ("+ b [b] $ b [c]") (= (secret_value as) 't')) ep.true)
-                (= (@jp ("b [b] b [a]") (secret_value as)) 't')
-                (= (@ep ("! s [b] $ s [c]") (= (secret_value as) 't')) ep.true)
+                ; (= (@jp ("b [b] b [a]") (secret_value as)) 't')
+                ; (= (@ep ("! s [b] $ s [c]") (= (secret_value as) 't')) ep.true)
+                (= (@ep ("+ b [a]") (= (shared_value bs) 'f')) ep.true)
+                (= (@ep ("+ b [a]") (= (shared_value ds) 't')) ep.true)
+
+
+                (= (@ep ("+ b [b]") (= (shared_value cs) 'f')) ep.true)
+                (= (@ep ("+ b [b]") (= (shared_value as) 't')) ep.true)
+
+                (= (@ep ("+ b [c]") (= (shared_value ds) 'f')) ep.true)
+                (= (@ep ("+ b [c]") (= (shared_value bs) 't')) ep.true)
+
+                (= (@ep ("+ b [d]") (= (shared_value as) 'f')) ep.true)
+                (= (@ep ("+ b [d]") (= (shared_value cs) 't')) ep.true)
                 ;seeing -> knowing whether
                 ;K observer S action box1
             )
