@@ -61,7 +61,8 @@ def loadParameter():
     # logger.info("Parsing Options")
     parser = OptionParser(usageStr)
     
-    parser.add_option('-t', '--timeout', dest="timeout", help='timeout, default 300s', type='int', default=300)
+    parser.add_option('-t', '--timeout', dest="timeout", help='timeout, default 300s', type='int', default=600)
+    parser.add_option('-m', '--memoryout', dest="memoryout", help='memoryout, default 8GB', type='int', default=8)
     parser.add_option('-o','--output', dest="output_path", help='output directory for the running results (default: output/<timestamp>)',default='')
     parser.add_option('-s', '--search_path', dest="search_path", help='the path of the search algorithm', default='')
     # parser.add_option('-d','--debug', dest="log_debug", action='store_true', help='enable logging level to debug', default=False)
@@ -69,7 +70,7 @@ def loadParameter():
     # parser.add_option('--time_debug', dest="time_debug", action='store_true', help='enable logging level to debug', default=False)
     # parser.add_option('-i','--input', dest="input_path", help='input directory for the experiments (default: examples/*)',default='examples')
     parser.add_option('-i','--input', dest="input_domain_names", help='input for the experiment config (default: examples/*)',default='examples/CONFIG')
-    parser.add_option('-b', '--belief_mode', dest="belief_mode", type='int', help='should between 0-3', default=1)
+    # parser.add_option('-b', '--belief_mode', dest="belief_mode", type='int', help='should between 0-3', default=1)
     parser.add_option('--latex_output', dest="latex_output", action='store_true', help='automatically generater latex tables', default=False)
     # parser.add_option('-s','--savefiles', action='store_true', help='keep the student repos', default=False)
     # parser.add_option('--tag', help='the tag for submission', default='submission')
@@ -161,7 +162,7 @@ if __name__ == '__main__':
                     search_module= search_module,
                     search_name=search_name
                     )
-                ins.solve(timeout=options.timeout,log_debug = options.console_debug, output_path = output_path,belief_mode=options.belief_mode)
+                ins.solve(time_out=options.timeout,log_debug = options.console_debug, output_path = output_path,memory_out=options.memoryout)
                 end_time = datetime.datetime.now().astimezone(TIMEZONE)
                 used_time = end_time - start_time
                 logger.info(f"solving time: {used_time}")

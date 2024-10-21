@@ -1,8 +1,0 @@
-Plan found with cost: 4
-1. (MOVE_B_L1_L2 )
-2. (FIB_A_A_L1 )
-3. (MOVE_B_L2_L1 )
-4. (SHARE_A_A_L1 )
-Time: 0.00926799
-Generated: 137
-Expanded: 22
