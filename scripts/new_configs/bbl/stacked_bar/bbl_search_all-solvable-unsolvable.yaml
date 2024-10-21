@@ -36,30 +36,40 @@ bar_x:
     - bfsdcu
     - astar
     - greedy
-    - ngreedy
+    # - ngreedy
 
 # total_key:
 #   name: domain_name
 #   value: bbl
 
 stack_keys:
-  -
-    name: solvable
-    value: True
+  - 
+    display_name: Solvable
+    content:
+      -
+        name: solvable
+        value: True
   # -
   #   name: solvable
   #   value: False
-  -
-    -
-      name: solvable
-      value: False
-    -
-      name: running
-      value: SUCC
-
-  -
-    name: running
-    value: TIMEOUT
-  -
-    name: running
-    value: MEMORYOUT
+  - 
+    display_name: Proven Unsolvable
+    content:
+      -
+        name: solvable
+        value: False
+      -
+        name: running
+        value: SUCC
+  - 
+    display_name: Timeout
+    content:
+      -
+        name: running
+        value: TIMEOUT
+  - 
+    display_name: Memoryout
+    content:
+      -
+        name: running
+        value: MEMORYOUT

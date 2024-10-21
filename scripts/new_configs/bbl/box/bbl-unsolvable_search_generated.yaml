@@ -56,6 +56,6 @@ box_x:
 
   
 
-box_key: bfs_ratio_expanded
-# box_key: bfs_ratio_generated
+# box_key: bfs_ratio_expanded
+box_key: bfs_ratio_generated
 # box_key: bfs_ratio_search_time

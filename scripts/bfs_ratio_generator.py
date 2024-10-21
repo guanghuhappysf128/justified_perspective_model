@@ -79,43 +79,54 @@ if __name__ == "__main__":
     #         main_collection.update_one(query, updates)
 
 
-    bfs_query = {'search': 'bfs', "num_of_agents": { "$in": [2, 3] }}
-    bfs_query = {'search': 'bfs', "num_of_agents": 4}
+    bfs_query = {'search': 'bfs'}
     
-    # bfs_update_query = {'search': 'bfs', "num_of_agents": { "$in": [2, 3] }, 'bfs_ratio_search_time': {'$exists': False}}
+    # bfs_update_query = {'search': 'bfs', 'bfs_ratio_search_time': {'$exists': False}}
     # bfs_update = {'$set': {'bfs_ratio_search_time': 1}}
     # main_collection.update_many(bfs_update_query, bfs_update)
     
-    # bfs_update_query = {'search': 'bfs', "num_of_agents": { "$in": [2, 3] }, 'bfs_ratio_expanded': {'$exists': False}}
+    # bfs_update_query = {'search': 'bfs', 'bfs_ratio_expanded': {'$exists': False}}
     # bfs_update = {'$set': {'bfs_ratio_expanded': 1}}
     # main_collection.update_many(bfs_update_query, bfs_update)
     
-    # bfs_update_query = {'search': 'bfs', "num_of_agents": { "$in": [2, 3] }, 'bfs_ratio_generated': {'$exists': False}}
+    # bfs_update_query = {'search': 'bfs', 'bfs_ratio_generated': {'$exists': False}}
     # bfs_update = {'$set': {'bfs_ratio_generated': 1}}
     # main_collection.update_many(bfs_update_query, bfs_update)
     
     
-    bfs_dict = dict()
-    
+    bfs_dict = dict()    
     for item in main_collection.find(bfs_query):
         problem_name = item['problem_name']
         init_name = item['init_name']
+        
         # search_time = item['search_time']
         # expanded = item['expanded']
         if problem_name not in bfs_dict:
             bfs_dict[problem_name] = dict()
-        bfs_dict[problem_name][init_name] = dict()
-        bfs_dict[problem_name][init_name]['search_time'] = item['search_time']
-        bfs_dict[problem_name][init_name]['expanded'] = item['expanded']
-        bfs_dict[problem_name][init_name]['generated'] = item['generated']
         
+        if init_name not in bfs_dict[problem_name]:
+            bfs_dict[problem_name][init_name] = dict()
+            bfs_dict[problem_name][init_name]['search_time'] = item['search_time']
+            bfs_dict[problem_name][init_name]['expanded'] = item['expanded']
+            bfs_dict[problem_name][init_name]['generated'] = item['generated']
+        else:
+            print(f"problem name {problem_name} init name {init_name} already exists")
         
-    other_query = {'search': 'greedy',"num_of_agents": { "$in": [2, 3] }}
-    other_query = {'search': 'greedy',"num_of_agents": 4}
+
+    bfs_dict_item_count = 0
+    for problem_name, problem_item in bfs_dict.items():
+        for init_name, init_item in problem_item.items():
+            bfs_dict_item_count += 1
+            
+    print(f"bfs_dict_item_count {bfs_dict_item_count}")
+
+    other_query = {"search": {"$ne": "bfs"}}
+
+    json_list = list()
     for item in main_collection.find(other_query):
+
         problem_name = item['problem_name']
         init_name = item['init_name']
-        # search_time = item['search_time']
         _id = item['_id']
         if problem_name not in bfs_dict:
             print(f"problem name not found, deleting {problem_name} {init_name}")
@@ -132,7 +143,16 @@ if __name__ == "__main__":
             query = {'_id': _id}
             updates = {'$set': {'bfs_ratio_search_time': bfs_ratio_search_time, 'bfs_ratio_expanded': bfs_ratio_expanded, 'bfs_ratio_generated': bfs_ratio_generated}}
             main_collection.update_one(query, updates)
+
+            if bfs_ratio_search_time > 2 or bfs_ratio_expanded > 2 or bfs_ratio_generated > 2:
+                json_list.append(item)
     
+    with open("bfs_ratio.txt", "w") as f:
+        for item in json_list:
+            f.write(f"{item}\n")
+
+    with open("bfs_ratio.json", "w") as f:
+        json.dump(json_list, f, indent=4)
         
     # bfsdcu_query = {'search': 'bfsdcu'}
     # for item in main_collection.find(bfsdcu_query):

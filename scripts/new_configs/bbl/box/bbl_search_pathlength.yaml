@@ -9,9 +9,9 @@ filters:
   # -
   #   name : total_goal_size
   #   value : 1
-  -
-    name: solvable
-    value: False
+  # -
+  #   name: solvable
+  #   value: True
   # -
   #   name: search
   #   value: bfsdcu
@@ -21,27 +21,32 @@ filters:
   # -
   #   name: expanded
   #   value: {'$gt':10}
-  # - 
-  #   name: plan
-  #   value: {'$ne':[]}
-  -
-    name: problem_name
-    value: {'$ne':"bbl_a2_g4_d3_34074"}
+  - 
+    name: plan
+    value: {'$ne':[]}
+  # -
+  #   name: problem_name
+  #   value: {'$ne':"bbl_a2_g4_d3_34074"}
 
+# subplot_x:
+#   name: total_goal_size
+#   values: []
 
 subplot_x:
-  name: total_goal_size
-  values: []
-
-subplot_y:
-  name: num_of_agents
+  name: domain_name
   values:
   -
-    2
-  -
-    3
-  -
-    4
+    bbl
+
+# subplot_y:
+#   name: num_of_agents
+#   values:
+#   -
+#     2
+#   -
+#     3
+#   -
+#     4
 
 
 
@@ -56,6 +61,7 @@ box_x:
 
   
 
-box_key: bfs_ratio_expanded
+# box_key: bfs_ratio_expanded
 # box_key: bfs_ratio_generated
 # box_key: bfs_ratio_search_time
+box_key: path_length

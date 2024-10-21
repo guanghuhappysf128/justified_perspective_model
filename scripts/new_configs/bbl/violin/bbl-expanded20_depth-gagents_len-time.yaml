@@ -11,9 +11,12 @@ filters:
   -
     name: search
     value: greedy
+  # - 
+  #   name: plan
+  #   value: {'$ne':[]}
   - 
-    name: plan
-    value: {'$ne':[]}
+    name: expanded
+    value: {'$gt': 20}
   # -
   #   name: total_goal_size
   #   value: 1
@@ -27,18 +30,27 @@ filters:
   #   name: epistemic_call_length_max
   #   value: {'$ne':0}
 
-
 subplot_x:
   name: max_goal_depth
-  values: []
+  values: 
+  -
+    1
+  -
+    2
+  -
+    3
+  -
+    4
 
 subplot_y:
-  name: domain_name
+  name: num_of_goal_agents
   values:
   -
-    bbl
-
-
+    2
+  -
+    3
+  -
+    4
 
 # keys:
 #   -

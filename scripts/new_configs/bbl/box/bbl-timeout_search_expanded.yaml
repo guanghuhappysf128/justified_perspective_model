@@ -9,9 +9,13 @@ filters:
   # -
   #   name : total_goal_size
   #   value : 1
-  -
-    name: solvable
-    value: False
+  # -
+  #   name: solvable
+  #   value: False
+
+  - 
+    name: running
+    value: TIMEOUT
   # -
   #   name: search
   #   value: bfsdcu
