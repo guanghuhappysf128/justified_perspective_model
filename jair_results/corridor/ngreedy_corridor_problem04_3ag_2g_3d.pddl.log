@@ -1,0 +1,45 @@
+2024-10-22 16:51:48,899 - instance_runner - INFO - parser domain and problem
+2024-10-22 16:51:48,899 - instance_runner - INFO - new_syntax/corridor/domain.pddl
+2024-10-22 16:51:48,899 - instance_runner - INFO - new_syntax/corridor/problem04_3ag_2g_3d.pddl
+2024-10-22 16:51:48,900 - pddl_parser - INFO - Reading domain file
+2024-10-22 16:51:48,900 - pddl_parser - INFO - new_syntax/corridor/domain.pddl
+2024-10-22 16:51:48,900 - pddl_parser - INFO - Parsing domain file
+2024-10-22 16:51:48,902 - pddl_parser - INFO - Reading problem file
+2024-10-22 16:51:48,903 - pddl_parser - INFO - new_syntax/corridor/problem04_3ag_2g_3d.pddl
+2024-10-22 16:51:48,904 - pddl_parser - INFO - Parsing problem file
+2024-10-22 16:51:48,905 - instance_runner - INFO - loading external function: new_syntax/corridor/corridor.py
+2024-10-22 16:51:48,905 - instance_runner - INFO - finish loading external function
+2024-10-22 16:51:48,906 - instance_runner - INFO - Initialize problem
+2024-10-22 16:51:48,906 - epistemic_model - INFO - initialize epistemic model
+2024-10-22 16:51:48,906 - instance_runner - INFO - starting search
+2024-10-22 16:51:48,906 - ngreedy - INFO - starting searching using [ngreedy]
+2024-10-22 16:51:48,907 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-22 16:51:48,926 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-22 16:51:48,940 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-22 16:51:48,944 - ngreedy - INFO - plan is: ['move_right a', 'sense a s', 'shout_truth a s', 'move_left a', 'shout_lie a s']
+2024-10-22 16:51:48,944 - ngreedy - INFO - Goal found
+2024-10-22 16:51:48,944 - ngreedy - INFO - [number of node pruned_by_unknown]: 0
+2024-10-22 16:51:48,944 - ngreedy - INFO - [number of node pruned_by_visited]: 2
+2024-10-22 16:51:48,944 - ngreedy - INFO - [number of node pruned]: 2
+2024-10-22 16:51:48,944 - ngreedy - INFO - [number of node goal_checked]: 32
+2024-10-22 16:51:48,944 - ngreedy - INFO - [number of node expansion]: 9
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of node generated]: 32
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of epistemic formulas evaluation: 32]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [time in epistemic formulas evaluation: 0:00:00.027543]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [avg time in epistemic formulas evaluation: 0.8607187500000001]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [total_goal_size: 2]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [ontic_goal_size: 0]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [epistemic_goal_size: 2]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [ontic_goals: []]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [goals: ['(= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [epistemic_call_time_max: 1.9189999999999998]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [functions: 12]
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of common perspective generated]: 0
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of averaged unfiltered branching factors]: 3.7777777777777777
+2024-10-22 16:51:48,945 - ngreedy - INFO - [number of max unfiltered branching factors]: 5
+2024-10-22 16:51:48,946 - instance_runner - INFO - initialization time: 0:00:00.007062
+2024-10-22 16:51:48,946 - instance_runner - INFO - search time: 0:00:00.039561
