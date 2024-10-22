@@ -68,11 +68,11 @@ OBJECT_REG = r"[\w \&\-]*"
 OBJECT_REG_SURFIX = r"\)"
 
 INIT_REG_PREFIX = r"\(:init"
-INIT_REG = r"(\(assign [\w \'\"\(\)]*\))*"
+INIT_REG = r"(\(assign [\w \-\'\"\(\)]*\))*"
 INIT_REG_SURFIX = r"\)"
 
 RANGE_REG_PREFIX = r"\(:ranges"
-RANGE_REG = r"(\([\w \[\]\'\,]*\))*"
+RANGE_REG = r"(\([\w \-\[\]\'\,]*\))*"
 RANGE_REG_SURFIX = r"\)"
 
 RULE_REG_PREFIX = r"\(:rules"
@@ -236,7 +236,7 @@ class PDDLParser:
         problem_str = problem_str[:len(len_holder)]
         self.logger.debug(ranges_str)
         self.logger.debug(problem_str)
-        pattern = r"\([\w \[\]\'\,]*\)"
+        pattern = r"\([\w \-\[\]\'\,]*\)"
         single_range_str_list = re.findall(pattern, ranges_str)
         self.logger.debug(single_range_str_list)
         for single_range_str in single_range_str_list:
@@ -295,8 +295,8 @@ class PDDLParser:
         for function_name in functions.keys():
             if not function_name in rules.keys():
                 rules.update({function_name:Rule(function_name,RULE_TYPE.STATIC,[])})
-        print(len(functions))
-        print(len(rules))
+        # print(len(functions))
+        # print(len(rules))
 
 
         # update the action_schema
@@ -348,8 +348,7 @@ class PDDLParser:
         initial_state: typing.Dict[str,any] = {}
         # extract initial state
         init_str,problem_str = self.keyWordParser("init",INIT_REG_PREFIX,INIT_REG,INIT_REG_SURFIX,problem_str)
-        self.logger.debug(init_str)
-        pattern = r"\(assign \([\w ]*\) [ \w\'\"]*\)"
+        pattern = r"\(assign \([\w ]*\) [ \-\w\'\"]*\)"
         single_init_str_list = re.findall(pattern, init_str)
         self.logger.debug(single_init_str_list)
         for single_init_str in single_init_str_list:
@@ -363,8 +362,7 @@ class PDDLParser:
                 value_type = function_schemas[function_schema_name].value_type
                 value = self.str2value(value_type,value_str)
                 initial_state.update({variable_name:value})
-        
-        self.logger.debug(initial_state)     
+             
         
         self.logger.debug(problem_str)           
         # extract goal
@@ -929,6 +927,9 @@ class PDDLParser:
         
         input_str = re.sub('\n',LINE_BREAK,input_str,flags =re.MULTILINE)
         self.logger.debug(repr(input_str)) 
+
+        # adding back space for negative number
+        input_str = re.sub('\)-',') -',input_str,flags =re.MULTILINE)
         return input_str      
     
     def str2value(self,value_type,value_str):
