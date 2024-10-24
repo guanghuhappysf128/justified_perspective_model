@@ -1,0 +1,62 @@
+{
+    "solvable": true,
+    "plan": [
+        "turn_clockwise b",
+        "turn_anti_clockwise b",
+        "turn_anti_clockwise b",
+        "turn_anti_clockwise b",
+        "turn_anti_clockwise b"
+    ],
+    "path_length": 5,
+    "timeout": 600,
+    "memoryout": 8192,
+    "pruned": 54,
+    "pruned_by_unknown": 0,
+    "pruned_by_visited": 54,
+    "goal_checked": 325,
+    "expanded": 81,
+    "generated": 325,
+    "epistemic_calls": 325,
+    "epistemic_call_time": 0.378801,
+    "epistemic_call_time_avg": 1.1655415384615384,
+    "epistemic_call_time_max": 3.162,
+    "epistemic_call_length": 1693,
+    "epistemic_call_length_avg": 5.2092307692307696,
+    "epistemic_call_length_max": 6,
+    "total_goal_size": 1,
+    "ontic_goal_size": 0,
+    "epistemic_goal_size": 1,
+    "ontic_goals:": [],
+    "epistemic_goals": [
+        "(= (@ep (\"+ b [b] + b [a]\") (= (v p) 't')) ep.true)"
+    ],
+    "goals": [
+        "(= (@ep (\"+ b [b] + b [a]\") (= (v p) 't')) ep.true)"
+    ],
+    "functions": 9,
+    "domain_path": "new_syntax/bbl/domain.pddl",
+    "problem_path": "new_syntax/bbl/problem03.pddl",
+    "max_goal_depth": 2,
+    "num_of_unknown_goals": 0,
+    "num_of_goal_agents": 2,
+    "goal_agents": [
+        "b",
+        "a"
+    ],
+    "agents": [
+        "b",
+        "a"
+    ],
+    "num_of_agents": 2,
+    "common_calls": 0,
+    "common_total": 0,
+    "common_max": 0,
+    "common_average": 0,
+    "avg_branching_factors": 4.0,
+    "max_branching_factors": 4,
+    "domain_name": "bbl",
+    "problem_name": "bbl03",
+    "search": "greedy",
+    "init_time": 0.004064,
+    "search_time": 0.462407
+}

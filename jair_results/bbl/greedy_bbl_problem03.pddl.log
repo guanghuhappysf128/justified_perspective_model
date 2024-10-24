@@ -1,0 +1,42 @@
+2024-10-24 15:50:48,208 - instance_runner - INFO - parser domain and problem
+2024-10-24 15:50:48,208 - instance_runner - INFO - new_syntax/bbl/domain.pddl
+2024-10-24 15:50:48,208 - instance_runner - INFO - new_syntax/bbl/problem03.pddl
+2024-10-24 15:50:48,208 - pddl_parser - INFO - Reading domain file
+2024-10-24 15:50:48,208 - pddl_parser - INFO - new_syntax/bbl/domain.pddl
+2024-10-24 15:50:48,209 - pddl_parser - INFO - Parsing domain file
+2024-10-24 15:50:48,209 - pddl_parser - INFO - Reading problem file
+2024-10-24 15:50:48,209 - pddl_parser - INFO - new_syntax/bbl/problem03.pddl
+2024-10-24 15:50:48,210 - pddl_parser - INFO - Parsing problem file
+2024-10-24 15:50:48,211 - instance_runner - INFO - loading external function: new_syntax/bbl/bbl.py
+2024-10-24 15:50:48,211 - instance_runner - INFO - finish loading external function
+2024-10-24 15:50:48,211 - instance_runner - INFO - Initialize problem
+2024-10-24 15:50:48,212 - epistemic_model - INFO - initialize epistemic model
+2024-10-24 15:50:48,212 - instance_runner - INFO - starting search
+2024-10-24 15:50:48,212 - greedy - INFO - starting searching using [greedy]
+2024-10-24 15:50:48,668 - greedy - INFO - plan is: ['turn_clockwise b', 'turn_anti_clockwise b', 'turn_anti_clockwise b', 'turn_anti_clockwise b', 'turn_anti_clockwise b']
+2024-10-24 15:50:48,668 - greedy - INFO - Goal found
+2024-10-24 15:50:48,668 - greedy - INFO - [number of node pruned_by_unknown]: 0
+2024-10-24 15:50:48,669 - greedy - INFO - [number of node pruned_by_visited]: 54
+2024-10-24 15:50:48,669 - greedy - INFO - [number of node pruned]: 54
+2024-10-24 15:50:48,669 - greedy - INFO - [number of node goal_checked]: 325
+2024-10-24 15:50:48,669 - greedy - INFO - [number of node expansion]: 81
+2024-10-24 15:50:48,669 - greedy - INFO - [number of node generated]: 325
+2024-10-24 15:50:48,669 - greedy - INFO - [number of epistemic formulas evaluation: 325]
+2024-10-24 15:50:48,669 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.378801]
+2024-10-24 15:50:48,669 - greedy - INFO - [avg time in epistemic formulas evaluation: 1.1655415384615384]
+2024-10-24 15:50:48,669 - greedy - INFO - [total_goal_size: 1]
+2024-10-24 15:50:48,669 - greedy - INFO - [ontic_goal_size: 0]
+2024-10-24 15:50:48,669 - greedy - INFO - [epistemic_goal_size: 1]
+2024-10-24 15:50:48,669 - greedy - INFO - [ontic_goals: []]
+2024-10-24 15:50:48,669 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [b] + b [a]") (= (v p) \'t\')) ep.true)']]
+2024-10-24 15:50:48,669 - greedy - INFO - [goals: ['(= (@ep ("+ b [b] + b [a]") (= (v p) \'t\')) ep.true)']]
+2024-10-24 15:50:48,670 - greedy - INFO - [epistemic_call_time_max: 3.162]
+2024-10-24 15:50:48,670 - greedy - INFO - [functions: 9]
+2024-10-24 15:50:48,670 - greedy - INFO - [number of common perspective generated]: 0
+2024-10-24 15:50:48,670 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-24 15:50:48,670 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-24 15:50:48,670 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-24 15:50:48,670 - greedy - INFO - [number of averaged unfiltered branching factors]: 4.0
+2024-10-24 15:50:48,671 - greedy - INFO - [number of max unfiltered branching factors]: 4
+2024-10-24 15:50:48,675 - instance_runner - INFO - initialization time: 0:00:00.004064
+2024-10-24 15:50:48,675 - instance_runner - INFO - search time: 0:00:00.462407
