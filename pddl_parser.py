@@ -447,6 +447,9 @@ class PDDLParser:
             else:
                 new_condition.condition_type = ConditionType.ONTIC
                 new_condition.condition_variable = goal_content_str
+
+                function_schema_name = functions[goal_content_str].function_schema_name
+                value_type = function_schemas[function_schema_name].value_type
                 new_condition.target_value = self.str2value(value_type,value_str)
             goals.update({goal_condition_name:new_condition})
                 # self.logger.debug(goal_proposition_str)
