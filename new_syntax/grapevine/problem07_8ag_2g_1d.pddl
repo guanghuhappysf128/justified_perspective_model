@@ -1,5 +1,5 @@
 (define 
-        (problem grapevine01) 
+        (problem grapevine07) 
         (:domain grapevine)
 
         (:agents

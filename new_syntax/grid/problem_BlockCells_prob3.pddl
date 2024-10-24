@@ -1,5 +1,5 @@
 ( define
-    (problem ep_goal_prob1)
+    (problem BlockCells_prob3)
     (:domain grid)
 
     (:agents

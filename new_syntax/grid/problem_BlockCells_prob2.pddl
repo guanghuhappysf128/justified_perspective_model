@@ -1,5 +1,5 @@
 ( define
-    (problem boardcast_prob3)
+    (problem BlockCells_prob2)
     (:domain grid)
 
     (:agents
