@@ -58,13 +58,14 @@
         :parameters (?i - agent, ?l1 - location, ?l2 - location)
         :precondition (
             (= (blockable ?l2) 1)
+            ; the locations are connected
             (= (connected ?l1 ?l2) 1)
             ; agent is in the location
             (= (agent_loc ?i) (room_id ?l1))
             ; agent can move
             (= (movable ?i) 1)
-            ; the locations are connected
-            (= (@ep ("+ b [?i]") (= (blocked ?l2) 1)) ep.unknown)
+            
+            ; (= (@ep ("+ b [?i]") (= (blocked ?l2) 1)) ep.unknown)
         )
         :effect (
             (assign (loc_sensed ?l2 ?i) 1)
@@ -87,7 +88,7 @@
             ; 1 means occuriped by agent
             ; 2 means searched
             ; agent cannot entry a room if its been ocuuiped by another agent
-            (!= (searched ?l2) 1)
+            ; (!= (searched ?l2) 1)
              (= (@ep ("+ b [?i]") (= (blocked ?l2) 0)) ep.true)
         )
         :effect (

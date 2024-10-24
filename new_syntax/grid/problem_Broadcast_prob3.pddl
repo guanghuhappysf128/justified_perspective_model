@@ -1,5 +1,5 @@
 ( define
-    (problem non_ep_prob1)
+    (problem boardcast_prob3)
     (:domain grid)
 
     (:agents
@@ -7,7 +7,7 @@
     )
     (:objects
         s1 s2 s3 - survivor
-        r1 r2 r3 r4 r5 r6 r7 r8 r9 - location
+        r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 - location
     )
 
 
@@ -16,7 +16,7 @@
         (assign (agent_loc b) 'r4')
         (assign (agent_loc c) 'r9')
 
-        (assign (movable a) 1)
+        (assign (movable a) 0)
         (assign (movable b) 1)
         (assign (movable c) 1)
 
@@ -25,8 +25,8 @@
         (assign (sharable c) 1)
 
         (assign (receivable a) 1)
-        (assign (receivable b) 1)
-        (assign (receivable c) 1)
+        (assign (receivable b) 0)
+        (assign (receivable c) 0)
 
         (assign (survivor_loc s1) 'r4')
         (assign (survivor_loc s2) 'r5')
@@ -45,6 +45,11 @@
         (assign (searched r7) 0)
         (assign (searched r8) 0)
         (assign (searched r9) 1)
+        (assign (searched r10) 0)
+        (assign (searched r11) 0)
+        (assign (searched r12) 0)
+
+
 
         (assign (room_id r1) 'r1')
         (assign (room_id r2) 'r2')
@@ -55,10 +60,14 @@
         (assign (room_id r7) 'r7')
         (assign (room_id r8) 'r8')
         (assign (room_id r9) 'r9')
+        (assign (room_id r10) 'r10')
+        (assign (room_id r11) 'r11')
+        (assign (room_id r12) 'r12')
 
 ; 1 2 3
 ; 4 5 6
 ; 7 8 9
+; 10 11 12
 
 
         (assign (connected r1 r1) 0)
@@ -70,6 +79,9 @@
         (assign (connected r1 r7) 0)
         (assign (connected r1 r8) 0)
         (assign (connected r1 r9) 0)
+        (assign (connected r1 r10) 0)
+        (assign (connected r1 r11) 0)
+        (assign (connected r1 r12) 0)
 
         (assign (connected r2 r1) 1)
         (assign (connected r2 r2) 0)
@@ -80,6 +92,9 @@
         (assign (connected r2 r7) 0)
         (assign (connected r2 r8) 0)
         (assign (connected r2 r9) 0)
+        (assign (connected r2 r10) 0)
+        (assign (connected r2 r11) 0)
+        (assign (connected r2 r12) 0)
 
         (assign (connected r3 r1) 0)
         (assign (connected r3 r2) 1)
@@ -90,6 +105,9 @@
         (assign (connected r3 r7) 0)
         (assign (connected r3 r8) 0)
         (assign (connected r3 r9) 0)
+        (assign (connected r3 r10) 0)
+        (assign (connected r3 r11) 0)
+        (assign (connected r3 r12) 0)
 
         (assign (connected r4 r1) 1)
         (assign (connected r4 r2) 0)
@@ -100,6 +118,9 @@
         (assign (connected r4 r7) 1)
         (assign (connected r4 r8) 0)
         (assign (connected r4 r9) 0)
+        (assign (connected r4 r10) 0)
+        (assign (connected r4 r11) 0)
+        (assign (connected r4 r12) 0)
 
         (assign (connected r5 r1) 0)
         (assign (connected r5 r2) 1)
@@ -110,6 +131,9 @@
         (assign (connected r5 r7) 0)
         (assign (connected r5 r8) 1)
         (assign (connected r5 r9) 0)
+        (assign (connected r5 r10) 0)
+        (assign (connected r5 r11) 0)
+        (assign (connected r5 r12) 0)
 
         (assign (connected r6 r1) 0)
         (assign (connected r6 r2) 0)
@@ -120,6 +144,9 @@
         (assign (connected r6 r7) 0)
         (assign (connected r6 r8) 0)
         (assign (connected r6 r9) 1)
+        (assign (connected r6 r10) 0)
+        (assign (connected r6 r11) 0)
+        (assign (connected r6 r12) 0)
 
         (assign (connected r7 r1) 0)
         (assign (connected r7 r2) 0)
@@ -130,6 +157,9 @@
         (assign (connected r7 r7) 0)
         (assign (connected r7 r8) 1)
         (assign (connected r7 r9) 0)
+        (assign (connected r7 r10) 1)
+        (assign (connected r7 r11) 0)
+        (assign (connected r7 r12) 0)
 
         (assign (connected r8 r1) 0)
         (assign (connected r8 r2) 0)
@@ -140,6 +170,9 @@
         (assign (connected r8 r7) 1)
         (assign (connected r8 r8) 0)
         (assign (connected r8 r9) 1)
+        (assign (connected r8 r10) 0)
+        (assign (connected r8 r11) 1)
+        (assign (connected r8 r12) 0)
 
         (assign (connected r9 r1) 0)
         (assign (connected r9 r2) 0)
@@ -150,6 +183,49 @@
         (assign (connected r9 r7) 0)
         (assign (connected r9 r8) 1)
         (assign (connected r9 r9) 0)
+        (assign (connected r9 r10) 0)
+        (assign (connected r9 r11) 0)
+        (assign (connected r9 r12) 1)
+        
+
+        (assign (connected r10 r1) 0)
+        (assign (connected r10 r2) 0)
+        (assign (connected r10 r3) 0)
+        (assign (connected r10 r4) 0)
+        (assign (connected r10 r5) 0)
+        (assign (connected r10 r6) 0)
+        (assign (connected r10 r7) 1)
+        (assign (connected r10 r8) 0)
+        (assign (connected r10 r9) 0)
+        (assign (connected r10 r10) 0)
+        (assign (connected r10 r11) 1)
+        (assign (connected r10 r12) 0)
+        
+        (assign (connected r11 r1) 0)
+        (assign (connected r11 r2) 0)
+        (assign (connected r11 r3) 0)
+        (assign (connected r11 r4) 0)
+        (assign (connected r11 r5) 0)
+        (assign (connected r11 r6) 0)
+        (assign (connected r11 r7) 0)
+        (assign (connected r11 r8) 1)
+        (assign (connected r11 r9) 0)
+        (assign (connected r11 r10) 1)
+        (assign (connected r11 r11) 0)
+        (assign (connected r11 r12) 1)
+
+        (assign (connected r12 r1) 0)
+        (assign (connected r12 r2) 0)
+        (assign (connected r12 r3) 0)
+        (assign (connected r12 r4) 0)
+        (assign (connected r12 r5) 0)
+        (assign (connected r12 r6) 0)
+        (assign (connected r12 r7) 0)
+        (assign (connected r12 r8) 0)
+        (assign (connected r12 r9) 1)
+        (assign (connected r12 r10) 0)
+        (assign (connected r12 r11) 1)
+        (assign (connected r12 r12) 0)
 
         (assign (blockable r1) 0)
         (assign (blockable r2) 0)
@@ -160,6 +236,9 @@
         (assign (blockable r7) 0)
         (assign (blockable r8) 0)
         (assign (blockable r9) 0)
+        (assign (blockable r10) 0)
+        (assign (blockable r11) 0)
+        (assign (blockable r12) 0)
 
         (assign (blocked r1) 0)
         (assign (blocked r2) 0)
@@ -170,6 +249,9 @@
         (assign (blocked r7) 0)
         (assign (blocked r8) 0)
         (assign (blocked r9) 0)
+        (assign (blocked r10) 0)
+        (assign (blocked r11) 0)
+        (assign (blocked r12) 0)
 
         (assign (loc_shared r1) 0)
         (assign (loc_shared r2) 0)
@@ -180,6 +262,9 @@
         (assign (loc_shared r7) 0)
         (assign (loc_shared r8) 0)
         (assign (loc_shared r9) 0)
+        (assign (loc_shared r10) 0)
+        (assign (loc_shared r11) 0)
+        (assign (loc_shared r12) 0)
 
         (assign (loc_sensed r1 a) 0)
         (assign (loc_sensed r2 a) 0)
@@ -190,6 +275,9 @@
         (assign (loc_sensed r7 a) 0)
         (assign (loc_sensed r8 a) 0)
         (assign (loc_sensed r9 a) 0)
+        (assign (loc_sensed r10 a) 0)
+        (assign (loc_sensed r11 a) 0)
+        (assign (loc_sensed r12 a) 0)
 
         (assign (loc_sensed r1 b) 0)
         (assign (loc_sensed r2 b) 0)
@@ -200,6 +288,9 @@
         (assign (loc_sensed r7 b) 0)
         (assign (loc_sensed r8 b) 0)
         (assign (loc_sensed r9 b) 0)
+        (assign (loc_sensed r10 b) 0)
+        (assign (loc_sensed r11 b) 0)
+        (assign (loc_sensed r12 b) 0)
 
         (assign (loc_sensed r1 c) 0)
         (assign (loc_sensed r2 c) 0)
@@ -210,6 +301,9 @@
         (assign (loc_sensed r7 c) 0)
         (assign (loc_sensed r8 c) 0)
         (assign (loc_sensed r9 c) 0)
+        (assign (loc_sensed r10 c) 0)
+        (assign (loc_sensed r11 c) 0)
+        (assign (loc_sensed r12 c) 0)
         
     )
 
@@ -223,12 +317,19 @@
         (!= (searched r7) 0)
         (!= (searched r8) 0)
         (!= (searched r9) 0)
+        (!= (searched r10) 0)
+        (!= (searched r11) 0)
+        (!= (searched r12) 0)
+        (= (@ep ("+ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
+        (= (@ep ("+ b [a]") (= (survivor_loc s2) 'r5')) ep.true)
+        (= (@ep ("+ b [a]") (= (survivor_loc s3) 'r8')) ep.true)
+    
     ))
 
     (:ranges
-        (agent_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'])
-        (survivor_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'])
-        (room_id enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'])
+        (agent_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'])
+        (survivor_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'])
+        (room_id enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'])
         (shared integer [0,1])
         (connected integer [0,1])
         (sharable integer [0,1])
@@ -245,6 +346,7 @@
     )
 
     (:rules
+ 
     )
 )
 

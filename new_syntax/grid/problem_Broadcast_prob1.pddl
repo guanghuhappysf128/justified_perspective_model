@@ -1,5 +1,5 @@
 ( define
-    (problem non_ep_prob1)
+    (problem boardcast_prob1)
     (:domain grid)
 
     (:agents
@@ -16,7 +16,7 @@
         (assign (agent_loc b) 'r4')
         (assign (agent_loc c) 'r9')
 
-        (assign (movable a) 1)
+        (assign (movable a) 0)
         (assign (movable b) 1)
         (assign (movable c) 1)
 
@@ -25,8 +25,8 @@
         (assign (sharable c) 1)
 
         (assign (receivable a) 1)
-        (assign (receivable b) 1)
-        (assign (receivable c) 1)
+        (assign (receivable b) 0)
+        (assign (receivable c) 0)
 
         (assign (survivor_loc s1) 'r4')
         (assign (survivor_loc s2) 'r5')
@@ -210,7 +210,6 @@
         (assign (loc_sensed r7 c) 0)
         (assign (loc_sensed r8 c) 0)
         (assign (loc_sensed r9 c) 0)
-        
     )
 
     (:goal (and 
@@ -223,6 +222,9 @@
         (!= (searched r7) 0)
         (!= (searched r8) 0)
         (!= (searched r9) 0)
+        (= (@ep ("+ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
+        (= (@ep ("+ b [a]") (= (survivor_loc s2) 'r5')) ep.true)
+        (= (@ep ("+ b [a]") (= (survivor_loc s3) 'r8')) ep.true)
     ))
 
     (:ranges
@@ -245,6 +247,7 @@
     )
 
     (:rules
+
     )
 )
 

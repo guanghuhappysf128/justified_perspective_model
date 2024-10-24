@@ -1,9 +1,9 @@
 ( define
-    (problem ep_prob1)
+    (problem boardcast_prob2)
     (:domain grid)
 
     (:agents
-        a b c - agent
+        a b c d - agent
     )
     (:objects
         s1 s2 s3 - survivor
@@ -15,18 +15,22 @@
         (assign (agent_loc a) 'r1')
         (assign (agent_loc b) 'r4')
         (assign (agent_loc c) 'r9')
+        (assign (agent_loc d) 'r2')
 
-        (assign (movable a) 1)
+        (assign (movable a) 0)
         (assign (movable b) 1)
         (assign (movable c) 1)
+        (assign (movable d) 1)
 
         (assign (sharable a) 1)
         (assign (sharable b) 1)
         (assign (sharable c) 1)
+        (assign (sharable d) 1)
 
         (assign (receivable a) 1)
-        (assign (receivable b) 1)
-        (assign (receivable c) 1)
+        (assign (receivable b) 0)
+        (assign (receivable c) 0)
+        (assign (receivable d) 0)
 
         (assign (survivor_loc s1) 'r4')
         (assign (survivor_loc s2) 'r5')
@@ -210,7 +214,16 @@
         (assign (loc_sensed r7 c) 0)
         (assign (loc_sensed r8 c) 0)
         (assign (loc_sensed r9 c) 0)
-        
+
+        (assign (loc_sensed r1 d) 0)
+        (assign (loc_sensed r2 d) 0)
+        (assign (loc_sensed r3 d) 0)
+        (assign (loc_sensed r4 d) 0)
+        (assign (loc_sensed r5 d) 0)
+        (assign (loc_sensed r6 d) 0)
+        (assign (loc_sensed r7 d) 0)
+        (assign (loc_sensed r8 d) 0)
+        (assign (loc_sensed r9 d) 0)
     )
 
     (:goal (and 
@@ -226,12 +239,6 @@
         (= (@ep ("+ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
         (= (@ep ("+ b [a]") (= (survivor_loc s2) 'r5')) ep.true)
         (= (@ep ("+ b [a]") (= (survivor_loc s3) 'r8')) ep.true)
-        (= (@ep ("+ b [b]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [b]") (= (survivor_loc s2) 'r5')) ep.true)
-        (= (@ep ("+ b [b]") (= (survivor_loc s3) 'r8')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s2) 'r5')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s3) 'r8')) ep.true)
     ))
 
     (:ranges
@@ -257,6 +264,7 @@
         (static (agent_loc a) [])
         (static (agent_loc b) [])
         (static (agent_loc c) [])
+        (static (agent_loc d) [])
 
         (static (survivor_loc s1) [])
         (static (survivor_loc s2) [])
@@ -379,14 +387,17 @@
         (static (sharable a) [])
         (static (sharable b) [])
         (static (sharable c) [])
+        (static (sharable d) [])
 
         (static (movable a) [])
         (static (movable b) [])
         (static (movable c) [])
+        (static (movable d) [])
 
         (static (receivable a) [])
         (static (receivable b) [])
         (static (receivable c) [])
+        (static (receivable d) [])
 
         (static (blockable r1) [])
         (static (blockable r2) [])
@@ -447,6 +458,16 @@
         (static (loc_sensed r7 c) [])
         (static (loc_sensed r8 c) [])
         (static (loc_sensed r9 c) [])
+
+        (static (loc_sensed r1 d) [])
+        (static (loc_sensed r2 d) [])
+        (static (loc_sensed r3 d) [])
+        (static (loc_sensed r4 d) [])
+        (static (loc_sensed r5 d) [])
+        (static (loc_sensed r6 d) [])
+        (static (loc_sensed r7 d) [])
+        (static (loc_sensed r8 d) [])
+        (static (loc_sensed r9 d) [])
     )
 )
 

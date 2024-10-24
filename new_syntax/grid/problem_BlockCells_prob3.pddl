@@ -1,15 +1,16 @@
 ( define
-    (problem non_ep_prob1)
+    (problem ep_goal_prob1)
     (:domain grid)
 
     (:agents
         a b c - agent
     )
     (:objects
-        s1 s2 s3 - survivor
+        s1 - survivor
         r1 r2 r3 r4 r5 r6 r7 r8 r9 - location
     )
 
+    ;testing push
 
     (:init
         (assign (agent_loc a) 'r1')
@@ -29,12 +30,8 @@
         (assign (receivable c) 1)
 
         (assign (survivor_loc s1) 'r4')
-        (assign (survivor_loc s2) 'r5')
-        (assign (survivor_loc s3) 'r8')
 
         (assign (shared s1) 0)
-        (assign (shared s2) 0)
-        (assign (shared s3) 0)
 
         (assign (searched r1) 1)
         (assign (searched r2) 0)
@@ -45,7 +42,7 @@
         (assign (searched r7) 0)
         (assign (searched r8) 0)
         (assign (searched r9) 1)
-
+        
         (assign (room_id r1) 'r1')
         (assign (room_id r2) 'r2')
         (assign (room_id r3) 'r3')
@@ -151,22 +148,22 @@
         (assign (connected r9 r8) 1)
         (assign (connected r9 r9) 0)
 
-        (assign (blockable r1) 0)
-        (assign (blockable r2) 0)
-        (assign (blockable r3) 0)
-        (assign (blockable r4) 0)
-        (assign (blockable r5) 0)
-        (assign (blockable r6) 0)
-        (assign (blockable r7) 0)
-        (assign (blockable r8) 0)
-        (assign (blockable r9) 0)
+        (assign (blockable r1) 1)
+        (assign (blockable r2) 1)
+        (assign (blockable r3) 1)
+        (assign (blockable r4) 1)
+        (assign (blockable r5) 1)
+        (assign (blockable r6) 1)
+        (assign (blockable r7) 1)
+        (assign (blockable r8) 1)
+        (assign (blockable r9) 1)
 
         (assign (blocked r1) 0)
         (assign (blocked r2) 0)
         (assign (blocked r3) 0)
         (assign (blocked r4) 0)
-        (assign (blocked r5) 0)
-        (assign (blocked r6) 0)
+        (assign (blocked r5) 1)
+        (assign (blocked r6) 1)
         (assign (blocked r7) 0)
         (assign (blocked r8) 0)
         (assign (blocked r9) 0)
@@ -181,7 +178,7 @@
         (assign (loc_shared r8) 0)
         (assign (loc_shared r9) 0)
 
-        (assign (loc_sensed r1 a) 0)
+        (assign (loc_sensed r1 a) 1)
         (assign (loc_sensed r2 a) 0)
         (assign (loc_sensed r3 a) 0)
         (assign (loc_sensed r4 a) 0)
@@ -194,7 +191,7 @@
         (assign (loc_sensed r1 b) 0)
         (assign (loc_sensed r2 b) 0)
         (assign (loc_sensed r3 b) 0)
-        (assign (loc_sensed r4 b) 0)
+        (assign (loc_sensed r4 b) 1)
         (assign (loc_sensed r5 b) 0)
         (assign (loc_sensed r6 b) 0)
         (assign (loc_sensed r7 b) 0)
@@ -209,7 +206,7 @@
         (assign (loc_sensed r6 c) 0)
         (assign (loc_sensed r7 c) 0)
         (assign (loc_sensed r8 c) 0)
-        (assign (loc_sensed r9 c) 0)
+        (assign (loc_sensed r9 c) 1)
         
     )
 
@@ -218,11 +215,23 @@
         (!= (searched r2) 0)
         (!= (searched r3) 0)
         (!= (searched r4) 0)
-        (!= (searched r5) 0)
-        (!= (searched r6) 0)
+        ; (!= (searched r5) 0) do not have this due to it is blocked
+        ; (!= (searched r6) 0) do not have this due to it is blocked
         (!= (searched r7) 0)
         (!= (searched r8) 0)
         (!= (searched r9) 0)
+
+
+
+
+        (= (@ep ("$ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
+        ; (= (@ep ("+ b [b]") (= (survivor_loc s1) 'r4')) ep.true)
+        (= (@ep ("+ b [C]") (= (survivor_loc s1) 'r4')) ep.true)
+
+
+
+        (= (agent_loc a) 'r3')
+        (= (agent_loc b) 'r3')
     ))
 
     (:ranges
@@ -245,6 +254,7 @@
     )
 
     (:rules
+
     )
 )
 

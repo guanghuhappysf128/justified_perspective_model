@@ -1,13 +1,13 @@
 ( define
-    (problem ep_prob1)
+    (problem non_boardcast_prob4)
     (:domain grid)
 
     (:agents
-        a b c - agent
+        a b c d - agent
     )
     (:objects
         s1 s2 s3 - survivor
-        r1 r2 r3 r4 r5 r6 r7 r8 r9 - location
+        r1 r2 r3 r4 r5 r6 r7 r8 r9 r10 r11 r12 - location
     )
 
 
@@ -15,18 +15,22 @@
         (assign (agent_loc a) 'r1')
         (assign (agent_loc b) 'r4')
         (assign (agent_loc c) 'r9')
+        (assign (agent_loc d) 'r2')
 
-        (assign (movable a) 1)
+        (assign (movable a) 0)
         (assign (movable b) 1)
         (assign (movable c) 1)
+        (assign (movable d) 1)
 
-        (assign (sharable a) 1)
+        (assign (sharable a) 0)
         (assign (sharable b) 1)
-        (assign (sharable c) 1)
+        (assign (sharable c) 0)
+        (assign (sharable d) 0)
 
         (assign (receivable a) 1)
-        (assign (receivable b) 1)
-        (assign (receivable c) 1)
+        (assign (receivable b) 0)
+        (assign (receivable c) 0)
+        (assign (receivable d) 0)
 
         (assign (survivor_loc s1) 'r4')
         (assign (survivor_loc s2) 'r5')
@@ -45,6 +49,11 @@
         (assign (searched r7) 0)
         (assign (searched r8) 0)
         (assign (searched r9) 1)
+        (assign (searched r10) 0)
+        (assign (searched r11) 0)
+        (assign (searched r12) 0)
+
+
 
         (assign (room_id r1) 'r1')
         (assign (room_id r2) 'r2')
@@ -55,10 +64,14 @@
         (assign (room_id r7) 'r7')
         (assign (room_id r8) 'r8')
         (assign (room_id r9) 'r9')
+        (assign (room_id r10) 'r10')
+        (assign (room_id r11) 'r11')
+        (assign (room_id r12) 'r12')
 
 ; 1 2 3
 ; 4 5 6
 ; 7 8 9
+; 10 11 12
 
 
         (assign (connected r1 r1) 0)
@@ -70,6 +83,9 @@
         (assign (connected r1 r7) 0)
         (assign (connected r1 r8) 0)
         (assign (connected r1 r9) 0)
+        (assign (connected r1 r10) 0)
+        (assign (connected r1 r11) 0)
+        (assign (connected r1 r12) 0)
 
         (assign (connected r2 r1) 1)
         (assign (connected r2 r2) 0)
@@ -80,6 +96,9 @@
         (assign (connected r2 r7) 0)
         (assign (connected r2 r8) 0)
         (assign (connected r2 r9) 0)
+        (assign (connected r2 r10) 0)
+        (assign (connected r2 r11) 0)
+        (assign (connected r2 r12) 0)
 
         (assign (connected r3 r1) 0)
         (assign (connected r3 r2) 1)
@@ -90,6 +109,9 @@
         (assign (connected r3 r7) 0)
         (assign (connected r3 r8) 0)
         (assign (connected r3 r9) 0)
+        (assign (connected r3 r10) 0)
+        (assign (connected r3 r11) 0)
+        (assign (connected r3 r12) 0)
 
         (assign (connected r4 r1) 1)
         (assign (connected r4 r2) 0)
@@ -100,6 +122,9 @@
         (assign (connected r4 r7) 1)
         (assign (connected r4 r8) 0)
         (assign (connected r4 r9) 0)
+        (assign (connected r4 r10) 0)
+        (assign (connected r4 r11) 0)
+        (assign (connected r4 r12) 0)
 
         (assign (connected r5 r1) 0)
         (assign (connected r5 r2) 1)
@@ -110,6 +135,9 @@
         (assign (connected r5 r7) 0)
         (assign (connected r5 r8) 1)
         (assign (connected r5 r9) 0)
+        (assign (connected r5 r10) 0)
+        (assign (connected r5 r11) 0)
+        (assign (connected r5 r12) 0)
 
         (assign (connected r6 r1) 0)
         (assign (connected r6 r2) 0)
@@ -120,6 +148,9 @@
         (assign (connected r6 r7) 0)
         (assign (connected r6 r8) 0)
         (assign (connected r6 r9) 1)
+        (assign (connected r6 r10) 0)
+        (assign (connected r6 r11) 0)
+        (assign (connected r6 r12) 0)
 
         (assign (connected r7 r1) 0)
         (assign (connected r7 r2) 0)
@@ -130,6 +161,9 @@
         (assign (connected r7 r7) 0)
         (assign (connected r7 r8) 1)
         (assign (connected r7 r9) 0)
+        (assign (connected r7 r10) 1)
+        (assign (connected r7 r11) 0)
+        (assign (connected r7 r12) 0)
 
         (assign (connected r8 r1) 0)
         (assign (connected r8 r2) 0)
@@ -140,6 +174,9 @@
         (assign (connected r8 r7) 1)
         (assign (connected r8 r8) 0)
         (assign (connected r8 r9) 1)
+        (assign (connected r8 r10) 0)
+        (assign (connected r8 r11) 1)
+        (assign (connected r8 r12) 0)
 
         (assign (connected r9 r1) 0)
         (assign (connected r9 r2) 0)
@@ -150,6 +187,49 @@
         (assign (connected r9 r7) 0)
         (assign (connected r9 r8) 1)
         (assign (connected r9 r9) 0)
+        (assign (connected r9 r10) 0)
+        (assign (connected r9 r11) 0)
+        (assign (connected r9 r12) 1)
+        
+
+        (assign (connected r10 r1) 0)
+        (assign (connected r10 r2) 0)
+        (assign (connected r10 r3) 0)
+        (assign (connected r10 r4) 0)
+        (assign (connected r10 r5) 0)
+        (assign (connected r10 r6) 0)
+        (assign (connected r10 r7) 1)
+        (assign (connected r10 r8) 0)
+        (assign (connected r10 r9) 0)
+        (assign (connected r10 r10) 0)
+        (assign (connected r10 r11) 1)
+        (assign (connected r10 r12) 0)
+        
+        (assign (connected r11 r1) 0)
+        (assign (connected r11 r2) 0)
+        (assign (connected r11 r3) 0)
+        (assign (connected r11 r4) 0)
+        (assign (connected r11 r5) 0)
+        (assign (connected r11 r6) 0)
+        (assign (connected r11 r7) 0)
+        (assign (connected r11 r8) 1)
+        (assign (connected r11 r9) 0)
+        (assign (connected r11 r10) 1)
+        (assign (connected r11 r11) 0)
+        (assign (connected r11 r12) 1)
+
+        (assign (connected r12 r1) 0)
+        (assign (connected r12 r2) 0)
+        (assign (connected r12 r3) 0)
+        (assign (connected r12 r4) 0)
+        (assign (connected r12 r5) 0)
+        (assign (connected r12 r6) 0)
+        (assign (connected r12 r7) 0)
+        (assign (connected r12 r8) 0)
+        (assign (connected r12 r9) 1)
+        (assign (connected r12 r10) 0)
+        (assign (connected r12 r11) 1)
+        (assign (connected r12 r12) 0)
 
         (assign (blockable r1) 0)
         (assign (blockable r2) 0)
@@ -160,6 +240,9 @@
         (assign (blockable r7) 0)
         (assign (blockable r8) 0)
         (assign (blockable r9) 0)
+        (assign (blockable r10) 0)
+        (assign (blockable r11) 0)
+        (assign (blockable r12) 0)
 
         (assign (blocked r1) 0)
         (assign (blocked r2) 0)
@@ -170,6 +253,9 @@
         (assign (blocked r7) 0)
         (assign (blocked r8) 0)
         (assign (blocked r9) 0)
+        (assign (blocked r10) 0)
+        (assign (blocked r11) 0)
+        (assign (blocked r12) 0)
 
         (assign (loc_shared r1) 0)
         (assign (loc_shared r2) 0)
@@ -180,6 +266,9 @@
         (assign (loc_shared r7) 0)
         (assign (loc_shared r8) 0)
         (assign (loc_shared r9) 0)
+        (assign (loc_shared r10) 0)
+        (assign (loc_shared r11) 0)
+        (assign (loc_shared r12) 0)
 
         (assign (loc_sensed r1 a) 0)
         (assign (loc_sensed r2 a) 0)
@@ -190,6 +279,9 @@
         (assign (loc_sensed r7 a) 0)
         (assign (loc_sensed r8 a) 0)
         (assign (loc_sensed r9 a) 0)
+        (assign (loc_sensed r10 a) 0)
+        (assign (loc_sensed r11 a) 0)
+        (assign (loc_sensed r12 a) 0)
 
         (assign (loc_sensed r1 b) 0)
         (assign (loc_sensed r2 b) 0)
@@ -200,6 +292,9 @@
         (assign (loc_sensed r7 b) 0)
         (assign (loc_sensed r8 b) 0)
         (assign (loc_sensed r9 b) 0)
+        (assign (loc_sensed r10 b) 0)
+        (assign (loc_sensed r11 b) 0)
+        (assign (loc_sensed r12 b) 0)
 
         (assign (loc_sensed r1 c) 0)
         (assign (loc_sensed r2 c) 0)
@@ -210,7 +305,23 @@
         (assign (loc_sensed r7 c) 0)
         (assign (loc_sensed r8 c) 0)
         (assign (loc_sensed r9 c) 0)
-        
+        (assign (loc_sensed r10 c) 0)
+        (assign (loc_sensed r11 c) 0)
+        (assign (loc_sensed r12 c) 0)
+
+        (assign (loc_sensed r1 d) 0)
+        (assign (loc_sensed r2 d) 0)
+        (assign (loc_sensed r3 d) 0)
+        (assign (loc_sensed r4 d) 0)
+        (assign (loc_sensed r5 d) 0)
+        (assign (loc_sensed r6 d) 0)
+        (assign (loc_sensed r7 d) 0)
+        (assign (loc_sensed r8 d) 0)
+        (assign (loc_sensed r9 d) 0)
+        (assign (loc_sensed r10 d) 0)
+        (assign (loc_sensed r11 d) 0)
+        (assign (loc_sensed r12 d) 0)
+
     )
 
     (:goal (and 
@@ -223,21 +334,18 @@
         (!= (searched r7) 0)
         (!= (searched r8) 0)
         (!= (searched r9) 0)
+        (!= (searched r10) 0)
+        (!= (searched r11) 0)
+        (!= (searched r12) 0)
         (= (@ep ("+ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
         (= (@ep ("+ b [a]") (= (survivor_loc s2) 'r5')) ep.true)
         (= (@ep ("+ b [a]") (= (survivor_loc s3) 'r8')) ep.true)
-        (= (@ep ("+ b [b]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [b]") (= (survivor_loc s2) 'r5')) ep.true)
-        (= (@ep ("+ b [b]") (= (survivor_loc s3) 'r8')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s2) 'r5')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s3) 'r8')) ep.true)
     ))
 
     (:ranges
-        (agent_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'])
-        (survivor_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'])
-        (room_id enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9'])
+        (agent_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'])
+        (survivor_loc enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'])
+        (room_id enumerate ['r1', 'r2', 'r3', 'r4', 'r5', 'r6', 'r7', 'r8', 'r9', 'r10', 'r11', 'r12'])
         (shared integer [0,1])
         (connected integer [0,1])
         (sharable integer [0,1])
@@ -257,6 +365,7 @@
         (static (agent_loc a) [])
         (static (agent_loc b) [])
         (static (agent_loc c) [])
+        (static (agent_loc d) [])
 
         (static (survivor_loc s1) [])
         (static (survivor_loc s2) [])
@@ -271,6 +380,9 @@
         (static (room_id r7) [])
         (static (room_id r8) [])
         (static (room_id r9) [])
+        (static (room_id r10) [])
+        (static (room_id r11) [])
+        (static (room_id r12) [])
 
         (static (shared s1) [])
         (static (shared s2) [])
@@ -285,6 +397,9 @@
         (static (connected r1 r7) [])
         (static (connected r1 r8) [])
         (static (connected r1 r9) [])
+        (static (connected r1 r10) [])
+        (static (connected r1 r11) [])
+        (static (connected r1 r12) [])
 
         (static (connected r2 r1) [])
         (static (connected r2 r2) [])
@@ -295,6 +410,9 @@
         (static (connected r2 r7) [])
         (static (connected r2 r8) [])
         (static (connected r2 r9) [])
+        (static (connected r2 r10) [])
+        (static (connected r2 r11) [])
+        (static (connected r2 r12) [])
 
         (static (connected r3 r1) [])
         (static (connected r3 r2) [])
@@ -305,6 +423,9 @@
         (static (connected r3 r7) [])
         (static (connected r3 r8) [])
         (static (connected r3 r9) [])
+        (static (connected r3 r10) [])
+        (static (connected r3 r11) [])
+        (static (connected r3 r12) [])
 
         (static (connected r4 r1) [])
         (static (connected r4 r2) [])
@@ -315,6 +436,9 @@
         (static (connected r4 r7) [])
         (static (connected r4 r8) [])
         (static (connected r4 r9) [])
+        (static (connected r4 r10) [])
+        (static (connected r4 r11) [])
+        (static (connected r4 r12) [])
 
         (static (connected r5 r1) [])
         (static (connected r5 r2) [])
@@ -325,6 +449,9 @@
         (static (connected r5 r7) [])
         (static (connected r5 r8) [])
         (static (connected r5 r9) [])
+        (static (connected r5 r10) [])
+        (static (connected r5 r11) [])
+        (static (connected r5 r12) [])
 
         (static (connected r6 r1) [])
         (static (connected r6 r2) [])
@@ -335,6 +462,9 @@
         (static (connected r6 r7) [])
         (static (connected r6 r8) [])
         (static (connected r6 r9) [])
+        (static (connected r6 r10) [])
+        (static (connected r6 r11) [])
+        (static (connected r6 r12) [])
 
         (static (connected r7 r1) [])
         (static (connected r7 r2) [])
@@ -345,6 +475,9 @@
         (static (connected r7 r7) [])
         (static (connected r7 r8) [])
         (static (connected r7 r9) [])
+        (static (connected r7 r10) [])
+        (static (connected r7 r11) [])
+        (static (connected r7 r12) [])
 
         (static (connected r8 r1) [])
         (static (connected r8 r2) [])
@@ -355,6 +488,9 @@
         (static (connected r8 r7) [])
         (static (connected r8 r8) [])
         (static (connected r8 r9) [])
+        (static (connected r8 r10) [])
+        (static (connected r8 r11) [])
+        (static (connected r8 r12) [])
 
         (static (connected r9 r1) [])
         (static (connected r9 r2) [])
@@ -365,6 +501,49 @@
         (static (connected r9 r7) [])
         (static (connected r9 r8) [])
         (static (connected r9 r9) [])
+        (static (connected r9 r10) [])
+        (static (connected r9 r11) [])
+        (static (connected r9 r12) [])
+
+        (static (connected r10 r1) [])
+        (static (connected r10 r2) [])
+        (static (connected r10 r3) [])
+        (static (connected r10 r4) [])
+        (static (connected r10 r5) [])
+        (static (connected r10 r6) [])
+        (static (connected r10 r7) [])
+        (static (connected r10 r8) [])
+        (static (connected r10 r9) [])
+        (static (connected r10 r10) [])
+        (static (connected r10 r11) [])
+        (static (connected r10 r12) [])
+
+        (static (connected r11 r1) [])
+        (static (connected r11 r2) [])
+        (static (connected r11 r3) [])
+        (static (connected r11 r4) [])
+        (static (connected r11 r5) [])
+        (static (connected r11 r6) [])
+        (static (connected r11 r7) [])
+        (static (connected r11 r8) [])
+        (static (connected r11 r9) [])
+        (static (connected r11 r10) [])
+        (static (connected r11 r11) [])
+        (static (connected r11 r12) [])
+
+        (static (connected r12 r1) [])
+        (static (connected r12 r2) [])
+        (static (connected r12 r3) [])
+        (static (connected r12 r4) [])
+        (static (connected r12 r5) [])
+        (static (connected r12 r6) [])
+        (static (connected r12 r7) [])
+        (static (connected r12 r8) [])
+        (static (connected r12 r9) [])
+        (static (connected r12 r10) [])
+        (static (connected r12 r11) [])
+        (static (connected r12 r12) [])
+
 
         (static (searched r1) [])
         (static (searched r2) [])
@@ -375,18 +554,24 @@
         (static (searched r7) [])
         (static (searched r8) [])
         (static (searched r9) [])
+        (static (searched r10) [])
+        (static (searched r11) [])
+        (static (searched r12) [])
 
         (static (sharable a) [])
         (static (sharable b) [])
         (static (sharable c) [])
+        (static (sharable d) [])
 
         (static (movable a) [])
         (static (movable b) [])
         (static (movable c) [])
+        (static (movable d) [])
 
         (static (receivable a) [])
         (static (receivable b) [])
         (static (receivable c) [])
+        (static (receivable d) [])
 
         (static (blockable r1) [])
         (static (blockable r2) [])
@@ -397,6 +582,9 @@
         (static (blockable r7) [])
         (static (blockable r8) [])
         (static (blockable r9) [])
+        (static (blockable r10) [])
+        (static (blockable r11) [])
+        (static (blockable r12) [])
 
         (static (blocked r1) [])
         (static (blocked r2) [])
@@ -407,6 +595,9 @@
         (static (blocked r7) [])
         (static (blocked r8) [])
         (static (blocked r9) [])
+        (static (blocked r10) [])
+        (static (blocked r11) [])
+        (static (blocked r12) [])
 
         (static (loc_shared r1) [])
         (static (loc_shared r2) [])
@@ -417,6 +608,9 @@
         (static (loc_shared r7) [])
         (static (loc_shared r8) [])
         (static (loc_shared r9) [])
+        (static (loc_shared r10) [])
+        (static (loc_shared r11) [])
+        (static (loc_shared r12) [])
 
         (static (loc_sensed r1 a) [])
         (static (loc_sensed r2 a) [])
@@ -427,6 +621,9 @@
         (static (loc_sensed r7 a) [])
         (static (loc_sensed r8 a) [])
         (static (loc_sensed r9 a) [])
+        (static (loc_sensed r10 a) [])
+        (static (loc_sensed r11 a) [])
+        (static (loc_sensed r12 a) [])
 
         (static (loc_sensed r1 b) [])
         (static (loc_sensed r2 b) [])
@@ -437,6 +634,9 @@
         (static (loc_sensed r7 b) [])
         (static (loc_sensed r8 b) [])
         (static (loc_sensed r9 b) [])
+        (static (loc_sensed r10 b) [])
+        (static (loc_sensed r11 b) [])
+        (static (loc_sensed r12 b) [])
 
         (static (loc_sensed r1 c) [])
         (static (loc_sensed r2 c) [])
@@ -447,6 +647,23 @@
         (static (loc_sensed r7 c) [])
         (static (loc_sensed r8 c) [])
         (static (loc_sensed r9 c) [])
+        (static (loc_sensed r10 c) [])
+        (static (loc_sensed r11 c) [])
+        (static (loc_sensed r12 c) [])
+
+        (static (loc_sensed r1 d) [])
+        (static (loc_sensed r2 d) [])
+        (static (loc_sensed r3 d) [])
+        (static (loc_sensed r4 d) [])
+        (static (loc_sensed r5 d) [])
+        (static (loc_sensed r6 d) [])
+        (static (loc_sensed r7 d) [])
+        (static (loc_sensed r8 d) [])
+        (static (loc_sensed r9 d) [])
+        (static (loc_sensed r10 d) [])
+        (static (loc_sensed r11 d) [])
+        (static (loc_sensed r12 d) [])
+        
     )
 )
 

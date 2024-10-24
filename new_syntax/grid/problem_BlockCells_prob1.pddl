@@ -10,6 +10,7 @@
         r1 r2 r3 r4 r5 r6 r7 r8 r9 - location
     )
 
+    ;testing push
 
     (:init
         (assign (agent_loc a) 'r1')
@@ -177,7 +178,7 @@
         (assign (loc_shared r8) 0)
         (assign (loc_shared r9) 0)
 
-        (assign (loc_sensed r1 a) 0)
+        (assign (loc_sensed r1 a) 1)
         (assign (loc_sensed r2 a) 0)
         (assign (loc_sensed r3 a) 0)
         (assign (loc_sensed r4 a) 0)
@@ -190,7 +191,7 @@
         (assign (loc_sensed r1 b) 0)
         (assign (loc_sensed r2 b) 0)
         (assign (loc_sensed r3 b) 0)
-        (assign (loc_sensed r4 b) 0)
+        (assign (loc_sensed r4 b) 1)
         (assign (loc_sensed r5 b) 0)
         (assign (loc_sensed r6 b) 0)
         (assign (loc_sensed r7 b) 0)
@@ -205,7 +206,7 @@
         (assign (loc_sensed r6 c) 0)
         (assign (loc_sensed r7 c) 0)
         (assign (loc_sensed r8 c) 0)
-        (assign (loc_sensed r9 c) 0)
+        (assign (loc_sensed r9 c) 1)
         
     )
 
@@ -214,14 +215,22 @@
         (!= (searched r2) 0)
         (!= (searched r3) 0)
         (!= (searched r4) 0)
-        ; (!= (searched r5) 0)
-        ; (!= (searched r6) 0)
+        ; (!= (searched r5) 0) do not have this due to it is blocked
+        ; (!= (searched r6) 0) do not have this due to it is blocked
         (!= (searched r7) 0)
         (!= (searched r8) 0)
         (!= (searched r9) 0)
-        (= (@ep ("+ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
+
+
+
+
+        (= (@ep ("$ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
         (= (@ep ("+ b [b]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s1) 'r4')) ep.true)
+
+
+
+        (= (agent_loc a) 'r3')
+        (= (agent_loc b) 'r3')
     ))
 
     (:ranges
@@ -244,198 +253,6 @@
     )
 
     (:rules
-        (static (agent_loc a) [])
-        (static (agent_loc b) [])
-        (static (agent_loc c) [])
-
-        (static (survivor_loc s1) [])
-
-        (static (room_id r1) [])
-        (static (room_id r2) [])
-        (static (room_id r3) [])
-        (static (room_id r4) [])
-        (static (room_id r5) [])
-        (static (room_id r6) [])
-        (static (room_id r7) [])
-        (static (room_id r8) [])
-        (static (room_id r9) [])
-
-        (static (shared s1) [])
-
-        (static (connected r1 r1) [])
-        (static (connected r1 r2) [])
-        (static (connected r1 r3) [])
-        (static (connected r1 r4) [])
-        (static (connected r1 r5) [])
-        (static (connected r1 r6) [])
-        (static (connected r1 r7) [])
-        (static (connected r1 r8) [])
-        (static (connected r1 r9) [])
-
-        (static (connected r2 r1) [])
-        (static (connected r2 r2) [])
-        (static (connected r2 r3) [])
-        (static (connected r2 r4) [])
-        (static (connected r2 r5) [])
-        (static (connected r2 r6) [])
-        (static (connected r2 r7) [])
-        (static (connected r2 r8) [])
-        (static (connected r2 r9) [])
-
-        (static (connected r3 r1) [])
-        (static (connected r3 r2) [])
-        (static (connected r3 r3) [])
-        (static (connected r3 r4) [])
-        (static (connected r3 r5) [])
-        (static (connected r3 r6) [])
-        (static (connected r3 r7) [])
-        (static (connected r3 r8) [])
-        (static (connected r3 r9) [])
-
-        (static (connected r4 r1) [])
-        (static (connected r4 r2) [])
-        (static (connected r4 r3) [])
-        (static (connected r4 r4) [])
-        (static (connected r4 r5) [])
-        (static (connected r4 r6) [])
-        (static (connected r4 r7) [])
-        (static (connected r4 r8) [])
-        (static (connected r4 r9) [])
-
-        (static (connected r5 r1) [])
-        (static (connected r5 r2) [])
-        (static (connected r5 r3) [])
-        (static (connected r5 r4) [])
-        (static (connected r5 r5) [])
-        (static (connected r5 r6) [])
-        (static (connected r5 r7) [])
-        (static (connected r5 r8) [])
-        (static (connected r5 r9) [])
-
-        (static (connected r6 r1) [])
-        (static (connected r6 r2) [])
-        (static (connected r6 r3) [])
-        (static (connected r6 r4) [])
-        (static (connected r6 r5) [])
-        (static (connected r6 r6) [])
-        (static (connected r6 r7) [])
-        (static (connected r6 r8) [])
-        (static (connected r6 r9) [])
-
-        (static (connected r7 r1) [])
-        (static (connected r7 r2) [])
-        (static (connected r7 r3) [])
-        (static (connected r7 r4) [])
-        (static (connected r7 r5) [])
-        (static (connected r7 r6) [])
-        (static (connected r7 r7) [])
-        (static (connected r7 r8) [])
-        (static (connected r7 r9) [])
-
-        (static (connected r8 r1) [])
-        (static (connected r8 r2) [])
-        (static (connected r8 r3) [])
-        (static (connected r8 r4) [])
-        (static (connected r8 r5) [])
-        (static (connected r8 r6) [])
-        (static (connected r8 r7) [])
-        (static (connected r8 r8) [])
-        (static (connected r8 r9) [])
-
-        (static (connected r9 r1) [])
-        (static (connected r9 r2) [])
-        (static (connected r9 r3) [])
-        (static (connected r9 r4) [])
-        (static (connected r9 r5) [])
-        (static (connected r9 r6) [])
-        (static (connected r9 r7) [])
-        (static (connected r9 r8) [])
-        (static (connected r9 r9) [])
-
-        (static (searched r1) [])
-        (static (searched r2) [])
-        (static (searched r3) [])
-        (static (searched r4) [])
-        (static (searched r5) [])
-        (static (searched r6) [])
-        (static (searched r7) [])
-        (static (searched r8) [])
-        (static (searched r9) [])
-
-        (static (sharable a) [])
-        (static (sharable b) [])
-        (static (sharable c) [])
-
-        (static (movable a) [])
-        (static (movable b) [])
-        (static (movable c) [])
-
-        (static (receivable a) [])
-        (static (receivable b) [])
-        (static (receivable c) [])
-
-        (static (blockable r1) [])
-        (static (blockable r2) [])
-        (static (blockable r3) [])
-        (static (blockable r4) [])
-        (static (blockable r5) [])
-        (static (blockable r6) [])
-        (static (blockable r7) [])
-        (static (blockable r8) [])
-        (static (blockable r9) [])
-
-        (static (blocked r1) [])
-        (static (blocked r2) [])
-        (static (blocked r3) [])
-        (static (blocked r4) [])
-        (static (blocked r5) [])
-        (static (blocked r6) [])
-        (static (blocked r7) [])
-        (static (blocked r8) [])
-        (static (blocked r9) [])
-
-        (static (loc_shared r1) [])
-        (static (loc_shared r2) [])
-        (static (loc_shared r3) [])
-        (static (loc_shared r4) [])
-        (static (loc_shared r5) [])
-        (static (loc_shared r6) [])
-        (static (loc_shared r7) [])
-        (static (loc_shared r8) [])
-        (static (loc_shared r9) [])
-
-        (static (loc_sensed r1 a) [])
-        (static (loc_sensed r2 a) [])
-        (static (loc_sensed r3 a) [])
-        (static (loc_sensed r4 a) [])
-        (static (loc_sensed r5 a) [])
-        (static (loc_sensed r6 a) [])
-        (static (loc_sensed r7 a) [])
-        (static (loc_sensed r8 a) [])
-        (static (loc_sensed r9 a) [])
-
-        (static (loc_sensed r1 b) [])
-        (static (loc_sensed r2 b) [])
-        (static (loc_sensed r3 b) [])
-        (static (loc_sensed r4 b) [])
-        (static (loc_sensed r5 b) [])
-        (static (loc_sensed r6 b) [])
-        (static (loc_sensed r7 b) [])
-        (static (loc_sensed r8 b) [])
-        (static (loc_sensed r9 b) [])
-
-        (static (loc_sensed r1 c) [])
-        (static (loc_sensed r2 c) [])
-        (static (loc_sensed r3 c) [])
-        (static (loc_sensed r4 c) [])
-        (static (loc_sensed r5 c) [])
-        (static (loc_sensed r6 c) [])
-        (static (loc_sensed r7 c) [])
-        (static (loc_sensed r8 c) [])
-        (static (loc_sensed r9 c) [])
-
-
-
 
     )
 )

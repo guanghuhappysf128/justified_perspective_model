@@ -55,6 +55,10 @@ class ExternalFunction:
             # this is does not matter, to improve search speed we allow agent sees searched
             return True
         elif 'survivor_loc'  == function_schemas_name:
+            agent_loc = state['agent_loc' + VARIABLE_FILLER + agent_index]
+            survivor_loc = state['survivor_loc' + VARIABLE_FILLER + target_list[0]]
+            if agent_loc == survivor_loc:
+                return True
             if state['shared' + VARIABLE_FILLER + target_list[0]] == 1:
                 if state['receivable' + VARIABLE_FILLER + agent_index] == 1:
                     return True
