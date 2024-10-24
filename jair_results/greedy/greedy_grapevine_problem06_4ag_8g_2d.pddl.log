@@ -1,0 +1,42 @@
+2024-10-24 16:45:16,060 - instance_runner - INFO - parser domain and problem
+2024-10-24 16:45:16,060 - instance_runner - INFO - new_syntax/grapevine/domain.pddl
+2024-10-24 16:45:16,060 - instance_runner - INFO - new_syntax/grapevine/problem06_4ag_8g_2d.pddl
+2024-10-24 16:45:16,060 - pddl_parser - INFO - Reading domain file
+2024-10-24 16:45:16,060 - pddl_parser - INFO - new_syntax/grapevine/domain.pddl
+2024-10-24 16:45:16,061 - pddl_parser - INFO - Parsing domain file
+2024-10-24 16:45:16,065 - pddl_parser - INFO - Reading problem file
+2024-10-24 16:45:16,066 - pddl_parser - INFO - new_syntax/grapevine/problem06_4ag_8g_2d.pddl
+2024-10-24 16:45:16,075 - pddl_parser - INFO - Parsing problem file
+2024-10-24 16:45:16,078 - instance_runner - INFO - loading external function: new_syntax/grapevine/grapevine.py
+2024-10-24 16:45:16,078 - instance_runner - INFO - finish loading external function
+2024-10-24 16:45:16,078 - instance_runner - INFO - Initialize problem
+2024-10-24 16:45:16,078 - epistemic_model - INFO - initialize epistemic model
+2024-10-24 16:45:16,078 - instance_runner - INFO - starting search
+2024-10-24 16:45:16,078 - greedy - INFO - starting searching using [greedy]
+2024-10-24 16:46:54,592 - greedy - INFO - plan is: ['lying_own_secret a as', 'quiet as', 'lying_own_secret b bs', 'quiet bs', 'lying_own_secret c cs', 'quiet cs', 'lying_own_secret d ds', 'quiet ds', 'move_right b', 'sharing_own_secret d ds', 'quiet ds', 'move_right a', 'sharing_own_secret b bs', 'quiet bs', 'sharing_own_secret a as', 'quiet as', 'move_left b', 'sharing_others_secret b as', 'quiet as', 'move_right b', 'sharing_own_secret c cs', 'quiet cs', 'move_right d', 'sharing_others_secret d cs']
+2024-10-24 16:46:54,592 - greedy - INFO - Goal found
+2024-10-24 16:46:54,592 - greedy - INFO - [number of node pruned_by_unknown]: 0
+2024-10-24 16:46:54,592 - greedy - INFO - [number of node pruned_by_visited]: 477
+2024-10-24 16:46:54,592 - greedy - INFO - [number of node pruned]: 477
+2024-10-24 16:46:54,592 - greedy - INFO - [number of node goal_checked]: 4061
+2024-10-24 16:46:54,592 - greedy - INFO - [number of node expansion]: 548
+2024-10-24 16:46:54,592 - greedy - INFO - [number of node generated]: 4061
+2024-10-24 16:46:54,592 - greedy - INFO - [number of epistemic formulas evaluation: 6226]
+2024-10-24 16:46:54,592 - greedy - INFO - [time in epistemic formulas evaluation: 0:01:34.362442]
+2024-10-24 16:46:54,592 - greedy - INFO - [avg time in epistemic formulas evaluation: 15.15619049148731]
+2024-10-24 16:46:54,592 - greedy - INFO - [total_goal_size: 8]
+2024-10-24 16:46:54,592 - greedy - INFO - [ontic_goal_size: 0]
+2024-10-24 16:46:54,592 - greedy - INFO - [epistemic_goal_size: 8]
+2024-10-24 16:46:54,592 - greedy - INFO - [ontic_goals: []]
+2024-10-24 16:46:54,593 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [a] + b [d]") (= (shared_value as) \'f\')) ep.true)', '(= (@ep ("+ b [d]") (= (shared_value as) \'t\')) ep.true)', '(= (@ep ("+ b [b] + b [c]") (= (shared_value ds) \'f\')) ep.true)', '(= (@ep ("+ b [c]") (= (shared_value ds) \'t\')) ep.true)', '(= (@ep ("+ b [c] + b [b]") (= (shared_value cs) \'f\')) ep.true)', '(= (@ep ("+ b [b]") (= (shared_value cs) \'t\')) ep.true)', '(= (@ep ("+ b [d] + b [a]") (= (shared_value bs) \'f\')) ep.true)', '(= (@ep ("+ b [a]") (= (shared_value bs) \'t\')) ep.true)']]
+2024-10-24 16:46:54,593 - greedy - INFO - [goals: ['(= (@ep ("+ b [a] + b [d]") (= (shared_value as) \'f\')) ep.true)', '(= (@ep ("+ b [d]") (= (shared_value as) \'t\')) ep.true)', '(= (@ep ("+ b [b] + b [c]") (= (shared_value ds) \'f\')) ep.true)', '(= (@ep ("+ b [c]") (= (shared_value ds) \'t\')) ep.true)', '(= (@ep ("+ b [c] + b [b]") (= (shared_value cs) \'f\')) ep.true)', '(= (@ep ("+ b [b]") (= (shared_value cs) \'t\')) ep.true)', '(= (@ep ("+ b [d] + b [a]") (= (shared_value bs) \'f\')) ep.true)', '(= (@ep ("+ b [a]") (= (shared_value bs) \'t\')) ep.true)']]
+2024-10-24 16:46:54,593 - greedy - INFO - [epistemic_call_time_max: 1357.36]
+2024-10-24 16:46:54,593 - greedy - INFO - [functions: 37]
+2024-10-24 16:46:54,593 - greedy - INFO - [number of common perspective generated]: 0
+2024-10-24 16:46:54,593 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-24 16:46:54,593 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-24 16:46:54,593 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-24 16:46:54,593 - greedy - INFO - [number of averaged unfiltered branching factors]: 7.408759124087592
+2024-10-24 16:46:54,593 - greedy - INFO - [number of max unfiltered branching factors]: 24
+2024-10-24 16:46:55,273 - instance_runner - INFO - initialization time: 0:00:00.018425
+2024-10-24 16:46:55,273 - instance_runner - INFO - search time: 0:01:39.194421
