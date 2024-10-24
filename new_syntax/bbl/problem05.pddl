@@ -1,5 +1,5 @@
 (define 
-        (problem bbl1_t_00000) 
+        (problem bbl05) 
         (:domain bbl)
 
         (:agents
@@ -26,8 +26,8 @@
         ; 
         (:goal 
             (and 
-                (= (@ep ("+ b [b] + b [a] ") (= (v p) 't')) ep.true)
-                ; (= (@ep ("+ b [b]") (= (v p) 't')) ep.true)
+                (= (@ep ("+ b [b] + b [a] + b [b]") (= (v p) 't')) ep.true)
+                ; (= (@ep ("+ b [a] + b [b]") (= (v p) 't')) ep.true)
             )
         )
 
@@ -40,15 +40,6 @@
         )
 
         (:rules
-            (static (dir a) [])
-            (static (dir b) [])
-            (static (dir p) [])
-            (static (x a) [])
-            (static (x b) [])
-            (static (x p) [])
-            (static (y a) [])
-            (static (y b) [])
-            (static (y p) [])
-            (static (v p) [])
+
         )
     )
