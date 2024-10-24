@@ -31,9 +31,6 @@
         )
 
         (:rules
-            (static (peeking a) [])
-            (static (peeking b) [])
-            (static (coin c) [])
         )
     )
     
