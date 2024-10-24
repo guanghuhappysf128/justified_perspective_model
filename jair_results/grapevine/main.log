@@ -1,25 +1,25 @@
-2024-10-22 13:53:10,013 - experiment_runner - INFO - finish loading search algorithm:
-2024-10-22 13:53:10,013 - experiment_runner - INFO - solving ngreedy_grapevine_problem01_4ag_2g_1d.pddl - new_syntax/grapevine
-2024-10-22 13:53:10,166 - experiment_runner - INFO - solving time: 0:00:00.153186
-2024-10-22 13:53:10,166 - experiment_runner - INFO - solving ngreedy_grapevine_problem02_4ag_2g_2d.pddl - new_syntax/grapevine
-2024-10-22 13:53:10,360 - experiment_runner - INFO - solving time: 0:00:00.193885
-2024-10-22 13:53:10,360 - experiment_runner - INFO - solving ngreedy_grapevine_problem03_4ag_4g_1d.pddl - new_syntax/grapevine
-2024-10-22 13:53:10,899 - experiment_runner - INFO - solving time: 0:00:00.538566
-2024-10-22 13:53:10,899 - experiment_runner - INFO - solving ngreedy_grapevine_problem04_4ag_4g_2d.pddl - new_syntax/grapevine
-2024-10-22 13:53:11,669 - experiment_runner - INFO - solving time: 0:00:00.769899
-2024-10-22 13:53:11,669 - experiment_runner - INFO - solving ngreedy_grapevine_problem05_4ag_8g_1d.pddl - new_syntax/grapevine
-2024-10-22 13:53:44,475 - experiment_runner - INFO - solving time: 0:00:32.805721
-2024-10-22 13:53:44,475 - experiment_runner - INFO - solving ngreedy_grapevine_problem06_4ag_8g_2d.pddl - new_syntax/grapevine
-2024-10-22 13:59:26,517 - experiment_runner - INFO - solving time: 0:05:42.041902
-2024-10-22 13:59:26,518 - experiment_runner - INFO - solving ngreedy_grapevine_problem07_8ag_2g_1d.pddl - new_syntax/grapevine
-2024-10-22 13:59:27,042 - experiment_runner - INFO - solving time: 0:00:00.523906
-2024-10-22 13:59:27,042 - experiment_runner - INFO - solving ngreedy_grapevine_problem08_8ag_2g_2d.pddl - new_syntax/grapevine
-2024-10-22 13:59:29,319 - experiment_runner - INFO - solving time: 0:00:02.276361
-2024-10-22 13:59:29,319 - experiment_runner - INFO - solving ngreedy_grapevine_problem09_8ag_4g_1d.pddl - new_syntax/grapevine
-2024-10-22 13:59:30,010 - experiment_runner - INFO - solving time: 0:00:00.691276
-2024-10-22 13:59:30,010 - experiment_runner - INFO - solving ngreedy_grapevine_problem10_8ag_4g_2d.pddl - new_syntax/grapevine
-2024-10-22 13:59:34,425 - experiment_runner - INFO - solving time: 0:00:04.414254
-2024-10-22 13:59:34,425 - experiment_runner - INFO - solving ngreedy_grapevine_problem11_8ag_8g_1d.pddl - new_syntax/grapevine
-2024-10-22 14:01:49,593 - experiment_runner - INFO - solving time: 0:02:15.167768
-2024-10-22 14:01:49,593 - experiment_runner - INFO - solving ngreedy_grapevine_problem12_8ag_8g_2d.pddl - new_syntax/grapevine
-2024-10-22 14:05:00,475 - experiment_runner - INFO - solving time: 0:03:10.882000
+2024-10-24 16:06:40,756 - experiment_runner - INFO - finish loading search algorithm:
+2024-10-24 16:06:40,757 - experiment_runner - INFO - solving ngreedy_grapevine_problem01_4ag_2g_1d.pddl - new_syntax/grapevine
+2024-10-24 16:06:40,994 - experiment_runner - INFO - solving time: 0:00:00.236900
+2024-10-24 16:06:40,995 - experiment_runner - INFO - solving ngreedy_grapevine_problem02_4ag_2g_2d.pddl - new_syntax/grapevine
+2024-10-24 16:06:41,231 - experiment_runner - INFO - solving time: 0:00:00.236045
+2024-10-24 16:06:41,231 - experiment_runner - INFO - solving ngreedy_grapevine_problem03_4ag_4g_1d.pddl - new_syntax/grapevine
+2024-10-24 16:06:41,947 - experiment_runner - INFO - solving time: 0:00:00.716047
+2024-10-24 16:06:41,948 - experiment_runner - INFO - solving ngreedy_grapevine_problem04_4ag_4g_2d.pddl - new_syntax/grapevine
+2024-10-24 16:06:43,118 - experiment_runner - INFO - solving time: 0:00:01.170442
+2024-10-24 16:06:43,118 - experiment_runner - INFO - solving ngreedy_grapevine_problem05_4ag_8g_1d.pddl - new_syntax/grapevine
+2024-10-24 16:07:42,818 - experiment_runner - INFO - solving time: 0:00:59.699680
+2024-10-24 16:07:42,818 - experiment_runner - INFO - solving ngreedy_grapevine_problem06_4ag_8g_2d.pddl - new_syntax/grapevine
+2024-10-24 16:17:39,418 - experiment_runner - INFO - solving time: 0:09:56.599272
+2024-10-24 16:17:39,426 - experiment_runner - INFO - solving ngreedy_grapevine_problem07_8ag_2g_1d.pddl - new_syntax/grapevine
+2024-10-24 16:17:40,468 - experiment_runner - INFO - solving time: 0:00:01.041355
+2024-10-24 16:17:40,468 - experiment_runner - INFO - solving ngreedy_grapevine_problem08_8ag_2g_2d.pddl - new_syntax/grapevine
+2024-10-24 16:17:44,363 - experiment_runner - INFO - solving time: 0:00:03.894592
+2024-10-24 16:17:44,363 - experiment_runner - INFO - solving ngreedy_grapevine_problem09_8ag_4g_1d.pddl - new_syntax/grapevine
+2024-10-24 16:17:45,209 - experiment_runner - INFO - solving time: 0:00:00.845873
+2024-10-24 16:17:45,210 - experiment_runner - INFO - solving ngreedy_grapevine_problem10_8ag_4g_2d.pddl - new_syntax/grapevine
+2024-10-24 16:17:51,540 - experiment_runner - INFO - solving time: 0:00:06.329215
+2024-10-24 16:17:51,540 - experiment_runner - INFO - solving ngreedy_grapevine_problem11_8ag_8g_1d.pddl - new_syntax/grapevine
+2024-10-24 16:21:50,673 - experiment_runner - INFO - solving time: 0:03:59.132105
+2024-10-24 16:21:50,673 - experiment_runner - INFO - solving ngreedy_grapevine_problem12_8ag_8g_2d.pddl - new_syntax/grapevine
+2024-10-24 16:26:49,150 - experiment_runner - INFO - solving time: 0:04:58.476425

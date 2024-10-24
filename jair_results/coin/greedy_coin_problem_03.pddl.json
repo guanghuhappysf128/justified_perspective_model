@@ -1,1 +1,62 @@
-{"solvable": true, "plan": ["peek a", "return a", "peek b"], "path_length": 3, "timeout": 600, "memoryout": 8192, "pruned": 0, "pruned_by_unknown": 0, "pruned_by_visited": 0, "goal_checked": 11, "expanded": 4, "generated": 11, "epistemic_calls": 11, "epistemic_call_time": 0.001198, "epistemic_call_time_avg": 0.1089090909090909, "epistemic_call_time_max": 0.134, "epistemic_call_length": 31, "epistemic_call_length_avg": 2.8181818181818183, "epistemic_call_length_max": 4, "total_goal_size": 2, "ontic_goal_size": 0, "epistemic_goal_size": 2, "ontic_goals:": [], "epistemic_goals": ["(= (@ep (\"+ b [a]\") (= (coin c) 'head')) ep.true)", "(= (@ep (\"+ b [b]\") (= (coin c) 'head')) ep.true)"], "goals": ["(= (@ep (\"+ b [a]\") (= (coin c) 'head')) ep.true)", "(= (@ep (\"+ b [b]\") (= (coin c) 'head')) ep.true)"], "functions": 3, "domain_path": "new_syntax/coin/domain.pddl", "problem_path": "new_syntax/coin/problem_03.pddl", "max_goal_depth": 1, "num_of_unknown_goals": 0, "num_of_goal_agents": 2, "goal_agents": ["a", "b"], "agents": ["a", "b"], "num_of_agents": 2, "common_calls": 0, "common_total": 0, "common_max": 0, "common_average": 0, "avg_branching_factors": 2.5, "max_branching_factors": 3, "domain_name": "coin", "problem_name": "coin01", "search": "greedy", "init_time": 0.003686, "search_time": 0.004766}
+{
+    "solvable": true,
+    "plan": [
+        "peek a",
+        "return a",
+        "peek b"
+    ],
+    "path_length": 3,
+    "timeout": 600,
+    "memoryout": 8192,
+    "pruned": 0,
+    "pruned_by_unknown": 0,
+    "pruned_by_visited": 0,
+    "goal_checked": 11,
+    "expanded": 4,
+    "generated": 11,
+    "epistemic_calls": 11,
+    "epistemic_call_time": 0.001076,
+    "epistemic_call_time_avg": 0.0978181818181818,
+    "epistemic_call_time_max": 0.14300000000000002,
+    "epistemic_call_length": 31,
+    "epistemic_call_length_avg": 2.8181818181818183,
+    "epistemic_call_length_max": 3,
+    "total_goal_size": 2,
+    "ontic_goal_size": 0,
+    "epistemic_goal_size": 2,
+    "ontic_goals:": [],
+    "epistemic_goals": [
+        "(= (@ep (\"+ b [a]\") (= (coin c) 'head')) ep.true)",
+        "(= (@ep (\"+ b [b]\") (= (coin c) 'head')) ep.true)"
+    ],
+    "goals": [
+        "(= (@ep (\"+ b [a]\") (= (coin c) 'head')) ep.true)",
+        "(= (@ep (\"+ b [b]\") (= (coin c) 'head')) ep.true)"
+    ],
+    "functions": 3,
+    "domain_path": "new_syntax/coin/domain.pddl",
+    "problem_path": "new_syntax/coin/problem_03.pddl",
+    "max_goal_depth": 1,
+    "num_of_unknown_goals": 0,
+    "num_of_goal_agents": 2,
+    "goal_agents": [
+        "a",
+        "b"
+    ],
+    "agents": [
+        "a",
+        "b"
+    ],
+    "num_of_agents": 2,
+    "common_calls": 0,
+    "common_total": 0,
+    "common_max": 0,
+    "common_average": 0,
+    "avg_branching_factors": 2.5,
+    "max_branching_factors": 3,
+    "domain_name": "coin",
+    "problem_name": "coin03",
+    "search": "greedy",
+    "init_time": 0.002874,
+    "search_time": 0.004616
+}

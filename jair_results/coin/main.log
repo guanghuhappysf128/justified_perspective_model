@@ -1,13 +1,13 @@
-2024-10-24 15:18:39,184 - experiment_runner - INFO - finish loading search algorithm:
-2024-10-24 15:18:39,185 - experiment_runner - INFO - solving greedy_coin_problem_01.pddl - new_syntax/coin
-2024-10-24 15:18:39,363 - experiment_runner - INFO - solving time: 0:00:00.177735
-2024-10-24 15:18:39,363 - experiment_runner - INFO - solving greedy_coin_problem_02.pddl - new_syntax/coin
-2024-10-24 15:18:39,382 - experiment_runner - INFO - solving time: 0:00:00.018996
-2024-10-24 15:18:39,382 - experiment_runner - INFO - solving greedy_coin_problem_03.pddl - new_syntax/coin
-2024-10-24 15:18:39,399 - experiment_runner - INFO - solving time: 0:00:00.016615
-2024-10-24 15:18:39,399 - experiment_runner - INFO - solving greedy_coin_problem_04.pddl - new_syntax/coin
-2024-10-24 15:18:39,423 - experiment_runner - INFO - solving time: 0:00:00.023548
-2024-10-24 15:18:39,423 - experiment_runner - INFO - solving greedy_coin_problem_05.pddl - new_syntax/coin
-2024-10-24 15:18:39,466 - experiment_runner - INFO - solving time: 0:00:00.042915
-2024-10-24 15:18:39,467 - experiment_runner - INFO - solving greedy_coin_problem_06.pddl - new_syntax/coin
-2024-10-24 15:18:39,506 - experiment_runner - INFO - solving time: 0:00:00.038877
+2024-10-24 16:03:15,121 - experiment_runner - INFO - finish loading search algorithm:
+2024-10-24 16:03:15,122 - experiment_runner - INFO - solving greedy_coin_problem_01.pddl - new_syntax/coin
+2024-10-24 16:03:15,236 - experiment_runner - INFO - solving time: 0:00:00.113798
+2024-10-24 16:03:15,236 - experiment_runner - INFO - solving greedy_coin_problem_02.pddl - new_syntax/coin
+2024-10-24 16:03:15,260 - experiment_runner - INFO - solving time: 0:00:00.023757
+2024-10-24 16:03:15,260 - experiment_runner - INFO - solving greedy_coin_problem_03.pddl - new_syntax/coin
+2024-10-24 16:03:15,275 - experiment_runner - INFO - solving time: 0:00:00.014446
+2024-10-24 16:03:15,275 - experiment_runner - INFO - solving greedy_coin_problem_04.pddl - new_syntax/coin
+2024-10-24 16:03:15,311 - experiment_runner - INFO - solving time: 0:00:00.036109
+2024-10-24 16:03:15,311 - experiment_runner - INFO - solving greedy_coin_problem_05.pddl - new_syntax/coin
+2024-10-24 16:03:15,373 - experiment_runner - INFO - solving time: 0:00:00.061466
+2024-10-24 16:03:15,374 - experiment_runner - INFO - solving greedy_coin_problem_06.pddl - new_syntax/coin
+2024-10-24 16:03:15,439 - experiment_runner - INFO - solving time: 0:00:00.064617
