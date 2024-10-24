@@ -1,0 +1,41 @@
+2024-10-24 15:12:35,875 - experiment_runner - INFO - finish loading search algorithm:
+2024-10-24 15:12:35,876 - experiment_runner - INFO - solving greedy_grid_problem_BlockCells_prob1.pddl - new_syntax/grid
+2024-10-24 15:12:39,406 - experiment_runner - INFO - solving time: 0:00:03.530660
+2024-10-24 15:12:39,407 - experiment_runner - INFO - solving greedy_grid_problem_BlockCells_prob2.pddl - new_syntax/grid
+2024-10-24 15:12:53,604 - experiment_runner - INFO - solving time: 0:00:14.196883
+2024-10-24 15:12:53,604 - experiment_runner - INFO - solving greedy_grid_problem_BlockCells_prob3.pddl - new_syntax/grid
+2024-10-24 15:12:56,983 - experiment_runner - INFO - solving time: 0:00:03.379408
+2024-10-24 15:12:56,983 - experiment_runner - INFO - solving greedy_grid_problem_BlockCells_prob4.pddl - new_syntax/grid
+2024-10-24 15:13:25,925 - experiment_runner - INFO - solving time: 0:00:28.941218
+2024-10-24 15:13:25,925 - experiment_runner - INFO - solving greedy_grid_problem_Broadcast_prob1.pddl - new_syntax/grid
+2024-10-24 15:13:26,065 - experiment_runner - INFO - solving time: 0:00:00.140008
+2024-10-24 15:13:26,065 - experiment_runner - INFO - solving greedy_grid_problem_Broadcast_prob2.pddl - new_syntax/grid
+2024-10-24 15:13:26,207 - experiment_runner - INFO - solving time: 0:00:00.141830
+2024-10-24 15:13:26,207 - experiment_runner - INFO - solving greedy_grid_problem_Broadcast_prob3.pddl - new_syntax/grid
+2024-10-24 15:13:26,554 - experiment_runner - INFO - solving time: 0:00:00.347016
+2024-10-24 15:13:26,555 - experiment_runner - INFO - solving greedy_grid_problem_Broadcast_prob4.pddl - new_syntax/grid
+2024-10-24 15:13:26,862 - experiment_runner - INFO - solving time: 0:00:00.307314
+2024-10-24 15:13:26,862 - experiment_runner - INFO - solving greedy_grid_problem_EpGoal_prob1.pddl - new_syntax/grid
+2024-10-24 15:13:27,166 - experiment_runner - INFO - solving time: 0:00:00.304136
+2024-10-24 15:13:27,166 - experiment_runner - INFO - solving greedy_grid_problem_EpGoal_prob2.pddl - new_syntax/grid
+2024-10-24 15:13:27,921 - experiment_runner - INFO - solving time: 0:00:00.754621
+2024-10-24 15:13:27,921 - experiment_runner - INFO - solving greedy_grid_problem_EpGoal_prob3.pddl - new_syntax/grid
+2024-10-24 15:13:28,315 - experiment_runner - INFO - solving time: 0:00:00.394107
+2024-10-24 15:13:28,315 - experiment_runner - INFO - solving greedy_grid_problem_EpGoal_prob4.pddl - new_syntax/grid
+2024-10-24 15:13:29,541 - experiment_runner - INFO - solving time: 0:00:01.225205
+2024-10-24 15:13:29,541 - experiment_runner - INFO - solving greedy_grid_problem_NonBroadcast_prob1.pddl - new_syntax/grid
+2024-10-24 15:13:29,825 - experiment_runner - INFO - solving time: 0:00:00.283545
+2024-10-24 15:13:29,825 - experiment_runner - INFO - solving greedy_grid_problem_NonBroadcast_prob2.pddl - new_syntax/grid
+2024-10-24 15:13:30,104 - experiment_runner - INFO - solving time: 0:00:00.279020
+2024-10-24 15:13:30,104 - experiment_runner - INFO - solving greedy_grid_problem_NonBroadcast_prob3.pddl - new_syntax/grid
+2024-10-24 15:13:31,931 - experiment_runner - INFO - solving time: 0:00:01.827175
+2024-10-24 15:13:31,931 - experiment_runner - INFO - solving greedy_grid_problem_NonBroadcast_prob4.pddl - new_syntax/grid
+2024-10-24 15:13:34,008 - experiment_runner - INFO - solving time: 0:00:02.076887
+2024-10-24 15:13:34,008 - experiment_runner - INFO - solving greedy_grid_problem_NonEp_prob1.pddl - new_syntax/grid
+2024-10-24 15:13:34,064 - experiment_runner - INFO - solving time: 0:00:00.055172
+2024-10-24 15:13:34,064 - experiment_runner - INFO - solving greedy_grid_problem_NonEp_prob2.pddl - new_syntax/grid
+2024-10-24 15:13:34,180 - experiment_runner - INFO - solving time: 0:00:00.116438
+2024-10-24 15:13:34,181 - experiment_runner - INFO - solving greedy_grid_problem_NonEp_prob3.pddl - new_syntax/grid
+2024-10-24 15:13:34,246 - experiment_runner - INFO - solving time: 0:00:00.064871
+2024-10-24 15:13:34,246 - experiment_runner - INFO - solving greedy_grid_problem_NonEp_prob4.pddl - new_syntax/grid
+2024-10-24 15:13:34,355 - experiment_runner - INFO - solving time: 0:00:00.109710
