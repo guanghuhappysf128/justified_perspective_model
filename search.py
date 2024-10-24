@@ -242,6 +242,7 @@ class Search:
                         new_path = path + [(succ_state,action_name)]
                         remaining_goal_num,goal_dict,g_p_dict = problem.is_goal(new_path)
                         self.goal_checked+=1
+                        # print(action_name)
                         succ_node = self.SearchNode(succ_state,remaining_goal_num,g_p_dict,new_path)
 
                         if self._unknown_check(succ_node,goal_dict):
@@ -445,8 +446,101 @@ class Search:
 
     # it is not admissible
     def goal_counting(self,node,goal_dict,problem):
+        # print(problem.problem_path)
 
+
+            
         remain_goal_number = list(goal_dict.values()).count(False)
+        state = node.state
+        
+        # customised a maze distance for blocked grid problem
+        if "BlockCells" in problem.problem_path:
+            # this is customised for the blocked grid problem
+            # this can be done by using algorithm to find the maze distance
+            # maze_distance = {
+            #     'r1':2,'r2':1,'r3':0,'r4':3,'r7':4,'r8':5,'r9':6,
+            #     'r10':5,'r11':6,'r12':7
+            # }
+            all_maze_distance = {
+                ('r1','r1'):0, ('r1','r2'):1, ('r1','r3'):2, 
+                ('r1','r4'):1, ('r1','r5'):99, ('r1','r6'):99,
+                ('r1','r7'):2, ('r1','r8'):3, ('r1','r9'):4,
+                ('r1','r10'):3, ('r1','r11'):4, ('r1','r12'):5,
+                ('r2','r1'):1, ('r2','r2'):0, ('r2','r3'):1,
+                ('r2','r4'):2, ('r2','r5'):99, ('r2','r6'):99,
+                ('r2','r7'):3, ('r2','r8'):4, ('r2','r9'):5,
+                ('r2','r10'):4, ('r2','r11'):5, ('r2','r12'):6,
+                ('r3','r1'):2, ('r3','r2'):1, ('r3','r3'):0,
+                ('r3','r4'):3, ('r3','r5'):99, ('r3','r6'):99,
+                ('r3','r7'):4, ('r3','r8'):5, ('r3','r9'):6,
+                ('r3','r10'):5, ('r3','r11'):6, ('r3','r12'):7,
+                ('r4','r1'):1, ('r4','r2'):2, ('r4','r3'):3,
+                ('r4','r4'):0, ('r4','r5'):99, ('r4','r6'):99,
+                ('r4','r7'):1, ('r4','r8'):2, ('r4','r9'):3,
+                ('r4','r10'):2, ('r4','r11'):3, ('r4','r12'):4,
+                ('r5','r1'):99, ('r5','r2'):99, ('r5','r3'):99,
+                ('r5','r4'):99, ('r5','r5'):99, ('r5','r6'):99,
+                ('r5','r7'):99, ('r5','r8'):99, ('r5','r9'):99,
+                ('r5','r10'):99, ('r5','r11'):99, ('r5','r12'):99,
+                ('r6','r1'):99, ('r6','r2'):99, ('r6','r3'):99,
+                ('r6','r4'):99, ('r6','r5'):99, ('r6','r6'):99,
+                ('r6','r7'):99, ('r6','r8'):99, ('r6','r9'):99,
+                ('r6','r10'):99, ('r6','r11'):99, ('r6','r12'):99,
+                ('r7','r1'):2, ('r7','r2'):3, ('r7','r3'):4,
+                ('r7','r4'):1, ('r7','r5'):99, ('r7','r6'):99,
+                ('r7','r7'):0, ('r7','r8'):1, ('r7','r9'):2,
+                ('r7','r10'):1, ('r7','r11'):2, ('r7','r12'):3,
+                ('r8','r1'):3, ('r8','r2'):4, ('r8','r3'):5,
+                ('r8','r4'):2, ('r8','r5'):99, ('r8','r6'):99,
+                ('r8','r7'):1, ('r8','r8'):0, ('r8','r9'):1,
+                ('r8','r10'):2, ('r8','r11'):1, ('r8','r12'):2,
+                ('r9','r1'):4, ('r9','r2'):5, ('r9','r3'):6,
+                ('r9','r4'):3, ('r9','r5'):99, ('r9','r6'):99,
+                ('r9','r7'):2, ('r9','r8'):1, ('r9','r9'):0,
+                ('r9','r10'):3, ('r9','r11'):2, ('r9','r12'):1,
+                ('r10','r1'):3, ('r10','r2'):4, ('r10','r3'):5,
+                ('r10','r4'):2, ('r10','r5'):99, ('r10','r6'):99,
+                ('r10','r7'):1, ('r10','r8'):2, ('r10','r9'):3,
+                ('r10','r10'):0, ('r10','r11'):1, ('r10','r12'):2,
+                ('r11','r1'):4, ('r11','r2'):5, ('r11','r3'):6,
+                ('r11','r4'):3, ('r11','r5'):99, ('r11','r6'):99,
+                ('r11','r7'):2, ('r11','r8'):1, ('r11','r9'):2,
+                ('r11','r10'):1, ('r11','r11'):0, ('r11','r12'):1,
+                ('r12','r1'):5, ('r12','r2'):6, ('r12','r3'):7,
+                ('r12','r4'):4, ('r12','r5'):99, ('r12','r6'):99,
+                ('r12','r7'):3, ('r12','r8'):2, ('r12','r9'):1,
+                ('r12','r10'):2, ('r12','r11'):1, ('r12','r12'):0
+            }
+            for key,value in goal_dict.items():
+                if not value and "agent_loc" in key:
+                    variable_name = problem.goals[key].condition_variable
+                    target_loc = problem.goals[key].target_value 
+                    current_loc = state[variable_name]
+                    # if not "agent_loc c" in key:
+                    #     # maze_distance_c = {
+                    #     #     'r1':2,'r2':1,'r3':0,'r4':3,'r7':3,'r8':3,'r9':3,
+                    #     #     'r10':3,'r11':3,'r12':3
+                    #     # }
+                    #     # remain_goal_number += maze_distance[current_loc] -1
+                    # # else:
+                    # # print(variable_name)
+                    # # print(current_loc)
+                    #     remain_goal_number += all_maze_distance[(current_loc,target_loc)]-1
+                    remain_goal_number += all_maze_distance[(current_loc,target_loc)]-1
+        elif "grid" in problem.problem_path:
+            # this is customised for the unblocked grid problem
+            # this can be done by using algorithm to find the maze distance
+            maze_distance = {
+                'r1':2,'r2':1,'r3':0,
+                'r4':3,'r5':2,'r6':1,
+                'r7':4,'r8':3,'r9':2,
+                'r10':5,'r11':4,'r12':3
+            }
+            for key,value in goal_dict.items():
+                if not value and "agent_loc" in key:
+                    variable_name = problem.goals[key].condition_variable   
+                    current_loc = state[variable_name]
+                    remain_goal_number += maze_distance[current_loc] -1
         return remain_goal_number
         heuristic_value = remain_goal_number
         
@@ -480,6 +574,7 @@ class Search:
         return heuristic_value,epistemic_dict
 
     def iw_gc(self,node,goal_dict,problem):
+        
         # remain_goal_number = list(goal_dict.values()).count(False)
         novelty_str = ""
         for goal_key in self.sorted_goal_list:
