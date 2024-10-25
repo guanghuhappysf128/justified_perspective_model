@@ -1,42 +1,42 @@
-2024-10-24 16:04:51,743 - instance_runner - INFO - parser domain and problem
-2024-10-24 16:04:51,743 - instance_runner - INFO - new_syntax/grid/domain.pddl
-2024-10-24 16:04:51,743 - instance_runner - INFO - new_syntax/grid/problem_Broadcast_prob2.pddl
-2024-10-24 16:04:51,743 - pddl_parser - INFO - Reading domain file
-2024-10-24 16:04:51,743 - pddl_parser - INFO - new_syntax/grid/domain.pddl
-2024-10-24 16:04:51,744 - pddl_parser - INFO - Parsing domain file
-2024-10-24 16:04:51,745 - pddl_parser - INFO - Reading problem file
-2024-10-24 16:04:51,745 - pddl_parser - INFO - new_syntax/grid/problem_Broadcast_prob2.pddl
-2024-10-24 16:04:51,747 - pddl_parser - INFO - Parsing problem file
-2024-10-24 16:04:51,749 - instance_runner - INFO - loading external function: new_syntax/grid/grid.py
-2024-10-24 16:04:51,749 - instance_runner - INFO - finish loading external function
-2024-10-24 16:04:51,749 - instance_runner - INFO - Initialize problem
-2024-10-24 16:04:51,749 - epistemic_model - INFO - initialize epistemic model
-2024-10-24 16:04:51,749 - instance_runner - INFO - starting search
-2024-10-24 16:04:51,749 - greedy - INFO - starting searching using [greedy]
-2024-10-24 16:04:51,968 - greedy - INFO - plan is: ['move d r2 r3', 'communicate_to_commander b s1 r4', 'move b r4 r5', 'communicate_to_commander b s2 r5', 'move b r5 r6', 'move c r9 r8', 'communicate_to_commander c s3 r8', 'move c r8 r7']
-2024-10-24 16:04:51,968 - greedy - INFO - Goal found
-2024-10-24 16:04:51,968 - greedy - INFO - [number of node pruned_by_unknown]: 0
-2024-10-24 16:04:51,968 - greedy - INFO - [number of node pruned_by_visited]: 0
-2024-10-24 16:04:51,968 - greedy - INFO - [number of node pruned]: 0
-2024-10-24 16:04:51,968 - greedy - INFO - [number of node goal_checked]: 57
-2024-10-24 16:04:51,968 - greedy - INFO - [number of node expansion]: 8
-2024-10-24 16:04:51,968 - greedy - INFO - [number of node generated]: 57
-2024-10-24 16:04:51,968 - greedy - INFO - [number of epistemic formulas evaluation: 65]
-2024-10-24 16:04:51,968 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.164956]
-2024-10-24 16:04:51,968 - greedy - INFO - [avg time in epistemic formulas evaluation: 2.537784615384615]
-2024-10-24 16:04:51,968 - greedy - INFO - [total_goal_size: 12]
-2024-10-24 16:04:51,968 - greedy - INFO - [ontic_goal_size: 9]
-2024-10-24 16:04:51,968 - greedy - INFO - [epistemic_goal_size: 3]
-2024-10-24 16:04:51,968 - greedy - INFO - [ontic_goals: ['(!= (searched r1) 0)', '(!= (searched r2) 0)', '(!= (searched r3) 0)', '(!= (searched r4) 0)', '(!= (searched r5) 0)', '(!= (searched r6) 0)', '(!= (searched r7) 0)', '(!= (searched r8) 0)', '(!= (searched r9) 0)']]
-2024-10-24 16:04:51,968 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [a]") (= (survivor_loc s1) \'r4\')) ep.true)', '(= (@ep ("+ b [a]") (= (survivor_loc s2) \'r5\')) ep.true)', '(= (@ep ("+ b [a]") (= (survivor_loc s3) \'r8\')) ep.true)']]
-2024-10-24 16:04:51,968 - greedy - INFO - [goals: ['(!= (searched r1) 0)', '(!= (searched r2) 0)', '(!= (searched r3) 0)', '(!= (searched r4) 0)', '(!= (searched r5) 0)', '(!= (searched r6) 0)', '(!= (searched r7) 0)', '(!= (searched r8) 0)', '(!= (searched r9) 0)', '(= (@ep ("+ b [a]") (= (survivor_loc s1) \'r4\')) ep.true)', '(= (@ep ("+ b [a]") (= (survivor_loc s2) \'r5\')) ep.true)', '(= (@ep ("+ b [a]") (= (survivor_loc s3) \'r8\')) ep.true)']]
-2024-10-24 16:04:51,968 - greedy - INFO - [epistemic_call_time_max: 11.527000000000001]
-2024-10-24 16:04:51,968 - greedy - INFO - [functions: 184]
-2024-10-24 16:04:51,969 - greedy - INFO - [number of common perspective generated]: 0
-2024-10-24 16:04:51,969 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
-2024-10-24 16:04:51,969 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
-2024-10-24 16:04:51,969 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
-2024-10-24 16:04:51,969 - greedy - INFO - [number of averaged unfiltered branching factors]: 7.0
-2024-10-24 16:04:51,969 - greedy - INFO - [number of max unfiltered branching factors]: 9
-2024-10-24 16:04:51,970 - instance_runner - INFO - initialization time: 0:00:00.006895
-2024-10-24 16:04:51,970 - instance_runner - INFO - search time: 0:00:00.220361
+2024-10-25 11:51:51,434 - instance_runner - INFO - parser domain and problem
+2024-10-25 11:51:51,434 - instance_runner - INFO - new_syntax/grid/domain.pddl
+2024-10-25 11:51:51,434 - instance_runner - INFO - new_syntax/grid/problem_Broadcast_prob2.pddl
+2024-10-25 11:51:51,434 - pddl_parser - INFO - Reading domain file
+2024-10-25 11:51:51,434 - pddl_parser - INFO - new_syntax/grid/domain.pddl
+2024-10-25 11:51:51,435 - pddl_parser - INFO - Parsing domain file
+2024-10-25 11:51:51,436 - pddl_parser - INFO - Reading problem file
+2024-10-25 11:51:51,436 - pddl_parser - INFO - new_syntax/grid/problem_Broadcast_prob2.pddl
+2024-10-25 11:51:51,447 - pddl_parser - INFO - Parsing problem file
+2024-10-25 11:51:51,450 - instance_runner - INFO - loading external function: new_syntax/grid/grid.py
+2024-10-25 11:51:51,451 - instance_runner - INFO - finish loading external function
+2024-10-25 11:51:51,451 - instance_runner - INFO - Initialize problem
+2024-10-25 11:51:51,451 - epistemic_model - INFO - initialize epistemic model
+2024-10-25 11:51:51,451 - instance_runner - INFO - starting search
+2024-10-25 11:51:51,451 - greedy - INFO - starting searching using [greedy]
+2024-10-25 11:51:51,619 - greedy - INFO - plan is: ['move d r2 r3', 'move b r4 r5', 'communicate_to_commander b s2 r5', 'move b r5 r6', 'move c r9 r8', 'move c r8 r7']
+2024-10-25 11:51:51,620 - greedy - INFO - Goal found
+2024-10-25 11:51:51,620 - greedy - INFO - [number of node pruned_by_unknown]: 3
+2024-10-25 11:51:51,620 - greedy - INFO - [number of node pruned_by_visited]: 0
+2024-10-25 11:51:51,620 - greedy - INFO - [number of node pruned]: 3
+2024-10-25 11:51:51,620 - greedy - INFO - [number of node goal_checked]: 52
+2024-10-25 11:51:51,620 - greedy - INFO - [number of node expansion]: 6
+2024-10-25 11:51:51,620 - greedy - INFO - [number of node generated]: 49
+2024-10-25 11:51:51,620 - greedy - INFO - [number of epistemic formulas evaluation: 58]
+2024-10-25 11:51:51,620 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.122523]
+2024-10-25 11:51:51,620 - greedy - INFO - [avg time in epistemic formulas evaluation: 2.1124655172413793]
+2024-10-25 11:51:51,620 - greedy - INFO - [total_goal_size: 12]
+2024-10-25 11:51:51,621 - greedy - INFO - [ontic_goal_size: 9]
+2024-10-25 11:51:51,621 - greedy - INFO - [epistemic_goal_size: 3]
+2024-10-25 11:51:51,621 - greedy - INFO - [ontic_goals: ['(!= (searched r1) 0)', '(!= (searched r2) 0)', '(!= (searched r3) 0)', '(!= (searched r4) 0)', '(!= (searched r5) 0)', '(!= (searched r6) 0)', '(!= (searched r7) 0)', '(!= (searched r8) 0)', '(!= (searched r9) 0)']]
+2024-10-25 11:51:51,621 - greedy - INFO - [epistemic_goals: ['(= (@ep ("$ b [a]") (= (survivor_loc s1) \'r4\')) ep.true)', '(= (@ep ("+ b [a]") (= (survivor_loc s2) \'r5\')) ep.true)', '(= (@ep ("$ b [a]") (= (survivor_loc s3) \'r8\')) ep.true)']]
+2024-10-25 11:51:51,621 - greedy - INFO - [goals: ['(!= (searched r1) 0)', '(!= (searched r2) 0)', '(!= (searched r3) 0)', '(!= (searched r4) 0)', '(!= (searched r5) 0)', '(!= (searched r6) 0)', '(!= (searched r7) 0)', '(!= (searched r8) 0)', '(!= (searched r9) 0)', '(= (@ep ("$ b [a]") (= (survivor_loc s1) \'r4\')) ep.true)', '(= (@ep ("+ b [a]") (= (survivor_loc s2) \'r5\')) ep.true)', '(= (@ep ("$ b [a]") (= (survivor_loc s3) \'r8\')) ep.true)']]
+2024-10-25 11:51:51,621 - greedy - INFO - [epistemic_call_time_max: 8.328999999999999]
+2024-10-25 11:51:51,621 - greedy - INFO - [functions: 184]
+2024-10-25 11:51:51,621 - greedy - INFO - [number of common perspective generated]: 0
+2024-10-25 11:51:51,621 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-25 11:51:51,621 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-25 11:51:51,621 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-25 11:51:51,621 - greedy - INFO - [number of averaged unfiltered branching factors]: 8.5
+2024-10-25 11:51:51,621 - greedy - INFO - [number of max unfiltered branching factors]: 9
+2024-10-25 11:51:51,622 - instance_runner - INFO - initialization time: 0:00:00.016854
+2024-10-25 11:51:51,622 - instance_runner - INFO - search time: 0:00:00.170915
