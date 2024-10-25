@@ -225,8 +225,8 @@
 
 
         (= (@ep ("$ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
-        ; (= (@ep ("+ b [b]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [C]") (= (survivor_loc s1) 'r4')) ep.true)
+        (= (@ep ("+ b [b]") (= (survivor_loc s1) 'r4')) ep.true)
+        (= (@ep ("$ b [c]") (= (survivor_loc s1) 'r4')) ep.true)
 
 
 

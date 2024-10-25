@@ -243,11 +243,11 @@
         (= (@ep ("+ b [b]") (= (survivor_loc s2) 'r5')) ep.true)
         (= (@ep ("+ b [b]") (= (survivor_loc s3) 'r8')) ep.true)
         (= (@ep ("+ b [c]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [c]") (= (survivor_loc s2) 'r5')) ep.true)
+        (= (@ep ("$ b [c]") (= (survivor_loc s2) 'r5')) ep.true)
         (= (@ep ("+ b [c]") (= (survivor_loc s3) 'r8')) ep.true)
         (= (@ep ("+ b [d]") (= (survivor_loc s1) 'r4')) ep.true)
         (= (@ep ("+ b [d]") (= (survivor_loc s2) 'r5')) ep.true)
-        (= (@ep ("+ b [d]") (= (survivor_loc s3) 'r8')) ep.true)
+        (= (@ep ("$ b [d]") (= (survivor_loc s3) 'r8')) ep.true)
     ))
 
     (:ranges

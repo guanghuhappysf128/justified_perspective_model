@@ -41,7 +41,7 @@
             ; 1 means occuriped by agent
             ; 2 means searched
             ; agent cannot entry a room if its been ocuuiped by another agent
-            (!= (searched ?l2) 1)
+            ; (!= (searched ?l2) 1)
             
         )
         :effect (

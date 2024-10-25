@@ -223,8 +223,8 @@
         (!= (searched r8) 0)
         (!= (searched r9) 0)
         (= (@ep ("+ b [a]") (= (survivor_loc s1) 'r4')) ep.true)
-        (= (@ep ("+ b [a]") (= (survivor_loc s2) 'r5')) ep.true)
-        (= (@ep ("+ b [a]") (= (survivor_loc s3) 'r8')) ep.true)
+        (= (@ep ("$ b [a]") (= (survivor_loc s2) 'r5')) ep.true)
+        (= (@ep ("$ b [a]") (= (survivor_loc s3) 'r8')) ep.true)
     ))
 
     (:ranges
