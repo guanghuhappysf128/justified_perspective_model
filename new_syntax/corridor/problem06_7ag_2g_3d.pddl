@@ -47,8 +47,8 @@
                 ; (= (@ep ("+ b [b] $ b [c]") (= (secret_value as) 't')) ep.true)
                 ; (= (@jp ("b [b] b [a]") (secret_value as)) 't')
                 ; (= (@ep ("! s [b] $ s [c]") (= (secret_value as) 't')) ep.true)
-                (= (@ep ("+ b [b] + b [b] + b [b] + b [b] + b [b]") (= (shared_value s) 'f')) ep.true)
-                (= (@ep ("+ b [c] + b [c] + b [c] + b [c] + b [c]") (= (shared_value s) 't')) ep.true)
+                (= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) 'f')) ep.true)
+                (= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) 't')) ep.true)
                 ;seeing -> knowing whether
                 ;K observer S action box1
             )
