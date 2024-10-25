@@ -1,19 +1,19 @@
-2024-10-25 08:36:06,726 - experiment_runner - INFO - finish loading search algorithm:
-2024-10-25 08:36:06,726 - experiment_runner - INFO - solving greedy_corridor_problem01_3ag_2g_1d.pddl - new_syntax/corridor
-2024-10-25 08:36:06,751 - experiment_runner - INFO - solving time: 0:00:00.024430
-2024-10-25 08:36:06,751 - experiment_runner - INFO - solving greedy_corridor_problem02_5ag_2g_1d.pddl - new_syntax/corridor
-2024-10-25 08:36:06,781 - experiment_runner - INFO - solving time: 0:00:00.029633
-2024-10-25 08:36:06,781 - experiment_runner - INFO - solving greedy_corridor_problem03_7ag_2g_1d.pddl - new_syntax/corridor
-2024-10-25 08:36:06,858 - experiment_runner - INFO - solving time: 0:00:00.077140
-2024-10-25 08:36:06,858 - experiment_runner - INFO - solving greedy_corridor_problem04_3ag_2g_3d.pddl - new_syntax/corridor
-2024-10-25 08:36:06,890 - experiment_runner - INFO - solving time: 0:00:00.031121
-2024-10-25 08:36:06,890 - experiment_runner - INFO - solving greedy_corridor_problem05_5ag_2g_3d.pddl - new_syntax/corridor
-2024-10-25 08:36:06,927 - experiment_runner - INFO - solving time: 0:00:00.037434
-2024-10-25 08:36:06,927 - experiment_runner - INFO - solving greedy_corridor_problem06_7ag_2g_3d.pddl - new_syntax/corridor
-2024-10-25 08:36:07,003 - experiment_runner - INFO - solving time: 0:00:00.075153
-2024-10-25 08:36:07,003 - experiment_runner - INFO - solving greedy_corridor_problem07_3ag_2g_5d.pddl - new_syntax/corridor
-2024-10-25 08:36:07,058 - experiment_runner - INFO - solving time: 0:00:00.054650
-2024-10-25 08:36:07,058 - experiment_runner - INFO - solving greedy_corridor_problem08_5ag_2g_5d.pddl - new_syntax/corridor
-2024-10-25 08:36:07,116 - experiment_runner - INFO - solving time: 0:00:00.057917
-2024-10-25 08:36:07,116 - experiment_runner - INFO - solving greedy_corridor_problem09_7ag_2g_5d.pddl - new_syntax/corridor
-2024-10-25 08:36:07,180 - experiment_runner - INFO - solving time: 0:00:00.064146
+2024-10-25 18:53:26,997 - experiment_runner - INFO - finish loading search algorithm:
+2024-10-25 18:53:26,998 - experiment_runner - INFO - solving greedy_corridor_problem01_3ag_2g_1d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,022 - experiment_runner - INFO - solving time: 0:00:00.023851
+2024-10-25 18:53:27,022 - experiment_runner - INFO - solving greedy_corridor_problem02_5ag_2g_1d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,049 - experiment_runner - INFO - solving time: 0:00:00.026815
+2024-10-25 18:53:27,049 - experiment_runner - INFO - solving greedy_corridor_problem03_7ag_2g_1d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,083 - experiment_runner - INFO - solving time: 0:00:00.033774
+2024-10-25 18:53:27,083 - experiment_runner - INFO - solving greedy_corridor_problem04_3ag_2g_3d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,126 - experiment_runner - INFO - solving time: 0:00:00.043307
+2024-10-25 18:53:27,126 - experiment_runner - INFO - solving greedy_corridor_problem05_5ag_2g_3d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,185 - experiment_runner - INFO - solving time: 0:00:00.058929
+2024-10-25 18:53:27,186 - experiment_runner - INFO - solving greedy_corridor_problem06_7ag_2g_3d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,239 - experiment_runner - INFO - solving time: 0:00:00.053399
+2024-10-25 18:53:27,239 - experiment_runner - INFO - solving greedy_corridor_problem07_3ag_2g_5d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,290 - experiment_runner - INFO - solving time: 0:00:00.051075
+2024-10-25 18:53:27,290 - experiment_runner - INFO - solving greedy_corridor_problem08_5ag_2g_5d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,362 - experiment_runner - INFO - solving time: 0:00:00.071391
+2024-10-25 18:53:27,362 - experiment_runner - INFO - solving greedy_corridor_problem09_7ag_2g_5d.pddl - new_syntax/corridor
+2024-10-25 18:53:27,423 - experiment_runner - INFO - solving time: 0:00:00.061388

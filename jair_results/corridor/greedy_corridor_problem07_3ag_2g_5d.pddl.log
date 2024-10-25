@@ -1,45 +1,45 @@
-2024-10-25 08:36:07,003 - instance_runner - INFO - parser domain and problem
-2024-10-25 08:36:07,003 - instance_runner - INFO - new_syntax/corridor/domain.pddl
-2024-10-25 08:36:07,003 - instance_runner - INFO - new_syntax/corridor/problem07_3ag_2g_5d.pddl
-2024-10-25 08:36:07,003 - pddl_parser - INFO - Reading domain file
-2024-10-25 08:36:07,003 - pddl_parser - INFO - new_syntax/corridor/domain.pddl
-2024-10-25 08:36:07,004 - pddl_parser - INFO - Parsing domain file
-2024-10-25 08:36:07,004 - pddl_parser - INFO - Reading problem file
-2024-10-25 08:36:07,004 - pddl_parser - INFO - new_syntax/corridor/problem07_3ag_2g_5d.pddl
-2024-10-25 08:36:07,006 - pddl_parser - INFO - Parsing problem file
-2024-10-25 08:36:07,006 - instance_runner - INFO - loading external function: new_syntax/corridor/corridor.py
-2024-10-25 08:36:07,006 - instance_runner - INFO - finish loading external function
-2024-10-25 08:36:07,006 - instance_runner - INFO - Initialize problem
-2024-10-25 08:36:07,006 - epistemic_model - INFO - initialize epistemic model
-2024-10-25 08:36:07,006 - instance_runner - INFO - starting search
-2024-10-25 08:36:07,006 - greedy - INFO - starting searching using [greedy]
-2024-10-25 08:36:07,007 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
-2024-10-25 08:36:07,032 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
-2024-10-25 08:36:07,048 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
-2024-10-25 08:36:07,052 - greedy - INFO - plan is: ['move_right a', 'sense a s', 'shout_truth a s', 'move_left a', 'shout_lie a s']
-2024-10-25 08:36:07,052 - greedy - INFO - Goal found
-2024-10-25 08:36:07,052 - greedy - INFO - [number of node pruned_by_unknown]: 0
-2024-10-25 08:36:07,052 - greedy - INFO - [number of node pruned_by_visited]: 4
-2024-10-25 08:36:07,052 - greedy - INFO - [number of node pruned]: 4
-2024-10-25 08:36:07,052 - greedy - INFO - [number of node goal_checked]: 32
-2024-10-25 08:36:07,052 - greedy - INFO - [number of node expansion]: 9
-2024-10-25 08:36:07,052 - greedy - INFO - [number of node generated]: 32
-2024-10-25 08:36:07,052 - greedy - INFO - [number of epistemic formulas evaluation: 32]
-2024-10-25 08:36:07,052 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.037398]
-2024-10-25 08:36:07,052 - greedy - INFO - [avg time in epistemic formulas evaluation: 1.1686875]
-2024-10-25 08:36:07,053 - greedy - INFO - [total_goal_size: 2]
-2024-10-25 08:36:07,053 - greedy - INFO - [ontic_goal_size: 0]
-2024-10-25 08:36:07,053 - greedy - INFO - [epistemic_goal_size: 2]
-2024-10-25 08:36:07,053 - greedy - INFO - [ontic_goals: []]
-2024-10-25 08:36:07,053 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [b] + b [b] + b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
-2024-10-25 08:36:07,053 - greedy - INFO - [goals: ['(= (@ep ("+ b [b] + b [b] + b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
-2024-10-25 08:36:07,053 - greedy - INFO - [epistemic_call_time_max: 2.992]
-2024-10-25 08:36:07,053 - greedy - INFO - [functions: 12]
-2024-10-25 08:36:07,053 - greedy - INFO - [number of common perspective generated]: 0
-2024-10-25 08:36:07,053 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
-2024-10-25 08:36:07,053 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
-2024-10-25 08:36:07,053 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
-2024-10-25 08:36:07,053 - greedy - INFO - [number of averaged unfiltered branching factors]: 3.7777777777777777
-2024-10-25 08:36:07,053 - greedy - INFO - [number of max unfiltered branching factors]: 5
-2024-10-25 08:36:07,053 - instance_runner - INFO - initialization time: 0:00:00.003526
-2024-10-25 08:36:07,054 - instance_runner - INFO - search time: 0:00:00.047096
+2024-10-25 18:53:27,239 - instance_runner - INFO - parser domain and problem
+2024-10-25 18:53:27,239 - instance_runner - INFO - new_syntax/corridor/domain.pddl
+2024-10-25 18:53:27,240 - instance_runner - INFO - new_syntax/corridor/problem07_3ag_2g_5d.pddl
+2024-10-25 18:53:27,240 - pddl_parser - INFO - Reading domain file
+2024-10-25 18:53:27,240 - pddl_parser - INFO - new_syntax/corridor/domain.pddl
+2024-10-25 18:53:27,240 - pddl_parser - INFO - Parsing domain file
+2024-10-25 18:53:27,241 - pddl_parser - INFO - Reading problem file
+2024-10-25 18:53:27,241 - pddl_parser - INFO - new_syntax/corridor/problem07_3ag_2g_5d.pddl
+2024-10-25 18:53:27,241 - pddl_parser - INFO - Parsing problem file
+2024-10-25 18:53:27,242 - instance_runner - INFO - loading external function: new_syntax/corridor/corridor.py
+2024-10-25 18:53:27,242 - instance_runner - INFO - finish loading external function
+2024-10-25 18:53:27,242 - instance_runner - INFO - Initialize problem
+2024-10-25 18:53:27,242 - epistemic_model - INFO - initialize epistemic model
+2024-10-25 18:53:27,242 - instance_runner - INFO - starting search
+2024-10-25 18:53:27,242 - greedy - INFO - starting searching using [greedy]
+2024-10-25 18:53:27,243 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-25 18:53:27,271 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-25 18:53:27,282 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-25 18:53:27,286 - greedy - INFO - plan is: ['move_right a', 'sense a s', 'shout_truth a s', 'move_left a', 'shout_lie a s']
+2024-10-25 18:53:27,286 - greedy - INFO - Goal found
+2024-10-25 18:53:27,286 - greedy - INFO - [number of node pruned_by_unknown]: 0
+2024-10-25 18:53:27,286 - greedy - INFO - [number of node pruned_by_visited]: 4
+2024-10-25 18:53:27,286 - greedy - INFO - [number of node pruned]: 4
+2024-10-25 18:53:27,286 - greedy - INFO - [number of node goal_checked]: 32
+2024-10-25 18:53:27,286 - greedy - INFO - [number of node expansion]: 9
+2024-10-25 18:53:27,287 - greedy - INFO - [number of node generated]: 32
+2024-10-25 18:53:27,287 - greedy - INFO - [number of epistemic formulas evaluation: 32]
+2024-10-25 18:53:27,287 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.034847]
+2024-10-25 18:53:27,287 - greedy - INFO - [avg time in epistemic formulas evaluation: 1.08896875]
+2024-10-25 18:53:27,287 - greedy - INFO - [total_goal_size: 2]
+2024-10-25 18:53:27,287 - greedy - INFO - [ontic_goal_size: 0]
+2024-10-25 18:53:27,287 - greedy - INFO - [epistemic_goal_size: 2]
+2024-10-25 18:53:27,287 - greedy - INFO - [ontic_goals: []]
+2024-10-25 18:53:27,287 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [b] + b [b] + b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
+2024-10-25 18:53:27,287 - greedy - INFO - [goals: ['(= (@ep ("+ b [b] + b [b] + b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
+2024-10-25 18:53:27,287 - greedy - INFO - [epistemic_call_time_max: 1.6620000000000001]
+2024-10-25 18:53:27,287 - greedy - INFO - [functions: 12]
+2024-10-25 18:53:27,287 - greedy - INFO - [number of common perspective generated]: 0
+2024-10-25 18:53:27,287 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-25 18:53:27,287 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-25 18:53:27,287 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-25 18:53:27,287 - greedy - INFO - [number of averaged unfiltered branching factors]: 3.7777777777777777
+2024-10-25 18:53:27,287 - greedy - INFO - [number of max unfiltered branching factors]: 5
+2024-10-25 18:53:27,287 - instance_runner - INFO - initialization time: 0:00:00.002639
+2024-10-25 18:53:27,287 - instance_runner - INFO - search time: 0:00:00.045497

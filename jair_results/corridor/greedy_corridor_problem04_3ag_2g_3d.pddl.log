@@ -1,45 +1,45 @@
-2024-10-25 08:36:06,859 - instance_runner - INFO - parser domain and problem
-2024-10-25 08:36:06,859 - instance_runner - INFO - new_syntax/corridor/domain.pddl
-2024-10-25 08:36:06,859 - instance_runner - INFO - new_syntax/corridor/problem04_3ag_2g_3d.pddl
-2024-10-25 08:36:06,859 - pddl_parser - INFO - Reading domain file
-2024-10-25 08:36:06,859 - pddl_parser - INFO - new_syntax/corridor/domain.pddl
-2024-10-25 08:36:06,859 - pddl_parser - INFO - Parsing domain file
-2024-10-25 08:36:06,860 - pddl_parser - INFO - Reading problem file
-2024-10-25 08:36:06,860 - pddl_parser - INFO - new_syntax/corridor/problem04_3ag_2g_3d.pddl
-2024-10-25 08:36:06,861 - pddl_parser - INFO - Parsing problem file
-2024-10-25 08:36:06,862 - instance_runner - INFO - loading external function: new_syntax/corridor/corridor.py
-2024-10-25 08:36:06,862 - instance_runner - INFO - finish loading external function
-2024-10-25 08:36:06,862 - instance_runner - INFO - Initialize problem
-2024-10-25 08:36:06,862 - epistemic_model - INFO - initialize epistemic model
-2024-10-25 08:36:06,862 - instance_runner - INFO - starting search
-2024-10-25 08:36:06,862 - greedy - INFO - starting searching using [greedy]
-2024-10-25 08:36:06,863 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
-2024-10-25 08:36:06,876 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
-2024-10-25 08:36:06,884 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
-2024-10-25 08:36:06,886 - greedy - INFO - plan is: ['move_right a', 'sense a s', 'shout_truth a s', 'move_left a', 'shout_lie a s']
-2024-10-25 08:36:06,886 - greedy - INFO - Goal found
-2024-10-25 08:36:06,886 - greedy - INFO - [number of node pruned_by_unknown]: 0
-2024-10-25 08:36:06,886 - greedy - INFO - [number of node pruned_by_visited]: 4
-2024-10-25 08:36:06,886 - greedy - INFO - [number of node pruned]: 4
-2024-10-25 08:36:06,886 - greedy - INFO - [number of node goal_checked]: 32
-2024-10-25 08:36:06,886 - greedy - INFO - [number of node expansion]: 9
-2024-10-25 08:36:06,886 - greedy - INFO - [number of node generated]: 32
-2024-10-25 08:36:06,886 - greedy - INFO - [number of epistemic formulas evaluation: 32]
-2024-10-25 08:36:06,886 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.018642]
-2024-10-25 08:36:06,886 - greedy - INFO - [avg time in epistemic formulas evaluation: 0.5825625]
-2024-10-25 08:36:06,886 - greedy - INFO - [total_goal_size: 2]
-2024-10-25 08:36:06,886 - greedy - INFO - [ontic_goal_size: 0]
-2024-10-25 08:36:06,886 - greedy - INFO - [epistemic_goal_size: 2]
-2024-10-25 08:36:06,887 - greedy - INFO - [ontic_goals: []]
-2024-10-25 08:36:06,887 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
-2024-10-25 08:36:06,887 - greedy - INFO - [goals: ['(= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
-2024-10-25 08:36:06,887 - greedy - INFO - [epistemic_call_time_max: 0.885]
-2024-10-25 08:36:06,887 - greedy - INFO - [functions: 12]
-2024-10-25 08:36:06,887 - greedy - INFO - [number of common perspective generated]: 0
-2024-10-25 08:36:06,887 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
-2024-10-25 08:36:06,887 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
-2024-10-25 08:36:06,887 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
-2024-10-25 08:36:06,887 - greedy - INFO - [number of averaged unfiltered branching factors]: 3.7777777777777777
-2024-10-25 08:36:06,887 - greedy - INFO - [number of max unfiltered branching factors]: 5
-2024-10-25 08:36:06,887 - instance_runner - INFO - initialization time: 0:00:00.003426
-2024-10-25 08:36:06,887 - instance_runner - INFO - search time: 0:00:00.025014
+2024-10-25 18:53:27,083 - instance_runner - INFO - parser domain and problem
+2024-10-25 18:53:27,083 - instance_runner - INFO - new_syntax/corridor/domain.pddl
+2024-10-25 18:53:27,083 - instance_runner - INFO - new_syntax/corridor/problem04_3ag_2g_3d.pddl
+2024-10-25 18:53:27,083 - pddl_parser - INFO - Reading domain file
+2024-10-25 18:53:27,083 - pddl_parser - INFO - new_syntax/corridor/domain.pddl
+2024-10-25 18:53:27,084 - pddl_parser - INFO - Parsing domain file
+2024-10-25 18:53:27,085 - pddl_parser - INFO - Reading problem file
+2024-10-25 18:53:27,085 - pddl_parser - INFO - new_syntax/corridor/problem04_3ag_2g_3d.pddl
+2024-10-25 18:53:27,085 - pddl_parser - INFO - Parsing problem file
+2024-10-25 18:53:27,086 - instance_runner - INFO - loading external function: new_syntax/corridor/corridor.py
+2024-10-25 18:53:27,086 - instance_runner - INFO - finish loading external function
+2024-10-25 18:53:27,086 - instance_runner - INFO - Initialize problem
+2024-10-25 18:53:27,086 - epistemic_model - INFO - initialize epistemic model
+2024-10-25 18:53:27,086 - instance_runner - INFO - starting search
+2024-10-25 18:53:27,086 - greedy - INFO - starting searching using [greedy]
+2024-10-25 18:53:27,087 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-25 18:53:27,106 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-25 18:53:27,119 - pddl_model - ERROR - value out of range: when decrease 1 - 1 in function_schema: agent_loc
+2024-10-25 18:53:27,122 - greedy - INFO - plan is: ['move_right a', 'sense a s', 'shout_truth a s', 'move_left a', 'shout_lie a s']
+2024-10-25 18:53:27,122 - greedy - INFO - Goal found
+2024-10-25 18:53:27,122 - greedy - INFO - [number of node pruned_by_unknown]: 0
+2024-10-25 18:53:27,122 - greedy - INFO - [number of node pruned_by_visited]: 4
+2024-10-25 18:53:27,122 - greedy - INFO - [number of node pruned]: 4
+2024-10-25 18:53:27,122 - greedy - INFO - [number of node goal_checked]: 32
+2024-10-25 18:53:27,122 - greedy - INFO - [number of node expansion]: 9
+2024-10-25 18:53:27,122 - greedy - INFO - [number of node generated]: 32
+2024-10-25 18:53:27,122 - greedy - INFO - [number of epistemic formulas evaluation: 32]
+2024-10-25 18:53:27,122 - greedy - INFO - [time in epistemic formulas evaluation: 0:00:00.025954]
+2024-10-25 18:53:27,122 - greedy - INFO - [avg time in epistemic formulas evaluation: 0.8110625]
+2024-10-25 18:53:27,122 - greedy - INFO - [total_goal_size: 2]
+2024-10-25 18:53:27,122 - greedy - INFO - [ontic_goal_size: 0]
+2024-10-25 18:53:27,123 - greedy - INFO - [epistemic_goal_size: 2]
+2024-10-25 18:53:27,123 - greedy - INFO - [ontic_goals: []]
+2024-10-25 18:53:27,123 - greedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
+2024-10-25 18:53:27,123 - greedy - INFO - [goals: ['(= (@ep ("+ b [b] + b [b] + b [b]") (= (shared_value s) \'f\')) ep.true)', '(= (@ep ("+ b [c] + b [c] + b [c]") (= (shared_value s) \'t\')) ep.true)']]
+2024-10-25 18:53:27,123 - greedy - INFO - [epistemic_call_time_max: 2.869]
+2024-10-25 18:53:27,123 - greedy - INFO - [functions: 12]
+2024-10-25 18:53:27,123 - greedy - INFO - [number of common perspective generated]: 0
+2024-10-25 18:53:27,123 - greedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-25 18:53:27,123 - greedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-25 18:53:27,123 - greedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-25 18:53:27,123 - greedy - INFO - [number of averaged unfiltered branching factors]: 3.7777777777777777
+2024-10-25 18:53:27,123 - greedy - INFO - [number of max unfiltered branching factors]: 5
+2024-10-25 18:53:27,123 - instance_runner - INFO - initialization time: 0:00:00.003250
+2024-10-25 18:53:27,123 - instance_runner - INFO - search time: 0:00:00.036934
