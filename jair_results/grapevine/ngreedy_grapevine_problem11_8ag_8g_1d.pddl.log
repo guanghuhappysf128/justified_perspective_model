@@ -1,0 +1,42 @@
+2024-10-26 15:15:16,908 - instance_runner - INFO - parser domain and problem
+2024-10-26 15:15:16,908 - instance_runner - INFO - new_syntax/grapevine/domain.pddl
+2024-10-26 15:15:16,908 - instance_runner - INFO - new_syntax/grapevine/problem11_8ag_8g_1d.pddl
+2024-10-26 15:15:16,908 - pddl_parser - INFO - Reading domain file
+2024-10-26 15:15:16,909 - pddl_parser - INFO - new_syntax/grapevine/domain.pddl
+2024-10-26 15:15:16,909 - pddl_parser - INFO - Parsing domain file
+2024-10-26 15:15:16,910 - pddl_parser - INFO - Reading problem file
+2024-10-26 15:15:16,910 - pddl_parser - INFO - new_syntax/grapevine/problem11_8ag_8g_1d.pddl
+2024-10-26 15:15:16,918 - pddl_parser - INFO - Parsing problem file
+2024-10-26 15:15:16,920 - instance_runner - INFO - loading external function: new_syntax/grapevine/grapevine.py
+2024-10-26 15:15:16,920 - instance_runner - INFO - finish loading external function
+2024-10-26 15:15:16,920 - instance_runner - INFO - Initialize problem
+2024-10-26 15:15:16,920 - epistemic_model - INFO - initialize epistemic model
+2024-10-26 15:15:16,920 - instance_runner - INFO - starting search
+2024-10-26 15:15:16,920 - ngreedy - INFO - starting searching using [ngreedy]
+2024-10-26 15:17:42,110 - ngreedy - INFO - plan is: ['lying_own_secret c cs', 'quiet cs', 'move_right b', 'sharing_own_secret c cs', 'quiet cs', 'move_left b', 'sharing_own_secret a as', 'quiet as', 'move_right b', 'lying_own_secret a as', 'quiet as', 'move_left b', 'lying_own_secret b bs', 'quiet bs', 'move_right a', 'sharing_own_secret b bs', 'quiet bs', 'move_left a', 'sharing_own_secret d ds', 'quiet ds', 'move_right a', 'lying_own_secret d ds']
+2024-10-26 15:17:42,110 - ngreedy - INFO - Goal found
+2024-10-26 15:17:42,110 - ngreedy - INFO - [number of node pruned_by_unknown]: 0
+2024-10-26 15:17:42,110 - ngreedy - INFO - [number of node pruned_by_visited]: 445
+2024-10-26 15:17:42,110 - ngreedy - INFO - [number of node pruned]: 445
+2024-10-26 15:17:42,110 - ngreedy - INFO - [number of node goal_checked]: 14805
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of node expansion]: 1571
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of node generated]: 14805
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of epistemic formulas evaluation: 21086]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [time in epistemic formulas evaluation: 0:02:15.732815]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [avg time in epistemic formulas evaluation: 6.437105899649056]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [total_goal_size: 8]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [ontic_goal_size: 0]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [epistemic_goal_size: 8]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [ontic_goals: []]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [epistemic_goals: ['(= (@ep ("+ b [a]") (= (shared_value bs) \'f\')) ep.true)', '(= (@ep ("+ b [a]") (= (shared_value ds) \'t\')) ep.true)', '(= (@ep ("+ b [b]") (= (shared_value cs) \'f\')) ep.true)', '(= (@ep ("+ b [b]") (= (shared_value as) \'t\')) ep.true)', '(= (@ep ("+ b [c]") (= (shared_value ds) \'f\')) ep.true)', '(= (@ep ("+ b [c]") (= (shared_value bs) \'t\')) ep.true)', '(= (@ep ("+ b [d]") (= (shared_value as) \'f\')) ep.true)', '(= (@ep ("+ b [d]") (= (shared_value cs) \'t\')) ep.true)']]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [goals: ['(= (@ep ("+ b [a]") (= (shared_value bs) \'f\')) ep.true)', '(= (@ep ("+ b [a]") (= (shared_value ds) \'t\')) ep.true)', '(= (@ep ("+ b [b]") (= (shared_value cs) \'f\')) ep.true)', '(= (@ep ("+ b [b]") (= (shared_value as) \'t\')) ep.true)', '(= (@ep ("+ b [c]") (= (shared_value ds) \'f\')) ep.true)', '(= (@ep ("+ b [c]") (= (shared_value bs) \'t\')) ep.true)', '(= (@ep ("+ b [d]") (= (shared_value as) \'f\')) ep.true)', '(= (@ep ("+ b [d]") (= (shared_value cs) \'t\')) ep.true)']]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [epistemic_call_time_max: 1357.119]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [functions: 105]
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of common perspective generated]: 0
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of all iterations used when generating common perspectives]: 0
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of max iterations used when generating common perspectives]: 0
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of average iterations used when generating common perspectives]: 0
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of averaged unfiltered branching factors]: 9.423297262889879
+2024-10-26 15:17:42,111 - ngreedy - INFO - [number of max unfiltered branching factors]: 52
+2024-10-26 15:17:42,681 - instance_runner - INFO - initialization time: 0:00:00.011754
+2024-10-26 15:17:42,681 - instance_runner - INFO - search time: 0:02:25.759862
