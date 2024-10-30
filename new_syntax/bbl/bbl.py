@@ -11,8 +11,8 @@ LOGGER_LEVEL = logging.INFO
 import numpy as np
 import math
 common_constants = {
-    'angle a': 90,
-    'angle b': 90,
+    'angle a': 89,
+    'angle b': 89,
 }
 
 dir_dict = {

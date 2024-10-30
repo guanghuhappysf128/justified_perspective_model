@@ -1,6 +1,6 @@
 ;Header and description
 (define 
-    (domain grapevine)
+    (domain corridor)
 
     (:types
         secret agent

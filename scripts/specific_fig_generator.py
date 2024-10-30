@@ -89,7 +89,6 @@ class GeneralFigGenerator():
         my_collection = self.db[collection_name]
         data = my_collection.find(filter_query)
         data_list = list(data)
-        print(len(data_list))
         if data_list == []:
             print("No data found")
             return
@@ -197,11 +196,9 @@ class GeneralFigGenerator():
         fig, axes = plt.subplots(
             nrows=y_len, 
             ncols=x_len, 
-            figsize=(20, 14), sharex=shareX)
+            figsize=(20, 14), sharey=shareY, sharex=shareX)
         # axes[0].set_ylabel('Scores')
         
-        first_axe_per_row = []
-
         box_key = config_yaml.get('box_key')
         if y_len == 1:
             if x_len == 1:
@@ -229,10 +226,7 @@ class GeneralFigGenerator():
                     box_values = filtered_query_df[box_key]
                     matrix_values.append(box_values)
 
-                box = axes.boxplot(matrix_values, labels=box_x_values)
-                median = [item.get_ydata()[0] for item in box['medians']]
-                for i, median_value in enumerate(median):
-                    axes.text(i+1, median_value, f'{median_value:.2f}', ha='center', va='center', color='black', fontsize=12)
+                axes.boxplot(matrix_values, labels=box_x_values)
                 axes.set_xlabel(box_x_name)
                 axes.set_ylabel("Percentage")
                 if not query_name == "":
@@ -267,26 +261,10 @@ class GeneralFigGenerator():
                         box_values = filtered_query_df[box_key]
                         matrix_values.append(box_values)
                     
-                    if x == 0:
-                        first_axe_per_row.append(axes[y][x])
+                    axes[y][x].boxplot(matrix_values, labels=box_x_values)
 
-                    else:
-                        # pass
-                        # axe = fig.add_subplot(y_len, x_len, y*4+x+1, sharey=first_axe_per_row[y])
-                        # axe.set_xticks([])
-                        # axe.set_xticklabels([]) 
-                        # axes[y][x] = axe
-                        axes[y][x].sharey(first_axe_per_row[y])
-                    box = axes[y][x].boxplot(matrix_values, labels=box_x_values,showfliers=True)
-
-                    # axe.set_xlabel('')
-                    # median = [item.get_ydata()[0] for item in box['medians']]
-                    # for i, median_value in enumerate(median):
-                    #     axes[y][x].text(i+1, median_value, f'{median_value:.2f}', ha='center', va='center', color='black', fontsize=12)
-                    if x != 0:
-                        axes[y][x].tick_params(labelleft=False)  
-                    # axes[y][x].set_xlabel(box_x_name)
-                    # axes[y][x].set_ylabel("Percentage")
+                    axes[y][x].set_xlabel(box_x_name)
+                    axes[y][x].set_ylabel("Percentage")
                     axes[y][x].set_title(query_name)
 
         # fig.legend(handles, stack_conditions, loc='upper center', ncol=len(stack_conditions))
@@ -483,7 +461,7 @@ class GeneralFigGenerator():
         fig, axes = plt.subplots(
             nrows=len(subplot_matrix), 
             ncols=len(subplot_matrix[0]), 
-            figsize=(24, 14), sharey=shareY, sharex=shareX)
+            figsize=(20, 14), sharey=shareY, sharex=shareX)
             
         # min_y = 999
         # max_y = 0
@@ -546,7 +524,7 @@ class GeneralFigGenerator():
             
             axes.set_title(query_name)
 
-        fig.subplots_adjust(bottom=0.15,top=0.95,right=0.95,left=0.05,hspace=0.40) 
+        fig.subplots_adjust(bottom=0.15,top=0.95,right=0.95,left=0.05,hspace=0.90) 
         plt.savefig(result_file_path, dpi=600, bbox_inches='tight')
         # plt.savefig(result_file_path, dpi=300, bbox_inches='tight')
         # plt.show()
