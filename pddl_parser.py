@@ -389,7 +389,7 @@ class PDDLParser:
             new_condition.condition_operator = condition_operator_dict[operator_str] 
             value_str = goal_proposition_str.split(" ")[-1]
             goal_content_str = goal_proposition_str[len(operator_str)+2:-len(value_str)-2:]
-            self.logger.debug(goal_content_str)
+            # print(goal_content_str)
             if "@jp" in goal_proposition_str:
                 goal_proposition_str = goal_proposition_str[4:-1:]
                 new_condition.condition_type = ConditionType.EP
@@ -790,115 +790,6 @@ class PDDLParser:
     #     import sys
     #     sys.exit()
     
-    
-    def predicator_convertor(self,pred_list):
-        result = dict()
-        result["ontic"] = list()
-        result["epistemic"] = list()
-        
-        for pred_str in pred_list:
-            self.logger.debug(pred_str)
-            self.logger.debug(ONTIC_STR_PREFIX)
-            #  this is for precondition, it is also fine with the goal for now
-            key = pred_str.replace(' ?',"?")
-            if ONTIC_STR_PREFIX[1:] in pred_str:
-                # this is an ontic predictor
-                
-                self.logger.debug(pred_str)
-                
-                
-                
-                
-                pred_str = pred_str[len(ONTIC_STR_PREFIX)+1:-1]
-                self.logger.debug(pred_str)
-                self.logger.debug(pred_str)
-                pre_comp_list = pred_str.split(" ")
-                symbol = pre_comp_list[0]
-                # value = goal_str_list[-1]
-                pred_str = pred_str[(len(symbol)+2):]
-                self.logger.debug(pred_str)
-                
-                # self.logger.debug(goal_str)
-                temp_list = pred_str.split(')')
-                old_variable = temp_list[0]
-                variable = old_variable.replace(' ?','?').replace(' ','-')
-                key = key.replace(old_variable,variable)
-                self.logger.debug(temp_list)
-                if len(temp_list) ==2:
-                    value = temp_list[1][1:]
-                    if "'" in value:
-                        value = value.replace("'",str())
-                    elif '"' in value:
-                        value = value.replace('"',str())
-                    else:
-                        value =int(value)      
-                elif len(temp_list) ==3:
-                    # it means the second argument is also a variable
-                    value = temp_list[1][2:].replace(' ?','?').replace(' ','-')
-                else:
-                    raise ValueError("error in decoding ontic [%s]",key)
-                self.logger.debug("ontic: [%s]",(key,symbol,variable,value))
-
-                result["ontic"].append((key,symbol,variable,value))
-            elif EPISTEMIC_STR_PREFIX[1:] in pred_str:
-                # this is an epistemic predictor
-                
-                self.logger.debug(pred_str)
-                
-                # this is for precondition, it is also fine with the goal for now
-                
-                
-                query_str = key[len(EPISTEMIC_STR_PREFIX):]
-                self.logger.debug("query string: [%s]",query_str)
-                separator_index = query_str.index("(")
-                query_prefix = query_str[:separator_index]
-                self.logger.debug("query prefix [%s]" % (query_prefix))
-                query_suffix_str = query_str[separator_index:]
-                self.logger.debug("query suffix [%s]" % (query_suffix_str))                
-                # pre_comp_list = pred_str.split("(")
-                
-                symbol = query_suffix_str[1:].split(" ")[0]
-                # pre_comp_list[0]
-                # value = goal_str_list[-1]
-                query_suffix_str = query_suffix_str[(len(symbol)+3):]
-                self.logger.debug(query_suffix_str)
-                
-                # self.logger.debug(goal_str)
-                temp_list = query_suffix_str.split(')')
-                old_variable = temp_list[0]
-                variable = old_variable.replace(' ?','?').replace(' ','-')
-                key = key.replace(old_variable,variable)
-                query_str = query_str.replace(old_variable,variable)
-                if len(temp_list) ==2:
-                    value = temp_list[1][1:]
-                    if "'" in value:
-                        value = value.replace("'",str())
-                    elif '"' in value:
-                        value = value.replace('"',str())
-                    else:
-                        value =int(value)      
-                elif len(temp_list) ==3:
-                    # it means the second argument is also a variable
-                    value = temp_list[1][2:].replace(' ?','?').replace(' ','-')
-                else:
-                    raise ValueError("error in decoding epistemic [%s]",key)
-                self.logger.debug("epistemic:(%s,%s,%s,%s,%s,%s)" % (key,query_str,query_prefix,symbol,variable,value))
-
-                result["epistemic"].append((key,query_str,query_prefix,symbol,variable,value))
-            elif pred_str == str():
-                pass
-            else:
-                raise ValueError("[predicate type not found] error in decoding [%s]",key)
-        
-        return result
-                
-
-
-
-
-
-
-
     def formatDocument(self,input_str):
         # this should remove all the comments
             # . match anything but the endline
