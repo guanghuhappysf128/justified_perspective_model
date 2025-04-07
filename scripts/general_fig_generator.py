@@ -158,6 +158,7 @@ class GeneralFigGenerator():
             
             subplot_matrix.append(subplot_x_list)
 
+        print("titles")
         for i in range(len(subplot_matrix)):
             for j in range(len(subplot_matrix[i])):
                 query_item = subplot_matrix[i][j]
@@ -244,6 +245,7 @@ class GeneralFigGenerator():
         else:
             for y in range(y_len):
                 for x in range(x_len):
+                    print(y,x)
                     query_item = subplot_matrix[y][x]
                     query_name = query_item['subplot_title']
                     print(query_name)

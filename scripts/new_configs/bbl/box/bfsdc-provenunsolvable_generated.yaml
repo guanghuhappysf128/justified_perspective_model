@@ -11,39 +11,35 @@ filters:
   #   value : 1
   # -
   #   name: solvable
-  #   value: False
+  #   value: True
   # -
   #   name: search
   #   value: bfsdcu
   # -
   #   name: num_of_agents
   #   value: 2
-  # -
-  #   name: expanded
-  #   value: {'$gt':10}
-  - 
-    name: plan
-    value: {'$ne':[]}
   -
     name: problem_name
-    value: {'$nin':["bbl_a2_g4_d3_34074","bbl_a2_g4_d3_421752"]}
-
-
-    # init_a2_00027
+    value: {'$ne':"bbl_a2_g4_d3_34074"}
+  # - 
+  #   name: plan
+  #   value: {'$ne':[]}
   -
-    name: bfsdc_solvable
+    name: bfsdc_proven_unsolvable
     value: True
-  -
-    name: num_of_unknown_goals
-    value: {'$ne':0}
-  -
-    name: pruned_by_unknown
-    value: {'$ne':0}
-
 
 subplot_x:
   name: total_goal_size
-  values: []
+  values: 
+  -
+    1
+  -
+    2
+  -
+    3
+  -
+    4
+
 
 subplot_y:
   name: num_of_agents
@@ -65,9 +61,10 @@ box_x:
     - bfsdcu
     - astar
     - greedy
+    # - ngreedy
 
   
 
-box_key: bfsdc_ratio_expanded
-# box_key: bfsdc_ratio_generated
+# box_key: bfs_ratio_expanded
+box_key: bfsdc_ratio_generated
 # box_key: bfs_ratio_search_time
