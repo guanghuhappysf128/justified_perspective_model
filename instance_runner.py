@@ -47,6 +47,81 @@ class Instance:
         self.external_function = external_function
         self.search_name = search_name
 
+    def validate(self,output_path,time_out, memory_out, time_debug=False,log_debug=False, plan_actions="",save_belief: str = None):
+        if plan_actions:
+            plan = plan_actions.split(',')
+            plan = [action.strip() for action in plan]
+        else:
+            print("No plan provided. Please specify with --plan_actions.")
+        start_time = datetime.datetime.now().astimezone(TIMEZONE)
+        result = dict()
+        if output_path == '':
+            output_path = f"output/{start_time.strftime(DATE_FORMAT)}"
+            
+        if not os.path.isdir(output_path):
+            os.makedirs(output_path)
+        
+        if log_debug:
+            log_level = logging.DEBUG
+        else:
+            log_level = logging.INFO  
+        
+        logger_handlers = setup_logger_handlers(f'{output_path}/{self.instance_name}.log', c_logger_level=log_level, c_display=False)
+        logger = setup_logger(LOGGER_NAME,logger_handlers,logger_level=LOGGER_LEVEL) 
+
+        # read the pddl files
+        pddl_parser = PDDLParser(logger_handlers)
+
+        logger.info('parser domain and problem')
+        logger.info(self.domain_path)
+        logger.info(self.problem_path)
+        domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals = pddl_parser.run(self.domain_path,self.problem_path)
+
+        
+        # loading external function
+        if type(self.external_function) ==str:
+            logger.info(f"loading external function: {self.external_function}")
+            external_path = self.external_function
+            external_path = external_path.replace('.py','').replace('\\','.').replace('/','.').replace('..','')
+            try:
+                external_module = importlib.import_module(external_path)
+                self.external_function = external_module.ExternalFunction(logger_handlers)
+                
+                logger.info(f"finish loading external function")
+            except (NameError, ImportError, IOError):
+                traceback.print_exc()
+                exit()
+            except:
+                traceback.print_exc()
+                exit()
+        else:
+            self.external_function.logger.handlers = logger.handlers
+            logger.info(f"External function exists")
+            
+            
+        logger.info(f'Initialize problem')
+        problem = pddl_model.Problem(enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,self.external_function,handlers=logger_handlers)
+        problem.domain_path = self.domain_path
+        problem.problem_path = self.problem_path
+        problem.logger.handlers = logger.handlers
+
+        logger.info(f'starting validate')############validate
+        start_search_time = datetime.datetime.now().astimezone(TIMEZONE)
+        
+        if time_debug:
+            search_class_ref = getattr( self.search_module, self.search_name)
+            search_algorithm = search_class_ref(logger_handlers,self.search_name)
+            temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief)
+            
+            # result = search_algorithm.searching(problem)
+            # print(result)
+        else:
+        
+            search_class_ref = getattr( self.search_module, self.search_name)
+            search_algorithm = search_class_ref(logger_handlers,self.search_name)
+            temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief)
+            # result = search_algorithm.searching(problem)
+            # print(result)
 
     def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False):
         
@@ -190,6 +265,7 @@ def loadParameter():
     parser.add_option('--time_debug', dest="time_debug", action='store_true', help='enable cProfile', default=False)
     parser.add_option('-t', '--time_out', dest="time_out", help='time_out, default 300s', type='int', default=300)
     parser.add_option('-m', '--memory_out', dest="memory_out", help='memoryout, default 8GB', type='int', default=8)
+    parser.add_option('--plan_actions', dest="plan_actions", help='comma-separated list of plan actions', default='')
     
     options, otherjunk = parser.parse_args(sys.argv[1:] )
     assert len(otherjunk) == 0, "Unrecognized options: " + str(otherjunk)
@@ -212,6 +288,7 @@ if __name__ == '__main__':
     external_function = options.external_path
     search_path = options.search_path
     output_path = ''
+    plan_action = options.plan_actions
 
     
     
@@ -267,7 +344,11 @@ if __name__ == '__main__':
         pr = cProfile.Profile()
         pr.enable()
         ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module= search_module, search_name = search_name)
-        ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+        #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+        if options.plan_actions:
+            ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
+        else:
+            ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
         
         
         pr.disable()
@@ -289,5 +370,9 @@ if __name__ == '__main__':
         
     else:
         ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module=search_module,search_name=search_name)
-        ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+        #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+        if options.plan_actions:
+            ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
+        else:
+            ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
 
