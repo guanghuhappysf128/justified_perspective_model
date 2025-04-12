@@ -1,5 +1,6 @@
 import logging
 import datetime
+import csv
 # import resource
 import psutil
 import os
@@ -284,11 +285,303 @@ class Search:
         self.logger.debug(self.result)
         return self.result
 
+    def validating(self,plan,problem:Problem,time_out:int,memory_out:int,save_belief:str=None,schemas=None):
+        self.timeout = datetime.timedelta(seconds=time_out)
+        self.memoryout = memory_out*1024 
+        self.logger.info("starting searching using [%s]",self.search_name)
+        start_time = datetime.datetime.now()
+
+        self.max_goal_num = len(list(problem.goals.keys()))
+        # intitalise unknown goal name
+        for key,item in problem.goals.items():
+            goal_condition: Condition = item
+            if goal_condition.condition_type == ConditionType.EP:
+                ep_formula: EP_formula = goal_condition.condition_formula
+                if ep_formula.epf_type == EPFType.EP:
+                    if goal_condition.target_value == Ternary.UNKNOWN:
+                        self.unknown_goal_name.append(key)
+                    # if there is a ! infront of unknown, then the unknown should not be counted
+                    else:
+                        negation_flag = True
+                        for temp_str in ep_formula.ep_query.split(' '):
+                            if temp_str == '!':
+                                negation_flag = not negation_flag
+                            elif temp_str == '$' and negation_flag:
+                                self.unknown_goal_name.append(key)
+        self.logger.debug(f'unknown goal name: {self.unknown_goal_name}')
+                
+        
+        # check whether the initial state is the goal state
+        init_state = problem.initial_state
+        init_path = [(init_state,'')]
+        remaining_goal_num,init_goal_dict,init_p_dict = problem.is_goal(init_path)
+        self.goal_checked +=1
+       
+        # init_epistemic_item_set = dict()
+        
+        init_node = Search.SearchNode(init_state,remaining_goal_num,init_p_dict,init_path)
+        # self.group_eg_dict = self.group_epistemic_goals(problem)
+        # self.landmarks_dict = problem.external.generate_constrain_dict(problem,self.group_eg_dict)
+
+        open_list = PriorityQueue()
+        h = self._h(init_node,init_goal_dict,problem)
+        g = self._gn(init_node)
+        fn = self._f(h,g)
+        open_list.push(item=init_node, priority=fn)
+        
+        
+        while not open_list.isEmpty():
+
+            _ , _, current_node = open_list.pop_full()
+            state = current_node.state
+            sg_p_dict = current_node.perspective_dict
+            path = current_node.path
+            actions = [ a  for s,a in path]
+            actions = actions[1:]
+
+
+            # if save_belief:
+            #     belief_keys = [key for key in sg_p_dict.keys() if "o [" not in key]
+            #     belief_data = []
+
+            #     # Collect all possible keys that appear in any belief world
+            #     all_world_keys = set()
+            #     for key in belief_keys:
+            #         for idx, world in enumerate(sg_p_dict[key]):
+            #             for k in world.keys():
+            #                 if not schemas or any(s in k for s in schemas):
+            #                     all_world_keys.add(k)
+
+
+            #     # Sort for consistency
+            #     all_world_keys = sorted(all_world_keys)
+
+            #     # Build rows
+            #     for belief_key in belief_keys:
+            #         for i, world in enumerate(sg_p_dict[belief_key]):
+            #             row = {"Belief Key": belief_key, "World Index": i}
+            #             for k in all_world_keys:
+            #                 if not schemas or any(s in k for s in schemas):
+            #                     v = world.get(k, "")
+            #                     if hasattr(v, "name"):
+            #                         v = v.name
+            #                     elif not isinstance(v, str):
+            #                         v = str(v)
+            #                     row[k] = v
+            #             belief_data.append(row)
+
+            #     # Write to CSV
+            #     with open(save_belief, mode='w', newline='') as file:
+            #         fieldnames = ["Belief Key", "World Index"] + all_world_keys
+            #         writer = csv.DictWriter(file, fieldnames=fieldnames)
+            #         writer.writeheader()
+            #         for row in belief_data:
+            #             writer.writerow(row)
+
+            #     print(f"Saved belief data to {save_belief}")
+                
+
+            # if len(path) > 8:
+            #     raise ValueError("exceed length")
+            self.logger.debug("path: %s",actions)
+            self.logger.debug(current_node.remaining_goal)
+            goal_checking = (0 == current_node.remaining_goal)
+            if goal_checking:
+                #print("goal found")
+                # self.logger.info(path)
+                actions = [ a  for s,a in path]
+                actions = actions[1:]
+                self.logger.info(f'plan is: {actions}')
+                self.logger.info(f'Goal found')
+                self.result.update({'solvable': True})
+                self.result.update({'plan':actions})
+                self.result.update({'path_length':len(actions)})
+                self.result.update({'timeout':self.timeout.seconds})
+                self.result.update({'memoryout':self.memoryout})
+                self._finalise_result(problem)
+                if_valid = True
+                # if if_valid:
+                #     print("goal found")
+                # else:
+                #     print("The input plan not valid")
+                # return self.result
+
+            current_time = datetime.datetime.now()
+            delta_time = current_time - start_time
+            process = psutil.Process(os.getpid())
+
+            # Get the memory usage (in bytes)
+            memory_info = process.memory_info()
+            current_memory_usage = memory_info.rss  # resident set size in bytes
+
+            # Convert bytes to MB for easier interpretation
+            usage = current_memory_usage / (1024 * 1024)
+
+            if delta_time > self.timeout:
+                actions = [ a  for s,a in path]
+                actions = actions[1:]
+                self.logger.info(f'Problem cannot be solved in the given time ({self.timeout.seconds}).')
+                self.result.update({'plan':[]})
+                self.result.update({'path_length':len(actions)})
+                self.result.update({'solvable': False})
+                self.result.update({'running': "TIMEOUT"})
+                self.result.update({'timeout':self.timeout.seconds})
+                self.result.update({'memoryout':self.memoryout})
+                self._finalise_result(problem)
+                if if_valid:
+                    print("goal found")
+                else:
+                    print("The input plan not valid")
+                return self.result
+            elif usage > self.memoryout:
+                actions = [ a  for s,a in path]
+                actions = actions[1:]
+                self.logger.info(f'Problem cannot be solved in the given memory ({self.memoryout}MB).')
+                self.result.update({'plan':[]})
+                self.result.update({'path_length':len(actions)})
+                self.result.update({'solvable': False})
+                self.result.update({'running': "MEMORYOUT"})
+                self.result.update({'timeout':self.timeout.seconds})
+                self.result.update({'memoryout':self.memoryout})
+                self._finalise_result(problem)
+                # if if_valid:
+                #     print("goal found")
+                # else:
+                #     print("The input plan not valid")
+                return self.result
+
+            all_legal_actions,sgp_p_dict = problem.get_all_legal_actions(state,path,sg_p_dict)#########keep
+
+            all_legal_action_name = list(all_legal_actions.keys())
+            all_legal_action_name.sort()
+            filtered_action_name = self.action_filter(problem,all_legal_action_name)############
+            if len(path) - 1 >= len(plan):
+                if_valid = False
+                break
+            
+            # print(plan[len(path)-1])
+            # print(filtered_action_name)
+            pass_action_filter = True
+            if plan[len(path)-1] in filtered_action_name:
+                filtered_action_name = [plan[len(path)-1]]
+            else:
+                if_valid = False
+                pass_action_filter = False
+
+                #print("The input plan not valid")
+
+            # print(filtered_action_name)
+            # print("-------------")
+            # print(filtered_action_name,plan[len(path)-1],len(path))
+            
+            self.logger.debug(sgp_p_dict.keys())
+            self.logger.debug(sgp_p_dict)
+            self.logger.debug("action generated: %s",all_legal_actions.keys())
+            
+            if pass_action_filter and self._duplication_check(state,sgp_p_dict):
+                # self.logger.debug("path [%s] get in visited",actions)
+                # self.logger.debug("ep_state_str is [%s]",ep_state_str)
+                self.expanded +=1
+                self.branch_factors.append(len(list(all_legal_actions.keys())))
+                temp_successor = 0
+                temp_actions = []
+                for action_name in filtered_action_name:
+                    action :Action = all_legal_actions[action_name]
+                # for action_name,action in all_legal_actions.items():
+                    self.logger.debug("action [%s] passed the precondition check", action_name)
+                    # passed the precondition
+                    succ_state = problem.generate_successor(state, action,path)
+                    # print(succ_state)
+                    if not succ_state == None:
+                        
+                        new_path = path + [(succ_state,action_name)]
+                        remaining_goal_num,goal_dict,g_p_dict = problem.is_goal(new_path)
+                        self.goal_checked+=1
+                        succ_node = self.SearchNode(succ_state,remaining_goal_num,g_p_dict,new_path)
+
+                        if self._unknown_check(succ_node,goal_dict):
+                            self.generated += 1
+                            h = self._h(succ_node,goal_dict,problem)
+                            g = self._gn(succ_node)
+                            fn = self._f(h,g)
+                            
+
+                            self.logger.debug("heuristic is: %d" % (h))
+                            g = self._gn(succ_node)
+                            self.logger.debug("gn is: %d" % (g))
+                            self.logger.debug("remaining is: %d" % (succ_node.remaining_goal))
+                            
+                            open_list.push(item=succ_node, priority=fn)
+                            temp_successor +=1
+                            temp_actions.append(action_name)
+                        else:
+                            self.pruned_by_unknown +=1
+                            
+                    else:
+                        self.logger.debug("successor node been pruned due to exceeds the function range: %s",action_name)
+                self.logger.debug('successor: [%s] with actions [%s]',temp_successor,temp_actions)
+            else:
+                self.pruned_by_visited += 1
+                # print(self.pruned_by_visited)
+                self.logger.debug("path [%s] already visited",actions)
+            # self.logger.debug(open_list.count)
+
+        if save_belief:
+            belief_keys = [key for key in sg_p_dict.keys() if "o [" not in key]
+            belief_data = []
+
+            # Collect all possible keys that appear in any belief world
+            all_world_keys = set()
+            for key in belief_keys:
+                for idx, world in enumerate(sg_p_dict[key]):
+                    for k in world.keys():
+                        if not schemas or any(s in k for s in schemas):
+                            all_world_keys.add(k)
+
+
+            # Sort for consistency
+            all_world_keys = sorted(all_world_keys)
+
+            # Build rows
+            for belief_key in belief_keys:
+                for i, world in enumerate(sg_p_dict[belief_key]):
+                    row = {"Belief Key": belief_key, "World Index": i}
+                    for k in all_world_keys:
+                        if not schemas or any(s in k for s in schemas):
+                            v = world.get(k, "")
+                            if hasattr(v, "name"):
+                                v = v.name
+                            elif not isinstance(v, str):
+                                v = str(v)
+                            row[k] = v
+                    belief_data.append(row)
+
+            # Write to CSV
+            with open(save_belief, mode='w', newline='') as file:
+                fieldnames = ["Belief Key", "World Index"] + all_world_keys
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()
+                for row in belief_data:
+                    writer.writerow(row)
+
+            print(f"Saved belief data to {save_belief}")
+        
+        self.logger.info(f'Problem is not solvable') #
+        self.result.update({'plan':[]})
+        self.result.update({'path_length':0})
+        self.result.update({'solvable': False})
+        self.result.update({'timeout':self.timeout.seconds})
+        self.result.update({'memoryout':self.memoryout})
+        self._finalise_result(problem)
+        self.logger.debug(self.result)
+        # if if_valid:
+        #     print("goal found")
+        # else:
+        #     print("The input plan not valid")
+
+        return self.result
     
     
-
-
-
 
     def _finalise_result(self,problem:Problem):
         # logger output
@@ -449,8 +742,130 @@ class Search:
     def goal_counting(self,node,goal_dict,problem):
         # print(problem.problem_path)
 
+
+            
         remain_goal_number = list(goal_dict.values()).count(False)
+        # state = node.state
+        
+        # # customised a maze distance for blocked grid problem
+        # if "BlockCells" in problem.problem_path:
+        #     # this is customised for the blocked grid problem
+        #     # this can be done by using algorithm to find the maze distance
+        #     # maze_distance = {
+        #     #     'r1':2,'r2':1,'r3':0,'r4':3,'r7':4,'r8':5,'r9':6,
+        #     #     'r10':5,'r11':6,'r12':7
+        #     # }
+        #     all_maze_distance = {
+        #         ('r1','r1'):0, ('r1','r2'):1, ('r1','r3'):2, 
+        #         ('r1','r4'):1, ('r1','r5'):99, ('r1','r6'):99,
+        #         ('r1','r7'):2, ('r1','r8'):3, ('r1','r9'):4,
+        #         ('r1','r10'):3, ('r1','r11'):4, ('r1','r12'):5,
+        #         ('r2','r1'):1, ('r2','r2'):0, ('r2','r3'):1,
+        #         ('r2','r4'):2, ('r2','r5'):99, ('r2','r6'):99,
+        #         ('r2','r7'):3, ('r2','r8'):4, ('r2','r9'):5,
+        #         ('r2','r10'):4, ('r2','r11'):5, ('r2','r12'):6,
+        #         ('r3','r1'):2, ('r3','r2'):1, ('r3','r3'):0,
+        #         ('r3','r4'):3, ('r3','r5'):99, ('r3','r6'):99,
+        #         ('r3','r7'):4, ('r3','r8'):5, ('r3','r9'):6,
+        #         ('r3','r10'):5, ('r3','r11'):6, ('r3','r12'):7,
+        #         ('r4','r1'):1, ('r4','r2'):2, ('r4','r3'):3,
+        #         ('r4','r4'):0, ('r4','r5'):99, ('r4','r6'):99,
+        #         ('r4','r7'):1, ('r4','r8'):2, ('r4','r9'):3,
+        #         ('r4','r10'):2, ('r4','r11'):3, ('r4','r12'):4,
+        #         ('r5','r1'):99, ('r5','r2'):99, ('r5','r3'):99,
+        #         ('r5','r4'):99, ('r5','r5'):99, ('r5','r6'):99,
+        #         ('r5','r7'):99, ('r5','r8'):99, ('r5','r9'):99,
+        #         ('r5','r10'):99, ('r5','r11'):99, ('r5','r12'):99,
+        #         ('r6','r1'):99, ('r6','r2'):99, ('r6','r3'):99,
+        #         ('r6','r4'):99, ('r6','r5'):99, ('r6','r6'):99,
+        #         ('r6','r7'):99, ('r6','r8'):99, ('r6','r9'):99,
+        #         ('r6','r10'):99, ('r6','r11'):99, ('r6','r12'):99,
+        #         ('r7','r1'):2, ('r7','r2'):3, ('r7','r3'):4,
+        #         ('r7','r4'):1, ('r7','r5'):99, ('r7','r6'):99,
+        #         ('r7','r7'):0, ('r7','r8'):1, ('r7','r9'):2,
+        #         ('r7','r10'):1, ('r7','r11'):2, ('r7','r12'):3,
+        #         ('r8','r1'):3, ('r8','r2'):4, ('r8','r3'):5,
+        #         ('r8','r4'):2, ('r8','r5'):99, ('r8','r6'):99,
+        #         ('r8','r7'):1, ('r8','r8'):0, ('r8','r9'):1,
+        #         ('r8','r10'):2, ('r8','r11'):1, ('r8','r12'):2,
+        #         ('r9','r1'):4, ('r9','r2'):5, ('r9','r3'):6,
+        #         ('r9','r4'):3, ('r9','r5'):99, ('r9','r6'):99,
+        #         ('r9','r7'):2, ('r9','r8'):1, ('r9','r9'):0,
+        #         ('r9','r10'):3, ('r9','r11'):2, ('r9','r12'):1,
+        #         ('r10','r1'):3, ('r10','r2'):4, ('r10','r3'):5,
+        #         ('r10','r4'):2, ('r10','r5'):99, ('r10','r6'):99,
+        #         ('r10','r7'):1, ('r10','r8'):2, ('r10','r9'):3,
+        #         ('r10','r10'):0, ('r10','r11'):1, ('r10','r12'):2,
+        #         ('r11','r1'):4, ('r11','r2'):5, ('r11','r3'):6,
+        #         ('r11','r4'):3, ('r11','r5'):99, ('r11','r6'):99,
+        #         ('r11','r7'):2, ('r11','r8'):1, ('r11','r9'):2,
+        #         ('r11','r10'):1, ('r11','r11'):0, ('r11','r12'):1,
+        #         ('r12','r1'):5, ('r12','r2'):6, ('r12','r3'):7,
+        #         ('r12','r4'):4, ('r12','r5'):99, ('r12','r6'):99,
+        #         ('r12','r7'):3, ('r12','r8'):2, ('r12','r9'):1,
+        #         ('r12','r10'):2, ('r12','r11'):1, ('r12','r12'):0
+        #     }
+        #     for key,value in goal_dict.items():
+        #         if not value and "agent_loc" in key:
+        #             variable_name = problem.goals[key].condition_variable
+        #             target_loc = problem.goals[key].target_value 
+        #             current_loc = state[variable_name]
+        #             # if not "agent_loc c" in key:
+        #             #     # maze_distance_c = {
+        #             #     #     'r1':2,'r2':1,'r3':0,'r4':3,'r7':3,'r8':3,'r9':3,
+        #             #     #     'r10':3,'r11':3,'r12':3
+        #             #     # }
+        #             #     # remain_goal_number += maze_distance[current_loc] -1
+        #             # # else:
+        #             # # print(variable_name)
+        #             # # print(current_loc)
+        #             #     remain_goal_number += all_maze_distance[(current_loc,target_loc)]-1
+        #             remain_goal_number += all_maze_distance[(current_loc,target_loc)]-1
+        # elif "grid" in problem.problem_path:
+        #     # this is customised for the unblocked grid problem
+        #     # this can be done by using algorithm to find the maze distance
+        #     maze_distance = {
+        #         'r1':2,'r2':1,'r3':0,
+        #         'r4':3,'r5':2,'r6':1,
+        #         'r7':4,'r8':3,'r9':2,
+        #         'r10':5,'r11':4,'r12':3
+        #     }
+        #     for key,value in goal_dict.items():
+        #         if not value and "agent_loc" in key:
+        #             variable_name = problem.goals[key].condition_variable   
+        #             current_loc = state[variable_name]
+        #             remain_goal_number += maze_distance[current_loc] -1
         return remain_goal_number
+        heuristic_value = remain_goal_number
+        
+        # landmark_constrain = []
+        temp_v_name_list = []
+        for v_name, ep_goals in self.group_eg_dict.items():
+            for ep_str,value in ep_goals:
+                if not goal_dict[f"{ep_str} {value}"]:
+                    temp_v_name_list.append(v_name)
+                    # heuristic_value +=1
+                    break
+
+        temp_landmark = set()
+                
+        for temp_v_name in temp_v_name_list:
+            # flag = True
+            for temp_state in self.landmarks_dict[temp_v_name]:
+                if not str(sorted(temp_state)) in temp_landmark:
+                    temp_flag = True
+                    for key,value in temp_state.items():
+                        if key in state.keys():
+                            if not state[key]==value:
+                                temp_flag = False
+                                break
+                    if temp_flag:
+                        heuristic_value +=1
+                        temp_landmark.add(str(sorted(temp_state)))
+                        break
+
+
+        return heuristic_value,epistemic_dict
 
     def iw_gc(self,node,goal_dict,problem):
         

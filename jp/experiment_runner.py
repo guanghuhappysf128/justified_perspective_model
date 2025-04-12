@@ -31,7 +31,7 @@ import pytz
 import logging
 from util import setup_logger_handlers,setup_logger
 # from latex_converter import LatexConverter
-import instance_runner
+from instance_runner import Instance
 
 TIMEZONE = pytz.timezone('Australia/Melbourne')
 DATE_FORMAT = '%d-%m-%Y_%H-%M-%S'
@@ -64,7 +64,7 @@ def loadParameter():
     parser.add_option('-t', '--timeout', dest="timeout", help='timeout, default 300s', type='int', default=600)
     parser.add_option('-m', '--memoryout', dest="memoryout", help='memoryout, default 8GB', type='int', default=8)
     parser.add_option('-o','--output', dest="output_path", help='output directory for the running results (default: output/<timestamp>)',default='')
-    parser.add_option('-s', '--search_path', dest="search_path", help='the path of the search algorithm', default='')
+    parser.add_option('-s', '--search_path', dest="search_path", help='the path of the search algorithm', default='search_algorithms/bfs.py')
     # parser.add_option('-d','--debug', dest="log_debug", action='store_true', help='enable logging level to debug', default=False)
     parser.add_option('--console_debug', dest="console_debug", action='store_true', help='enable logging level to debug', default=False)
     # parser.add_option('--time_debug', dest="time_debug", action='store_true', help='enable logging level to debug', default=False)
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 
         
     try:
-        search_module = importlib.import_module(module_path)
+        search_module = importlib.import_module(module_path, package=__package__)
         logger.info(f"finish loading search algorithm:")
     except (NameError, ImportError, IOError):
         traceback.print_exc()
@@ -154,7 +154,7 @@ if __name__ == '__main__':
                 instance_name = f"{search_name}_{domain_name}_{problem_name}"
                 logger.info(f"solving {instance_name} - {problem_folder}")
                 start_time = datetime.datetime.now().astimezone(TIMEZONE)
-                ins = instance_runner.Instance(
+                ins = Instance(
                     instance_name=instance_name,
                     problem_path=problem_path,
                     domain_path=domain_path,
