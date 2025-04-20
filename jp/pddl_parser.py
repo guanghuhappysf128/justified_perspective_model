@@ -63,6 +63,11 @@ AGENT_REG_PREFIX = r"\(:agents"
 AGENT_REG = r"[\w \&\-]*"
 AGENT_REG_SURFIX = r"\)"
 
+AGENTSPEC_REG_PREFIX = r"\(:agent_spec"
+
+AGENTSPEC_REG_SURFIX = r"\)"
+
+
 OBJECT_REG_PREFIX = r"\(:objects"
 OBJECT_REG = r"[\w \&\-]*"
 OBJECT_REG_SURFIX = r"\)"
@@ -97,6 +102,18 @@ EFFECT_TYPE_DICT = {
     "decrease": EffectType.DECREASE,
     "assign":EffectType.ASSIGN
 }
+
+DOMAIN_NAME_PREFIX = "(domain "
+DOMAIN_NAME_SURFIX = ")"
+
+TYPE_PREFIX = "(:types"
+TYPE_SURFIX = ")"
+
+FUNCTIONS_PREFIX = "(:functions"
+FUNCTIONS_SURFIX = ")"
+
+ACTION_PREFIX = "(:action"
+ACTION_SURFIX = ")"
 
 
 class PDDLParser:
@@ -297,8 +314,8 @@ class PDDLParser:
         for function_name in functions.keys():
             if not function_name in rules.keys():
                 rules.update({function_name:Rule(function_name,RULE_TYPE.STATIC,[])})
-        # print(len(functions))
-        # print(len(rules))
+        # self.logger.debug(len(functions))
+        # self.logger.debug(len(rules))
 
 
         # update the action_schema
@@ -391,7 +408,7 @@ class PDDLParser:
             new_condition.condition_operator = condition_operator_dict[operator_str] 
             value_str = goal_proposition_str.split(" ")[-1]
             goal_content_str = goal_proposition_str[len(operator_str)+2:-len(value_str)-2:]
-            # print(goal_content_str)
+            # self.logger.debug(goal_content_str)
             if "@jp" in goal_proposition_str:
                 goal_proposition_str = goal_proposition_str[4:-1:]
                 new_condition.condition_type = ConditionType.EP
@@ -495,12 +512,25 @@ class PDDLParser:
         domain_str = domain_str[len(PDDL_PREFIX):-len(PDDL_SURFIX):]
         self.logger.debug(repr(domain_str))
         
+        sectional_text_list = find_each_section(domain_str)
+        self.logger.debug(repr(sectional_text_list))
+
+        if len(sectional_text_list) < 4:
+            raise ValueError("the domain file should at least contain 4 sections:\n domain_name,types,functions and at least one action")
+        
         # extract domain name
-        domain_name,domain_str = self.keyWordParser("domain_name",DOMAIN_NAME_REG_PREFIX,DOMAIN_NAME_REG,DOMAIN_NAME_REG_SURFIX,domain_str)
+        domain_name_str = sectional_text_list[0]
+        # domain_name,_ = self.keyWordParser("domain_name",DOMAIN_NAME_REG_PREFIX,DOMAIN_NAME_REG,DOMAIN_NAME_REG_SURFIX,domain_name_str)
+        domain_name = domain_name_str[len(DOMAIN_NAME_PREFIX):-len(DOMAIN_NAME_SURFIX)]
+        self.logger.debug(domain_name)
+
 
         # extract typing
-        typing_str,domain_str = self.keyWordParser("types",TYPING_REG_PREFIX,TYPING_REG,TYPING_REG_SURFIX,domain_str)
-        # types: typing.List[Type] = []
+        type_str = sectional_text_list[1]
+        # typing_str,_ = self.keyWordParser("types",TYPING_REG_PREFIX,TYPING_REG,TYPING_REG_SURFIX,type_str)
+        typing_str = type_str[len(TYPE_PREFIX):-len(TYPE_SURFIX)]
+        self.logger.debug(typing_str)
+
         types: typing.Dict[str,Type] = {}
         for type_str in typing_str.split(LINE_BREAK):
             if type_str == str():
@@ -530,10 +560,14 @@ class PDDLParser:
 
 
         # extra function_schemas
+        function_str = sectional_text_list[2]
         function_schemas : typing.Dict[str,FunctionSchema] = {}
-        all_function_schema_str,domain_str = self.keyWordParser("function_schemas",FUNC_REG_PREFIX,FUNC_REG,FUNC_REG_SURFIX,domain_str)
+        # all_function_schema_str,domain_str = self.keyWordParser("function_schemas",FUNC_REG_PREFIX,FUNC_REG,FUNC_REG_SURFIX,function_str)
+        all_function_schema_str = function_str[len(FUNCTIONS_PREFIX):-len(FUNCTIONS_SURFIX)]
         self.logger.debug(all_function_schema_str)
-        function_schema_str_list = re.findall(r'\(.*?\)', all_function_schema_str)
+
+        # function_schema_str_list = re.findall(r'\(.*?\)', all_function_schema_str)
+        function_schema_str_list = find_each_section(all_function_schema_str)
         for function_schema_str in function_schema_str_list:
             parts = list()
             new_function_schema = None
@@ -548,71 +582,57 @@ class PDDLParser:
         self.logger.debug(function_schemas)
         
         # extract actions
-        action_schemas: typing.Dict[str,ActionSchema] = {}
-        pattern = r"\(:action.*?(?=\(:action|$)"
-        action_str_list = re.findall(pattern, domain_str)
-        for action_str in action_str_list:
-            self.logger.debug(action_str)
-            action_content_str,_ = self.keyWordParser("action",ACTION_REG_PREFIX,ACTION_REG,ACTION_REG_SURFIX,action_str)
+        action_schemas: typing.Dict[str,ActionSchema] = {}        
+        # pattern = r"\(:action.*?(?=\(:action|$)"
+        # action_str_list = re.findall(pattern, domain_str)
+        action_str_list = sectional_text_list[3:]
+        self.logger.debug(action_str_list)
+        for raw_action_str in action_str_list:
+            self.logger.debug(raw_action_str)
+            # action_content_str,_ = self.keyWordParser("action",ACTION_REG_PREFIX,ACTION_REG,ACTION_REG_SURFIX,action_str)
+            action_content_str = raw_action_str[len(ACTION_PREFIX):-len(ACTION_SURFIX)]
             self.logger.debug(action_content_str)
             temp_list = action_content_str.split(LINE_BREAK)
             action_name = temp_list[0]
             self.logger.debug(action_name)
             action_content_str = temp_list[1]
             
+            content_str_list = find_each_section(action_content_str)
+            self.logger.debug(content_str_list)
+            
+            if not len(content_str_list) == 3:
+                raise ValueError("The content of an action should contain three section: parameters, precondition and effect")
+            parameter_content_str= content_str_list[0]
+            precondition_content_str = content_str_list[1]
+            effect_content_str = content_str_list[2]
+
             # find parameter string
-            self.logger.debug(action_content_str)
-            parameter_str,action_content_str = self.keyWordParser("parameters",PARAMETERS_REG_PREFIX,PARAMETERS_REG,PARAMETERS_REG_SURFIX,action_content_str)
-            self.logger.debug(parameter_str)
-            self.logger.debug(action_content_str)
+            # parameter_str,action_content_str = self.keyWordParser("parameters",PARAMETERS_REG_PREFIX,PARAMETERS_REG,PARAMETERS_REG_SURFIX,action_content_str)
+            parameter_content_str = parameter_content_str[1:-1] # remove brackets
+            self.logger.debug(parameter_content_str)
             
             # extract parameter
             pattern = r'\?\w*'
-            match_variables = re.findall(pattern, parameter_str)
+            match_variables = re.findall(pattern, parameter_content_str)
             pattern = r'\?\w+\-\w+'
-            match_types = re.findall(pattern, parameter_str)
+            match_types = re.findall(pattern, parameter_content_str)
             if not len(match_variables) == len(match_types):
-                raise ValueError('missing variable or types in parameter [%s] for action [%s]',parameter_str,action_name)
+                raise ValueError('missing variable or types in parameter [%s] for action [%s]',parameter_content_str,action_name)
             parameters = Parameters()
             for i in range(len(match_types)):
                 parameters[match_variables[i]] = match_types[i].replace(match_variables[i]+"-",str())
             self.logger.debug(parameters)
-            self.logger.debug(action_content_str)
             
-            # find effect first, which is easier for the re
-            # extract effects
-            effects_str,len_holder = self.keyWordParser("effect",EFFECT_REG_PREFIX,EFFECT_REG,EFFECT_REG_SURFIX,action_content_str)
-            # take the len of the len_holder, which is the string with pre and effect removing the length of the whole effect
-            # the precondition comes before the effect, so we keep the first len(len_holder) from the old string
-            # which is effectively the precondition string
-            action_content_str = action_content_str[:len(len_holder)]            
-            # since there are uncertain nesting level of brackets in the effect
-            # using manual approach instead of regular expression
-            effects : typing.Dict[str,Effect] = dict()
-            # effects_str = effects_str[1:-1] # remove the first and last bracket
-            # for effect_str in effects_str.split(")("):
 
-            #     effects.append(self.parsingEffect(effect_str,action_name))
-            effect_str_list = find_each_section(effects_str)
-            self.logger.debug(effect_str_list)
-            for effect_str in effect_str_list:
-                effect_name = effect_str
-                self.logger.debug(effect_str)
-                effect_str = effect_str[1:-1:]
-                self.logger.debug(effect_str)
-                effect = self.parsingEffect(effect_str,action_name)
-                effects.update({effect_name:effect})
-            
-            # TODO I need to apply the action and check goal at the same time.
-            
             # extract preconditions
             preconditions: typing.Dict[str,Condition] = {}
             # find precondition string
-            preconditions_str, remaining_str = self.keyWordParser("precondition",PRECONDITION_REG_PREFIX,PRECONDITION_REG,PRECONDITION_REG_SURFIX,action_content_str)
-            if not remaining_str == str():
-                raise ValueError("The remaining string [%s] after action parsing is not empty",remaining_str)
-
-            precondition_str_list = find_each_section(preconditions_str)
+            # preconditions_str, remaining_str = self.keyWordParser("precondition",PRECONDITION_REG_PREFIX,PRECONDITION_REG,PRECONDITION_REG_SURFIX,action_content_str)
+            # if not remaining_str == str():
+            #     raise ValueError("The remaining string [%s] after action parsing is not empty",remaining_str)
+            # self.logger.debug(precondition_content_str)
+            precondition_content_str = precondition_content_str[1:-1]
+            precondition_str_list = find_each_section(precondition_content_str)
             self.logger.debug(precondition_str_list)
             
             for precondition_str in precondition_str_list:
@@ -701,10 +721,22 @@ class PDDLParser:
                     new_condition.condition_variable = precondition_content_str
                     # new_condition.target_value = value_str
                 preconditions.update({precondition_name:new_condition})
-            
-            # TODO
-            # match the preconditions
-            
+            self.logger.debug(preconditions)
+
+            # extract effects
+            # effects_str,len_holder = self.keyWordParser("effect",EFFECT_REG_PREFIX,EFFECT_REG,EFFECT_REG_SURFIX,action_content_str)
+            effects : typing.Dict[str,Effect] = dict()
+            effect_content_str = effect_content_str[1:-1]# remove the first and last bracket
+            effect_str_list = find_each_section(effect_content_str)
+            self.logger.debug(effect_str_list)
+            for effect_str in effect_str_list:
+                effect_name = effect_str
+                self.logger.debug(effect_str)
+                effect_str = effect_str[1:-1:]
+                self.logger.debug(effect_str)
+                effect = self.parsingEffect(effect_str,action_name)
+                effects.update({effect_name:effect})
+
             
             new_action = ActionSchema(action_name,parameters,preconditions,effects)
             action_schemas.update({action_name:new_action})
@@ -777,20 +809,6 @@ class PDDLParser:
         return new_effect
 
 
-
-    # assuming the input is one epistemic string
-    # def epistemic_decoder(self,ep_str):
-    #     self.logger.debug("extract epistemic formulea")
-    #     self.logger.debug("input epistemic str: [%s]",ep_str)
-    #                     # preconditions["epistemic_p"] = list()
-    #     p,q = re.search('\( = \(:epistemic [\?+\- 0-9a-z_\[\],]*\((?:>|<| =|> =|< =)+ \([ 0-9a-z_\? ]*\) (?:[0-9a-z_\'\"-]+|\([0-9a-z_ ]+\))\)\) [0-9a-z-]*\)',ep_str).span()
-    #     epistemic_prefix = "( = (:epistemic "
-    #     epistemic_surfix = ")"
-        
-    #     ep_str = ep_str[p+len(epistemic_prefix):q+len(epistemic_surfix)]
-    #     self.logger.debug(ep_str)
-    #     import sys
-    #     sys.exit()
     
     def formatDocument(self,input_str):
         # this should remove all the comments
@@ -843,75 +861,3 @@ class PDDLParser:
             raise ValueError("value type %s does not exist %s",value_type,value_str)
         
         return value
-    # def epistemic_converter(self,ep_content):
-    #     self.logger.debug("epistemic converter: [%s]",ep_content)
-    #     header_index = ep_content.find(" ")
-    #     header_str =  ep_content[1:header_index]
-    #     self.logger.debug("header string: [%s]",header_str)
-    #     ep_content = ep_content[:header_index]
-    #     agent_index = ep_content.find(" ")
-    #     agents_str = ep_content[2:agent_index-1]
-
-    #     ep = EpistemicQuery(header_str,agents_str,value,content)
-
-    #     ep_value = 
-    #     self.logger.debug(epistemic_pre_list)
-    #                     for pre_str in epistemic_pre_list:
-    
-    #                         key = pre_str.replace(' ?',"?")
-    #                         self.logger.debug(pre_str)
-    #                         pre_str = pre_str[len(epistemic_prefix):-len(epistemic_surfix):]
-    #                         self.logger.debug(pre_str)
-    #                         pre_str_list = pre_str.split(" ")
-    #                         # symbol = goal_str_list[0]
-    #                         value = pre_str_list[-1]
-    #                         pre_str = pre_str[:-(len(value)+2):]
-    #                         value = int(value)
-    #                         query = pre_str
-    #                         self.logger.debug(pre_str)
-                            
-    #                         # i,j = re.search('\)\) .*',goal_str).span()
-    #                         # value1 = int(goal_str[i+3:j:])
-                            
-    #                         p,q = re.search('(?:>|<| =|> =|< =)+ \([ 0-9a-z_\? ]*\) (?:[0-9a-z_\'\"-]+|\([0-9a-z_ ]+\))\)',pre_str).span()
-    #                         # query = pre_str[:p-1]
-    #                         pre_str = pre_str[p:q-1]
-                            
-                            
-    #                         pre_str_list = pre_str.split(' ')
-    #                         symbol = pre_str_list[0]
-    #                         pre_str = pre_str[(len(symbol)+2)::]
-    #                         pre_str_list = pre_str.split(') ')
-    #                         old_variable = pre_str_list[0]
-    #                         variable = pre_str_list[0].replace(' ?','?').replace(' ','-')
-    #                         self.logger.debug("old variable string: [%s]",old_variable)
-    #                         self.logger.debug("new variable string: [%s]",variable)
-    #                         self.logger.debug("query string: [%s]",query)
-    #                         query = query.replace(old_variable,variable) 
-    #                         self.logger.debug("query string: [%s]",query)
-    #                         key = key.replace(old_variable,variable)
-    #                         v_value = pre_str_list[1]
-    #                         if "'" in v_value:
-    #                             v_value = v_value.replace("'",str())
-    #                         elif '"' in v_value:
-    #                             v_value = v_value.replace('"',str())
-    #                         elif '?' in v_value:
-    #                             v_value = v_value.replace(' ?',"?").replace(')','').replace('(','')
-    #                         elif "(" in v_value and ")" in v_value:
-    #                             old_v_value = v_value
-    #                             v_value = v_value[1:-1]
-    #                             v_value = v_value.replace(" ","-")
-    #                             query = query.replace(old_v_value,v_value)
-                                
-                                
-    #                         else:
-    #                             v_value =int(v_value)
-    #                         self.logger.debug("epistemic_p: [%s]",(key,symbol,query,variable,v_value,value))
-    #                         preconditions["epistemic_p"].append((key,symbol,query,variable,v_value,value))
-    #                 except AttributeError:
-                        
-    #                     self.logger.error("error when extract precondition")
-    #                     self.logger.error(traceback.format_exc())
-    #                     traceback.self.logger.debug_exc()
-    #                     exit() 
-    

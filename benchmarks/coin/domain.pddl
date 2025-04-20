@@ -28,7 +28,7 @@
         :parameters (?i - agent)
         :precondition (and 
             ; (= (peeking ?i) 't')
-            (= (peeking ?i) 't'))
+            (= (peeking ?i) 't')
         )
         :effect (and 
             (assign (peeking ?i) 'f')
