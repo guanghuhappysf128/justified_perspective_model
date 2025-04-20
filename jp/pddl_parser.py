@@ -25,7 +25,6 @@ from util import Type,FunctionSchema,Parameters,EffectType,Effect,UpdateType,Act
 from util import VALUE_TYPE,value_type_dict,RULE_TYPE,rule_type_dict
 from util import Function,Rule,EP_formula,EPFType,Condition,ConditionType,Ternary,condition_operator_dict
 from util import special_value
-from util import State
 
 EFFECT_TYPE_DICT = {
     "increase": EffectType.INCREASE,
@@ -113,8 +112,8 @@ class PDDLParser:
         problem_str = self.formatDocument(problem_file)
         
         self.logger.info("Parsing problem file")
-        domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals = self.problemParser(problem_str,domain_name,types,function_schemas,action_schemas)
-        return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals
+        domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,nesting_base = self.problemParser(problem_str,domain_name,types,function_schemas,action_schemas)
+        return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,nesting_base
 
     def problemParser(self,raw_problem_str,domain_name,types:typing.Dict[str,Type],function_schemas: typing.Dict[str,FunctionSchema] ,action_schemas: typing.Dict[str,ActionSchema]):
 
@@ -188,15 +187,15 @@ class PDDLParser:
             # handle agent specs
             self.logger.debug("handle agent spec")
             agent_spec_str = agent_spec_str[len(AGENT_SPEC_PREFIX):-len(AGENT_SPEC_SURFIX):]
-            print(agent_spec_str)
+            self.logger.debug(agent_spec_str)
             agent_spec_str_list = find_each_section(agent_spec_str)
-            print(agent_spec_str_list)
+            self.logger.debug(agent_spec_str_list)
             for individual_agent_spec_str in agent_spec_str_list:
-                print(individual_agent_spec_str)
+                self.logger.debug(individual_agent_spec_str)
                 if not individual_agent_spec_str.startswith(AGENT_SPEC_NESTING_PREFIX):
                     raise ValueError("The current code can only handle nesting, agent spec string should start with %s",AGENT_SPEC_NESTING_PREFIX)
                 individual_agent_spec_str = individual_agent_spec_str[len(AGENT_SPEC_NESTING_PREFIX):-len(AGENT_SPEC_NESTING_SURFIX):]
-                print(individual_agent_spec_str)
+                self.logger.debug(individual_agent_spec_str)
                 individual_spec_list = individual_agent_spec_str.split(") ")
                 agent_index = individual_spec_list[0]
                 nesting_level = int(individual_spec_list[1])
@@ -207,8 +206,8 @@ class PDDLParser:
         else:
             # this is not an agent spec, put it back
             sectional_text_list.insert(0,agent_spec_str)
-        print(enetities)
-        print(local_agent_nesting_dict)
+        self.logger.debug(enetities)
+        self.logger.debug(local_agent_nesting_dict)
 
 
         # opitional section
@@ -218,12 +217,12 @@ class PDDLParser:
         if nesting_str.startswith(NESTING_PREFIX):
             # handle nesting
             self.logger.debug("handle nesting")
-            print(nesting_str)
+            self.logger.debug(nesting_str)
             nesting_str = nesting_str[len(NESTING_PREFIX):-len(NESTING_SURFIX):]
-            print(nesting_str)
+            self.logger.debug(nesting_str)
             if nesting_str.startswith(LINE_BREAK):
                 nesting_str = nesting_str[1:]
-            print(nesting_str)
+            self.logger.debug(nesting_str)
             nesting_base_list = nesting_str.split(" ")
             for nesting_base_str in nesting_base_list:
                 if not self.isValidNB(local_agent_nesting_dict,nesting_base_str):
@@ -234,7 +233,7 @@ class PDDLParser:
             # this is not a nesting, put it back
             sectional_text_list.insert(0,nesting_str)
             if not agent_spec_changed:
-                nesting_base = set() # default uniform infinite nesting
+                nesting_base = None # default uniformly unbounded level of nesting
             else:
                 # generate all nesting based on agent's nesting level
                 nesting_base = self.generateNestingBase(local_agent_nesting_dict)
@@ -399,9 +398,6 @@ class PDDLParser:
                 value_type = function_schemas[function_schema_name].value_type
                 value = self.str2value(value_type,value_str)
                 init.update({variable_name:value})
-        initial_state = State()
-        initial_state.state = init
-        initial_state.nesting_base = nesting_base
                   
         # extract goal
         if goal_str.startswith("(and"):
@@ -540,7 +536,7 @@ class PDDLParser:
         self.logger.debug(action_schemas)
 
 
-        return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals
+        return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,init,goals,nesting_base
 
     def domainParser(self,raw_domain_str):
         actions = {}
@@ -905,11 +901,11 @@ class PDDLParser:
 
 
     def isValidNB(self,nesting_dict:typing.Dict[str,int],nesting_base_string:str):
-        print(nesting_dict)
+        self.logger.debug(nesting_dict)
         nesting_list = nesting_base_string.split(NESTING_BREAK)
         for i,agent in enumerate(nesting_list):
-            print(agent)
-            print(i)
+            self.logger.debug(agent)
+            self.logger.debug(i)
             if not agent in nesting_dict.keys():
                 raise ValueError("agent %s not found in nesting dict %s",agent,nesting_dict.keys())
             if nesting_dict[agent] <= 0:
@@ -923,24 +919,24 @@ class PDDLParser:
     def generateNestingBase(self,nesting_dict:typing.Dict[str,int]):
         max_nesting = max(nesting_dict.values())
         nesting_base = set()
-
         agent_list = list(nesting_dict.keys())
         temp_base = agent_list.copy()
         nesting_base = set(temp_base)
         current_depth = 1
-        while agent_list:
+        while 1:
             temp_agent_list = []
             new_temp_base = []
             for agent in agent_list:
                 if nesting_dict[agent] > current_depth:
                     temp_agent_list.append(agent)
                     for string in temp_base:
-                        if not string.startswith(agent):
+                        # if not string.startswith(agent):
                             new_temp_base.append(agent + NESTING_BREAK + string)
             agent_list = temp_agent_list
+            if new_temp_base == []:
+                break
             temp_base = new_temp_base
             nesting_base.update(temp_base)
             current_depth += 1
-        print(nesting_base)
         return nesting_base
 

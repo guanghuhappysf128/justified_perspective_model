@@ -15,6 +15,7 @@ import logging
 # import forward_pddl_model as pddl_model
 # import pddl_model as pddl_model
 from pddl_model import Problem
+from epistemic_model import EpistemicModel
 
 from pddl_parser import PDDLParser
 # from latex_converter import epgoal2latex
@@ -90,7 +91,7 @@ class Instance:
         logger.info('parser domain and problem')
         logger.info(self.domain_path)
         logger.info(self.problem_path)
-        domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals = pddl_parser.run(self.domain_path,self.problem_path)
+        domain_name,problem_name,entities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,nesting_base = pddl_parser.run(self.domain_path,self.problem_path)
 
         
         # loading external function
@@ -118,9 +119,12 @@ class Instance:
             self.external_function.logger.handlers = logger.handlers
             logger.info(f"External function exists")
             
+
+        logger.info(f'Initialize epistemic handler')
+        epistemic_model = EpistemicModel(logger_handlers,entities,functions,function_schemas,self.external_function,nesting_base)
             
         logger.info(f'Initialize problem')
-        problem = Problem(enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,self.external_function,handlers=logger_handlers)
+        problem = Problem(entities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,epistemic_model,self.external_function,handlers=logger_handlers)
         problem.domain_path = self.domain_path
         problem.problem_path = self.problem_path
         problem.logger.handlers = logger.handlers
@@ -172,7 +176,7 @@ class Instance:
         logger.info(self.domain_path)
         logger.info(self.problem_path)
         # pddl_parser.run(self.domain_path,self.problem_path)
-        domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals = pddl_parser.run(self.domain_path,self.problem_path)
+        domain_name,problem_name,entities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,nesting_base = pddl_parser.run(self.domain_path,self.problem_path)
         # logger.info(f"loading problem file: {self.problem_path}")
         # variable_domains,i_state,g_states,agent_index,obj_index,variables,vd_name,p_name= pddl_parser.problemParser(self.problem_path)
         # logger.info(f"finish loading problem file: {p_name}")
@@ -203,8 +207,12 @@ class Instance:
             logger.info(f"External function exists")
             
             
+        logger.info(f'Initialize epistemic handler')
+        epistemic_model = EpistemicModel(logger_handlers,entities,functions,function_schemas,self.external_function,nesting_base)
+            
         logger.info(f'Initialize problem')
-        problem = Problem(enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,self.external_function,handlers=logger_handlers)
+        problem = Problem(entities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,epistemic_model,self.external_function,handlers=logger_handlers)
+
         problem.domain_path = self.domain_path
         problem.problem_path = self.problem_path
         problem.logger.handlers = logger.handlers

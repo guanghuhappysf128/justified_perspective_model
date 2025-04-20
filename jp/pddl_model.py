@@ -23,7 +23,7 @@ from util import ActionSchema,Type,Function,FunctionSchema
 from util import VARIABLE_FILLER
 # Class of the problem
 class Problem:
-    def __init__(self, enetities,types: typing.Dict[str,Type],function_schemas: typing.Dict[str,FunctionSchema],action_schemas: typing.Dict[str,ActionSchema],rules,functions:typing.Dict[str,Function],initial_state,goals, external=None,handlers=None):
+    def __init__(self, enetities,types: typing.Dict[str,Type],function_schemas: typing.Dict[str,FunctionSchema],action_schemas: typing.Dict[str,ActionSchema],rules,functions:typing.Dict[str,Function],initial_state,goals, epistemic_model, external=None,handlers=None):
         
         self.logger = None
         self.logger = setup_logger(LOGGER_NAME,handlers,logger_level=LOGGER_LEVEL)
@@ -69,8 +69,10 @@ class Problem:
 
         self.domain_path = ""
         self.problem_path = ""
+
+        self.epistemic_model = epistemic_model
         
-        self.epistemic_model = EpistemicModel(handlers,self.entities,self.functions,self.function_schemas,self.external)
+
 
     def generate_successor(self,state:typing.Dict[str,any],action: Action,previous_path):
         self.logger.debug("generate successor for action: %s",action.name)

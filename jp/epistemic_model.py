@@ -20,12 +20,13 @@ from util import eq_ternay_dict,Ternary,ConditionOperatorType
 from util import EpistemicGroupType,EpistemicType,ep_type_dict
 from util import evaluation,compareTernary,bool2Ternary_dict,format_JPstr2PerspectiveKey,str_replace_last
 from util import special_value
+from util import USSequence,HSSequence,NestingUpdate,inNestingBase
 
 class EpistemicModel:
 
     
     
-    def __init__(self, handlers, entities, functions, function_schemas, external):
+    def __init__(self, handlers, entities, functions, function_schemas, external,nesting_base=set()):
         self.logger = setup_logger(LOGGER_NAME,handlers,logger_level=LOGGER_LEVEL) 
         self.logger.info("initialize epistemic model")
         # self.logger = setup_logger(LOGGER_NAME,handlers,logger_level=LOGGER_LEVEL) 
@@ -33,6 +34,7 @@ class EpistemicModel:
         self.functions = functions
         self.function_schemas = function_schemas
         self.external = external
+        self.nesting_base = nesting_base
         self.goal_p_keys = None
         self.pre_p_keys = None
         self.all_p_keys = list()
@@ -57,7 +59,8 @@ class EpistemicModel:
             if ep_formula.epf_type == EPFType.EP:
                 eq_str = ep_formula.ep_query
                 condition = ep_formula.ep_varphi
-                output = self.eval_eq(eq_str,condition, GLOBAL_PERSPECTIVE_INDEX, state_sequence, p_dict)
+                nesting_base = self.nesting_base.copy()
+                output = self.eval_eq(eq_str,condition, GLOBAL_PERSPECTIVE_INDEX, state_sequence, nesting_base,p_dict)
                 if operator == ConditionOperatorType.EQUAL:
                     result = output == target_value
                 elif operator == ConditionOperatorType.NOT_EQUAL:
@@ -80,7 +83,8 @@ class EpistemicModel:
 
                     
                 else:
-                    self.generate_ps_from_jp_query(jp_str, GLOBAL_PERSPECTIVE_INDEX, state_sequence, p_dict)
+                    nesting_base = self.nesting_base.copy()
+                    self.generate_ps_from_jp_query(jp_str, GLOBAL_PERSPECTIVE_INDEX, state_sequence, nesting_base, p_dict)
                     if not p_key in p_dict.keys():
                         raise ValueError("p_key is not generated correctly",p_key,condition,p_dict.keys())
                     local_perspective = p_dict[p_key]
@@ -110,7 +114,8 @@ class EpistemicModel:
                 local_perspective = p_dict[p_key]
                 local_state = local_perspective[-1]                
             else:
-                self.generate_ps_from_jp_query(jp_str, GLOBAL_PERSPECTIVE_INDEX, state_sequence, p_dict)
+                nesting_base = self.nesting_base.copy()
+                self.generate_ps_from_jp_query(jp_str, GLOBAL_PERSPECTIVE_INDEX, state_sequence, nesting_base, p_dict)
                 if not p_key in p_dict.keys():
                     raise ValueError("p_key is not generated correctly",p_key,p_dict.keys())
                 local_perspective = p_dict[p_key]
@@ -124,7 +129,7 @@ class EpistemicModel:
                 result_dict[jp_name] = value2
         return result_dict,p_dict
 
-    def generate_ps_from_jp_query(self, jp_str, parent_prefix, state_sequence, input_ps):
+    def generate_ps_from_jp_query(self, jp_str, parent_prefix, state_sequence, nesting_base, input_ps):
         query_content_list = jp_str.split(" ")
         self.logger.debug(query_content_list)
         if not len(query_content_list) >=2:
@@ -143,7 +148,7 @@ class EpistemicModel:
                 raise ValueError("agent_id is not in the correct format (Should only contain one agent based on b/s/k)",agent_id_str,jp_str)
             agent_index = agent_id_str
             # new_p = self.generate_os(state_sequence,agent_index)
-            self.handle_ps_from_jp_single(jp_type,agent_index,rest_jp_str, parent_prefix,state_sequence, input_ps)
+            self.handle_ps_from_jp_single(jp_type,agent_index,rest_jp_str, parent_prefix,state_sequence, nesting_base, input_ps)
             
             return 
         elif jp_group_type == EpistemicGroupType.Uniform:
@@ -235,15 +240,29 @@ class EpistemicModel:
         return -1
                  
         
-    def handle_ps_from_jp_single(self,jp_type,agent_index,rest_eq_str, parent_prefix,state_sequence, input_ps):
+    def handle_ps_from_jp_single(self,jp_type,agent_index,rest_eq_str, parent_prefix,state_sequence, nesting_base, input_ps):
         # os_key_str = parent_prefix + "o ["+agent_index + "] "
         # if os_key_str in input_ps.keys():
         #     os = input_ps[os_key_str]
         # else:
         #     
         #     input_ps[os_key_str] = os
-        os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
+        if nesting_base == None:
+            os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
+            new_nesting_base = None
+        elif inNestingBase(agent_index,nesting_base):
+            # os_key_str should be the same
+            os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
+            new_nesting_base = NestingUpdate(agent_index,nesting_base)
+        else:
+            # return a sequence of states full with unknown
+            os_key_str = parent_prefix + "o ["+agent_index + "] "
+            os = USSequence(state_sequence)
+            new_nesting_base = NestingUpdate(agent_index,nesting_base)
         
+
+
+
         if jp_type == EpistemicType.Knowledge or jp_type == EpistemicType.Seeing:
             if rest_eq_str == '':
                 return
@@ -252,6 +271,7 @@ class EpistemicModel:
                     jp_str=rest_eq_str,
                     parent_prefix=os_key_str,
                     state_sequence=os,
+                    nesting_base=new_nesting_base,
                     input_ps=input_ps)
                 return 
                 
@@ -264,13 +284,20 @@ class EpistemicModel:
                     jp_str=rest_eq_str,
                     parent_prefix=ps_key_str,
                     state_sequence=ps,
+                    nesting_base=new_nesting_base,
                     input_ps=input_ps)
             # need to generate ps based on os
             pass
         else:
             raise ValueError("jp_type is not defined yet",jp_type)
+            
 
-    def eval_eq(self,eq_query_str, condition, parent_prefix,state_sequence, input_ps):
+
+
+
+            
+
+    def eval_eq(self,eq_query_str, condition, parent_prefix,state_sequence, nesting_base, input_ps):
         eq_query_content_list = eq_query_str.split(" ")
         self.logger.debug(eq_query_content_list)
         if not len(eq_query_content_list) >=3:
@@ -294,7 +321,7 @@ class EpistemicModel:
                 raise ValueError("agent_id is not in the correct format (Should only contain one agent based on b/s/k)",agent_id_str,eq_query_str)
             agent_index = agent_id_str
             
-            result = self.eval_eq_single_agent(ep_type,agent_index,rest_eq_str,condition, parent_prefix,state_sequence, input_ps)
+            result = self.eval_eq_single_agent(ep_type,agent_index,rest_eq_str,condition, parent_prefix,state_sequence,nesting_base, input_ps)
             self.logger.debug(result)
             return compareTernary(eq_ternary_type,result)
             # return self.eval_eq_in_ps(eq_query_str,new_prefix, parent_prefix, state_sequence)
@@ -307,7 +334,7 @@ class EpistemicModel:
         else:
             raise ValueError("Wrong ep group type")
     
-    def eval_eq_single_agent(self,ep_type,agent_index,rest_eq_str,condition:Condition, parent_prefix,state_sequence, input_ps):
+    def eval_eq_single_agent(self,ep_type,agent_index,rest_eq_str,condition:Condition, parent_prefix,state_sequence,nesting_base, input_ps):
         
         # os_key_str = parent_prefix + "o ["+agent_index + "] "
         # if os_key_str in input_ps.keys():
@@ -315,7 +342,20 @@ class EpistemicModel:
         # else:
         #     os = self.generate_os(state_sequence,agent_index)
         #     input_ps[os_key_str] = os
-        os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
+        if nesting_base == None:
+            os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
+            new_nesting_base = None
+        elif inNestingBase(agent_index,nesting_base):
+            # os_key_str should be the same
+            os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
+            new_nesting_base = NestingUpdate(agent_index,nesting_base)
+        else:
+            # return a sequence of states full with unknown
+            os_key_str = parent_prefix + "o ["+agent_index + "] "
+            os = USSequence(state_sequence)
+            new_nesting_base = NestingUpdate(agent_index,nesting_base)
+        
+        # os,os_key_str = self.generate_os(agent_index,parent_prefix,state_sequence,input_ps)
            
         if ep_type == EpistemicType.Knowledge:
             if rest_eq_str == '':
@@ -334,7 +374,7 @@ class EpistemicModel:
                 return evaluation(self.logger,operator,value1,value2)
             else:
                 # it means there is still nesting query
-                return self.eval_eq(rest_eq_str,condition, os_key_str, os,input_ps)
+                return self.eval_eq(rest_eq_str,condition, os_key_str, os,new_nesting_base,input_ps)
         elif ep_type == EpistemicType.Seeing:
             if rest_eq_str == '':
                 # this is the last level, we need to evaluate the condition
@@ -343,7 +383,7 @@ class EpistemicModel:
                 return bool2Ternary_dict[variable1_name in os[-1].keys()]
             else:
                 # it means there is still nesting query
-                return bool2Ternary_dict[self.eval_eq(rest_eq_str,condition, os_key_str, os, input_ps)!= Ternary.UNKNOWN]
+                return bool2Ternary_dict[self.eval_eq(rest_eq_str,condition, os_key_str, os,new_nesting_base, input_ps)!= Ternary.UNKNOWN]
                 
         elif ep_type == EpistemicType.Belief:
             ps,ps_key_str = self.generate_ps(os_key_str, os,state_sequence, input_ps)
@@ -362,7 +402,7 @@ class EpistemicModel:
                     value2 = ps[-1][variable2_name]
                 return evaluation(self.logger,operator,value1,value2)
             else:
-                return self.eval_eq(rest_eq_str,condition, ps_key_str,ps, input_ps)
+                return self.eval_eq(rest_eq_str,condition, ps_key_str,ps,new_nesting_base, input_ps)
         else:
             raise ValueError("ep_type is not defined yet",ep_type)
             
