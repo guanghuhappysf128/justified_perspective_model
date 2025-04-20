@@ -12,81 +12,9 @@ timestamp = datetime.datetime.now().astimezone(TIMEZONE).strftime(DATE_FORMAT)
 # logging.basicConfig(filename =f'logs/{timestamp}.log', level =logging.DEBUG)
 
 LINE_BREAK = r"&"
-PDDL_PREFIX = r"(define"
-PDDL_SURFIX = r")"
-
-# domain file constants
-DOMAIN_NAME_REG_PREFIX = r"\(domain "
-DOMAIN_NAME_REG = r"[0-9a-z_]*"
-DOMAIN_NAME_REG_SURFIX = r"\)"
-
-TYPING_REG_PREFIX = r"\(:types"
-TYPING_REG = r"[&0-9a-z_\- ]*"
-TYPING_REG_SURFIX = r"\)"
-
-FUNC_REG_PREFIX = r"\(:functions"
-FUNC_REG = r"(\([\w \-\?]*\))*"
-FUNC_REG_SURFIX = r"\)"
-
-ACTION_REG_PREFIX = r"\(:action "
-ACTION_REG = r".*"
-ACTION_REG_SURFIX = r"\)"
-
-PARAMETERS_REG_PREFIX = r":parameters\("
-PARAMETERS_REG = r"(.*?)"
-PARAMETERS_REG_SURFIX = r"\)"
-
-EFFECT_REG_PREFIX = r":effect\("
-EFFECT_REG = r".*"
-EFFECT_REG_SURFIX = r"\)"
-
-PRECONDITION_REG_PREFIX = r":precondition\("
-PRECONDITION_REG = r".*"
-PRECONDITION_REG_SURFIX = r"\)"
-
-# EFFECT_CONDITION_REG_PREFIX = r"\("
-# EFFECT_CONDITION_REG = r"(assign|increase|decrease) \(\w*\??\w*\) \(\@jp \(\"[\w \[\]]*\"\) \(\w*\??\w*\)\)"
-# EFFECT_CONDITION_REG_SURFIX = r"\)"
+PDDL_PREFIX = "(define"
+PDDL_SURFIX = ")"
 JP_PREFIX = r"@jp"
-
-# problem file constants
-PROBLEM_NAME_REG_PREFIX = r"\(problem "
-PROBLEM_NAME_REG = r"\w*"
-PROBLEM_NAME_REG_SURFIX = r"\)"
-
-PROBLEM_DOMAIN_NAME_REG_PREFIX = r"\(:domain "
-PROBLEM_DOMAIN_NAME_REG = r"[0-9a-z_]*"
-PROBLEM_DOMAIN_NAME_REG_SURFIX = r"\)"
-
-
-AGENT_REG_PREFIX = r"\(:agents"
-AGENT_REG = r"[\w \&\-]*"
-AGENT_REG_SURFIX = r"\)"
-
-AGENTSPEC_REG_PREFIX = r"\(:agent_spec"
-
-AGENTSPEC_REG_SURFIX = r"\)"
-
-
-OBJECT_REG_PREFIX = r"\(:objects"
-OBJECT_REG = r"[\w \&\-]*"
-OBJECT_REG_SURFIX = r"\)"
-
-INIT_REG_PREFIX = r"\(:init"
-INIT_REG = r"(\(assign [\w \-\'\"\(\)]*\))*"
-INIT_REG_SURFIX = r"\)"
-
-RANGE_REG_PREFIX = r"\(:ranges"
-RANGE_REG = r"(\([\w \-\[\]\'\,]*\))*"
-RANGE_REG_SURFIX = r"\)"
-
-RULE_REG_PREFIX = r"\(:rules"
-RULE_REG = r"(\(\w* \([\w ]*\) \[[\w,]*\]\))*"
-RULE_REG_SURFIX = r"\)"
-
-GOAL_REG_PREFIX = r"\(:goal\(and"
-GOAL_REG = r".*"
-GOAL_REG_SURFIX = r"\)\)"
 
 LOGGER_NAME = r"pddl_parser"
 LOGGER_LEVEL = logging.INFO
@@ -115,6 +43,37 @@ FUNCTIONS_SURFIX = ")"
 ACTION_PREFIX = "(:action"
 ACTION_SURFIX = ")"
 
+PROBLEM_NAME_PREFIX = "(:problem"
+PROBLEM_NAME_SURFIX = ")"
+
+PROBLEM_DOMAIN_NAME_PREFIX = "(:domain "
+PROBLEM_DOMAIN_NAME_SURFIX = ")"
+
+AGENT_PREFIX = "(:agents"
+AGENT_SURFIX = ")"
+
+AGENT_SPEC_PREFIX = "(:agent_spec"
+AGENT_SPEC_SURFIX = ")"
+
+NESTING_PREFIX = "(:nesting"
+NESTING_SURFIX = ")"
+
+OBJECT_PREFIX = "(:objects"
+OBJECT_SURFIX = ")"
+
+INIT_PREFIX = "(:init"
+INIT_SURFIX = ")"
+SINGLE_INIT_PREFIX = "(assign"
+SINGLE_INIT_SURFIX = ")"
+
+GOAL_PREFIX = "(:goal"
+GOAL_SURFIX = ")"
+
+RANGES_PREFIX = "(:ranges"
+RANGES_SURFIX = ")"
+
+RULES_PREFIX = "(:rules"
+RULES_SURFIX = ")"
 
 class PDDLParser:
 
@@ -153,34 +112,42 @@ class PDDLParser:
         domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals = self.problemParser(problem_str,domain_name,types,function_schemas,action_schemas)
         return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals
 
-    def problemParser(self,problem_str,domain_name,types:typing.Dict[str,Type],function_schemas: typing.Dict[str,FunctionSchema] ,action_schemas: typing.Dict[str,ActionSchema]):
+    def problemParser(self,raw_problem_str,domain_name,types:typing.Dict[str,Type],function_schemas: typing.Dict[str,FunctionSchema] ,action_schemas: typing.Dict[str,ActionSchema]):
 
         # checking the prefix and surface of the whole domain file
-        if not problem_str.startswith(PDDL_PREFIX):
+        if not raw_problem_str.startswith(PDDL_PREFIX):
             self.logger.error("the problem file does not start with '%s'",PDDL_PREFIX)
             exit()
-        elif not problem_str.endswith(PDDL_SURFIX):
+        elif not raw_problem_str.endswith(PDDL_SURFIX):
             self.logger.error("the problem file does not end with '%s'",PDDL_SURFIX)
             exit()
-        problem_str = problem_str[len(PDDL_PREFIX):-len(PDDL_SURFIX):]
-        self.logger.debug(repr(problem_str))
+        raw_problem_str = raw_problem_str[len(PDDL_PREFIX):-len(PDDL_SURFIX):]
+        self.logger.debug(repr(raw_problem_str))
 
+        sectional_text_list = find_each_section(raw_problem_str)
+        self.logger.debug(sectional_text_list)
+        if len(sectional_text_list) < 7:
+            raise ValueError("the problem file should at least contain 6 sections:\n problem_name,domain_name,objects,agents,rules, init and goal")
+        
         # extract problem name
-        problem_name,problem_str = self.keyWordParser("problem_name",PROBLEM_NAME_REG_PREFIX,PROBLEM_NAME_REG,PROBLEM_NAME_REG_SURFIX,problem_str)
+        # problem_name,problem_str = self.keyWordParser("problem_name",PROBLEM_NAME_REG_PREFIX,PROBLEM_NAME_REG,PROBLEM_NAME_REG_SURFIX,problem_str)
+        # self.logger.debug(problem_name)
+        problem_name_str = sectional_text_list.pop(0)
+        problem_name = problem_name_str[len(PROBLEM_NAME_PREFIX):-len(PROBLEM_NAME_SURFIX)]
         self.logger.debug(problem_name)
 
         # extract domain name
-        problem_domain_name,problem_str = self.keyWordParser(
-            "problem_domain_name",
-            PROBLEM_DOMAIN_NAME_REG_PREFIX,
-            PROBLEM_DOMAIN_NAME_REG,
-            PROBLEM_DOMAIN_NAME_REG_SURFIX,
-            problem_str)
+        problem_domain_name_str = sectional_text_list.pop(0)
+        problem_domain_name = problem_domain_name_str[len(PROBLEM_DOMAIN_NAME_PREFIX):-len(PROBLEM_DOMAIN_NAME_SURFIX)]
         self.logger.debug(problem_domain_name)
+
+        if not problem_domain_name == domain_name:
+            raise ValueError("problem domain name [%s] does not match domain name [%s]",problem_domain_name,domain_name)
 
         # extract agents
         enetities : typing.Dict[str,Entity] = {}
-        agents_str,problem_str = self.keyWordParser("agents",AGENT_REG_PREFIX,AGENT_REG,AGENT_REG_SURFIX,problem_str)
+        # agents_str,problem_str = self.keyWordParser("agents",AGENT_REG_PREFIX,AGENT_REG,AGENT_REG_SURFIX,problem_str)
+        agents_str = sectional_text_list.pop(0)[len(AGENT_PREFIX):-len(AGENT_SURFIX)]
         self.logger.debug(agents_str)
         pattern = r"\&[\w -]*"
         single_type_agents_str_list = re.findall(pattern, agents_str)
@@ -198,11 +165,33 @@ class PDDLParser:
                 agent_set.add(agent_index)
         for agent_index in agent_set:
             enetities.update({agent_index:Entity(agent_index,EntityType.AGENT)})
-        
         self.logger.debug(types)
 
+        # optional section
+        # extract agent_spec
+        agent_spec_str = sectional_text_list.pop(0)
+        self.logger.debug(agent_spec_str)
+        if agent_spec_str.startswith(AGENT_SPEC_PREFIX):
+            # handle agent specs
+            self.logger.debug("handle agent spec")
+            pass
+        else:
+            # this is not an agent spec, put it back
+            sectional_text_list.insert(0,agent_spec_str)
+
+        # opitional section
+        # extract nesting
+        nesting_str = sectional_text_list.pop(0)
+        if nesting_str.startswith(NESTING_PREFIX):
+            # handle nesting
+            pass
+        else:
+            # this is not a nesting, put it back
+            sectional_text_list.insert(0,nesting_str)
+
         # extract objects
-        objects_str,problem_str = self.keyWordParser("objects",OBJECT_REG_PREFIX,OBJECT_REG,OBJECT_REG_SURFIX,problem_str)
+        # objects_str,problem_str = self.keyWordParser("objects",OBJECT_REG_PREFIX,OBJECT_REG,OBJECT_REG_SURFIX,problem_str)
+        objects_str = sectional_text_list.pop(0)[len(OBJECT_PREFIX):-len(OBJECT_SURFIX)]
         self.logger.debug(objects_str)
         pattern = r"\&[\w -]*"
         single_type_objects_str_list = re.findall(pattern, objects_str)
@@ -226,37 +215,55 @@ class PDDLParser:
             enetities.update({object_index:Entity(object_index,EntityType.OBJECT)})
         self.logger.debug(types)
 
-        rules : typing.Dict[str,Rule] = {}
-        # extract rules first
-        rules_str,len_holder = self.keyWordParser("rules",RULE_REG_PREFIX,RULE_REG,RULE_REG_SURFIX,problem_str)
-        problem_str = problem_str[:len(len_holder)]
-        self.logger.debug(rules_str)
-        self.logger.debug(problem_str)
-        pattern = r"\(\w* \([\w ]*\) \[[\w,]*\]\)"
-        single_rule_str_list = re.findall(pattern, rules_str)
-        self.logger.debug(single_rule_str_list)
-        for single_rule_str in single_rule_str_list:
-            self.logger.debug(single_rule_str)
-            rule_str = single_rule_str[1:-1:]
-            self.logger.debug(rule_str)
-            rule_type_str = rule_str.split(" ")[0]
-            rule_type = rule_type_dict[rule_type_str]
-            rule_str = rule_str[len(rule_type_str)+2:]
-            function_name = rule_str.split(") ")[0]
-            rule_content = rule_str.split(") ")[1][1:-1].split(",")
-            new_rule = Rule(function_name,rule_type,rule_content)
-            rules.update({function_name:new_rule})
-        self.logger.debug(rules)
+        # with types and function_schema (domain.pddl)
+        # adding objects and agents, we can ground all functions
+        # initialise all functions
+        functions : typing.Dict[str,Function] = {}
+        for function_schema in function_schemas.values():
+            if function_schema.content_type_list == []:
+                # this function_schema does not have any input
+                function_name = function_schema.name
+                functions.update({function_name:Function(function_name,function_schema.name,[])})
+            else:
+                
+                entity_list = [[]]
+                for type_name in function_schema.content_type_list:
+                    temp_entity = types[type_name].entity_index_list
+                    entity_list = [x + [y] for x in entity_list for y in temp_entity]
+                for entity in entity_list:
+
+                    function_name = f"{function_schema.name} {' '.join(entity)}"
+                    functions.update({function_name:Function(function_name,function_schema.name,entity)})
+        self.logger.debug(functions)
 
 
+        
+        # extract initial state str
+        # init states can only be extracted when the range is finalised
+        init_str  = sectional_text_list.pop(0)
+        self.logger.debug(init_str)
+        if not init_str.startswith(INIT_PREFIX):
+            raise ValueError("init string should start with %s",INIT_PREFIX)
+        init_str = init_str[len(INIT_PREFIX):-len(INIT_SURFIX):]
+        self.logger.debug(init_str)
 
-        # extract the range first
-        ranges_str,len_holder = self.keyWordParser("ranges",RANGE_REG_PREFIX,RANGE_REG,RANGE_REG_SURFIX,problem_str)
-        problem_str = problem_str[:len(len_holder)]
+        # exrtact goal str
+        # goal states can only be extracted when the range is finalised
+        goal_str = sectional_text_list.pop(0)
+        self.logger.debug(goal_str)
+        if not goal_str.startswith(GOAL_PREFIX):
+            raise ValueError("goal string should start with %s",GOAL_PREFIX)
+        goal_str = goal_str[len(GOAL_PREFIX):-len(GOAL_SURFIX):]
+        self.logger.debug(goal_str)
+
+       # extract the ranges and update the function_schemas
+        # ranges_str,len_holder = self.keyWordParser("ranges",RANGE_REG_PREFIX,RANGE_REG,RANGE_REG_SURFIX,problem_str)
+        ranges_str = sectional_text_list.pop(0)
         self.logger.debug(ranges_str)
-        self.logger.debug(problem_str)
-        pattern = r"\([\w \-\[\]\'\,]*\)"
-        single_range_str_list = re.findall(pattern, ranges_str)
+        if not ranges_str.startswith(RANGES_PREFIX):
+            raise ValueError("ranges string should start with %s",RANGES_PREFIX)
+        ranges_str = ranges_str[len(RANGES_PREFIX):-len(RANGES_SURFIX):]
+        single_range_str_list = find_each_section(ranges_str)
         self.logger.debug(single_range_str_list)
         for single_range_str in single_range_str_list:
             self.logger.debug("single range")
@@ -289,86 +296,45 @@ class PDDLParser:
             function_schemas[function_schema_name].value_type = value_type
 
 
-        # generate a template state
-        # TODO
-        # initialise all functions
-        functions : typing.Dict[str,Function] = {}
-        for function_schema in function_schemas.values():
-            if function_schema.content_type_list == []:
-                # this function_schema does not have any input
-                function_name = function_schema.name
-                functions.update({function_name:Function(function_name,function_schema.name,[])})
-            else:
-                
-                entity_list = [[]]
-                for type_name in function_schema.content_type_list:
-                    temp_entity = types[type_name].entity_index_list
-                    entity_list = [x + [y] for x in entity_list for y in temp_entity]
-                for entity in entity_list:
 
-                    function_name = f"{function_schema.name} {' '.join(entity)}"
-                    functions.update({function_name:Function(function_name,function_schema.name,entity)})
-        self.logger.debug(functions)
 
-        # intialise static rule for all functions that does not have a rule
+        # optional section
+        # extract rules first
+        # rules_str,len_holder = self.keyWordParser("rules",RULE_REG_PREFIX,RULE_REG,RULE_REG_SURFIX,problem_str)
+        rules : typing.Dict[str,Rule] = {}
+        rules_str = sectional_text_list.pop(0)
+        self.logger.debug(rules_str)
+        if rules_str.startswith(RULES_PREFIX):
+            rules_str = rules_str[len(RULES_PREFIX):-len(RULES_SURFIX):]
+            self.logger.debug(rules_str)
+            single_rule_str_list = find_each_section(rules_str)
+            self.logger.debug(single_rule_str_list)
+            for single_rule_str in single_rule_str_list:
+                self.logger.debug(single_rule_str)
+                rule_str = single_rule_str[1:-1:]
+                self.logger.debug(rule_str)
+                rule_type_str = rule_str.split(" ")[0]
+                rule_type = rule_type_dict[rule_type_str]
+                rule_str = rule_str[len(rule_type_str)+2:]
+                function_name = rule_str.split(") ")[0]
+                rule_content = rule_str.split(") ")[1][1:-1].split(",")
+                new_rule = Rule(function_name,rule_type,rule_content)
+                rules.update({function_name:new_rule})
+            self.logger.debug(rules)
+        else:
+            raise ValueError("rules string should start with %s",RULES_PREFIX)
+
+
+        # intialise static rule for all functions without a specified rule
         for function_name in functions.keys():
             if not function_name in rules.keys():
                 rules.update({function_name:Rule(function_name,RULE_TYPE.STATIC,[])})
-        # self.logger.debug(len(functions))
-        # self.logger.debug(len(rules))
 
-
-        # update the action_schema
-        for action_schema in action_schemas.values():
-            self.logger.debug(action_schema.name)
-            for pre_str,precondition in action_schema.preconditions.items():
-                if not precondition.target_value == None:
-                    if precondition.condition_type == ConditionType.ONTIC:
-                        function_schema_name = self.precondition_variable2function_schema_name(precondition.condition_variable)
-                        value_type = function_schemas[function_schema_name].value_type
-                        precondition.target_value = self.str2value(value_type,precondition.target_value)
-                    elif precondition.condition_type == ConditionType.EP:
-                        ep_formula = precondition.condition_formula
-                        ep_formula_type = ep_formula.epf_type
-                        if ep_formula_type == EPFType.JP:
-                            function_schema_name = self.precondition_variable2function_schema_name(ep_formula.ep_variable)
-                            value_type = function_schemas[function_schema_name].value_type
-                            precondition.target_value = self.str2value(value_type,precondition.target_value)
-                        elif ep_formula_type == EPFType.EP:
-                            varphi = ep_formula.ep_varphi
-                            function_schema_name = self.precondition_variable2function_schema_name(varphi.condition_variable)
-                            value_type = function_schemas[function_schema_name].value_type
-                            varphi.target_value = self.str2value(value_type,varphi.target_value)
-                            # precondition.condition_formula = ep_formula
-                        else:
-                            raise ValueError("precondition %s epf type is invalid",precondition)
-                    else:
-                        raise ValueError("precondition %s condition_type is invalid",precondition)
-            
-            for effect in action_schema.effects.values():
-                if not effect.target_variable_name == None:
-                    if effect.update_type == UpdateType.ONTIC:
-                        # there is nothing to change for an ontic effect
-                        pass
-                    elif effect.update_type == UpdateType.CONSTENT:
-                        function_schema_name = self.precondition_variable2function_schema_name(effect.target_variable_name)
-                        value_type = function_schemas[function_schema_name].value_type
-                        effect.update = self.str2value(value_type,effect.update)
-                        if effect.effect_type == EffectType.INCREASE or effect.effect_type == EffectType.DECREASE:
-                            effect.update = int(effect.update)
-                    elif effect.update_type == UpdateType.EPSITEMIC:
-                        # there is nothing to change for an epistemic effect
-                        pass
-                    else:
-                        raise ValueError("effect %s update type is invalid",effect)
-        self.logger.debug(action_schemas)
-
-        self.logger.debug(repr(problem_str))
+        # init_str,problem_str = self.keyWordParser("init",INIT_REG_PREFIX,INIT_REG,INIT_REG_SURFIX,problem_str)
+        # pattern = r"\(assign \([\w ]*\) [ \-\w\'\"]*\)"
+        # single_init_str_list = re.findall(pattern, init_str)
         initial_state: typing.Dict[str,any] = {}
-        # extract initial state
-        init_str,problem_str = self.keyWordParser("init",INIT_REG_PREFIX,INIT_REG,INIT_REG_SURFIX,problem_str)
-        pattern = r"\(assign \([\w ]*\) [ \-\w\'\"]*\)"
-        single_init_str_list = re.findall(pattern, init_str)
+        single_init_str_list = find_each_section(init_str)
         self.logger.debug(single_init_str_list)
         for single_init_str in single_init_str_list:
             if not single_init_str.startswith("(assign"):
@@ -382,17 +348,10 @@ class PDDLParser:
                 value = self.str2value(value_type,value_str)
                 initial_state.update({variable_name:value})
              
-        
-        self.logger.debug(problem_str)           
+                  
         # extract goal
-        goal_str,problem_str = self.keyWordParser("goal",GOAL_REG_PREFIX,GOAL_REG,GOAL_REG_SURFIX,problem_str)
-        self.logger.debug(goal_str)
-        # extract goal propositions
-        # regualr expression does not work
-        # pattern = r'\(.*?\)'
-        # goal_proposition_str_list = re.findall(pattern, goal_str)
-        
-        
+        if goal_str.startswith("(and"):
+            goal_str = goal_str[4:-1:]
         goal_proposition_str_list = find_each_section(goal_str)
         self.logger.debug(goal_proposition_str_list)
         goals : typing.Dict[str,Condition] = {}
@@ -475,6 +434,58 @@ class PDDLParser:
                 # effect = self.parsingEffect(goal_proposition_str,"goal")
                 # self.logger.debug(effect)
         self.logger.debug(goals)
+
+
+ 
+
+
+
+        # update the action_schema
+        for action_schema in action_schemas.values():
+            self.logger.debug(action_schema.name)
+            for pre_str,precondition in action_schema.preconditions.items():
+                if not precondition.target_value == None:
+                    if precondition.condition_type == ConditionType.ONTIC:
+                        function_schema_name = self.precondition_variable2function_schema_name(precondition.condition_variable)
+                        value_type = function_schemas[function_schema_name].value_type
+                        precondition.target_value = self.str2value(value_type,precondition.target_value)
+                    elif precondition.condition_type == ConditionType.EP:
+                        ep_formula = precondition.condition_formula
+                        ep_formula_type = ep_formula.epf_type
+                        if ep_formula_type == EPFType.JP:
+                            function_schema_name = self.precondition_variable2function_schema_name(ep_formula.ep_variable)
+                            value_type = function_schemas[function_schema_name].value_type
+                            precondition.target_value = self.str2value(value_type,precondition.target_value)
+                        elif ep_formula_type == EPFType.EP:
+                            varphi = ep_formula.ep_varphi
+                            function_schema_name = self.precondition_variable2function_schema_name(varphi.condition_variable)
+                            value_type = function_schemas[function_schema_name].value_type
+                            varphi.target_value = self.str2value(value_type,varphi.target_value)
+                            # precondition.condition_formula = ep_formula
+                        else:
+                            raise ValueError("precondition %s epf type is invalid",precondition)
+                    else:
+                        raise ValueError("precondition %s condition_type is invalid",precondition)
+            
+            for effect in action_schema.effects.values():
+                if not effect.target_variable_name == None:
+                    if effect.update_type == UpdateType.ONTIC:
+                        # there is nothing to change for an ontic effect
+                        pass
+                    elif effect.update_type == UpdateType.CONSTENT:
+                        function_schema_name = self.precondition_variable2function_schema_name(effect.target_variable_name)
+                        value_type = function_schemas[function_schema_name].value_type
+                        effect.update = self.str2value(value_type,effect.update)
+                        if effect.effect_type == EffectType.INCREASE or effect.effect_type == EffectType.DECREASE:
+                            effect.update = int(effect.update)
+                    elif effect.update_type == UpdateType.EPSITEMIC:
+                        # there is nothing to change for an epistemic effect
+                        pass
+                    else:
+                        raise ValueError("effect %s update type is invalid",effect)
+        self.logger.debug(action_schemas)
+
+
         return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals
 
     def keyWordParser(self,keyword,reg_prefix,reg_str,reg_surfix,input_str):
@@ -520,7 +531,6 @@ class PDDLParser:
         
         # extract domain name
         domain_name_str = sectional_text_list[0]
-        # domain_name,_ = self.keyWordParser("domain_name",DOMAIN_NAME_REG_PREFIX,DOMAIN_NAME_REG,DOMAIN_NAME_REG_SURFIX,domain_name_str)
         domain_name = domain_name_str[len(DOMAIN_NAME_PREFIX):-len(DOMAIN_NAME_SURFIX)]
         self.logger.debug(domain_name)
 
