@@ -43,7 +43,7 @@ FUNCTIONS_SURFIX = ")"
 ACTION_PREFIX = "(:action"
 ACTION_SURFIX = ")"
 
-PROBLEM_NAME_PREFIX = "(:problem"
+PROBLEM_NAME_PREFIX = "(problem "
 PROBLEM_NAME_SURFIX = ")"
 
 PROBLEM_DOMAIN_NAME_PREFIX = "(:domain "
@@ -133,11 +133,15 @@ class PDDLParser:
         # problem_name,problem_str = self.keyWordParser("problem_name",PROBLEM_NAME_REG_PREFIX,PROBLEM_NAME_REG,PROBLEM_NAME_REG_SURFIX,problem_str)
         # self.logger.debug(problem_name)
         problem_name_str = sectional_text_list.pop(0)
+        if not problem_name_str.startswith(PROBLEM_NAME_PREFIX):
+            raise ValueError("problem name string should start with %s",PROBLEM_NAME_PREFIX)
         problem_name = problem_name_str[len(PROBLEM_NAME_PREFIX):-len(PROBLEM_NAME_SURFIX)]
         self.logger.debug(problem_name)
 
         # extract domain name
         problem_domain_name_str = sectional_text_list.pop(0)
+        if not problem_domain_name_str.startswith(PROBLEM_DOMAIN_NAME_PREFIX):
+            raise ValueError("problem domain name string should start with %s",PROBLEM_DOMAIN_NAME_PREFIX)
         problem_domain_name = problem_domain_name_str[len(PROBLEM_DOMAIN_NAME_PREFIX):-len(PROBLEM_DOMAIN_NAME_SURFIX)]
         self.logger.debug(problem_domain_name)
 
@@ -147,7 +151,10 @@ class PDDLParser:
         # extract agents
         enetities : typing.Dict[str,Entity] = {}
         # agents_str,problem_str = self.keyWordParser("agents",AGENT_REG_PREFIX,AGENT_REG,AGENT_REG_SURFIX,problem_str)
-        agents_str = sectional_text_list.pop(0)[len(AGENT_PREFIX):-len(AGENT_SURFIX)]
+        agents_raw_string = sectional_text_list.pop(0)
+        if not agents_raw_string.startswith(AGENT_PREFIX):
+            raise ValueError("agents string should start with %s",AGENT_PREFIX)
+        agents_str = agents_raw_string[len(AGENT_PREFIX):-len(AGENT_SURFIX)]
         self.logger.debug(agents_str)
         pattern = r"\&[\w -]*"
         single_type_agents_str_list = re.findall(pattern, agents_str)
@@ -488,56 +495,57 @@ class PDDLParser:
 
         return domain_name,problem_name,enetities,types,function_schemas,action_schemas,rules,functions,initial_state,goals
 
-    def keyWordParser(self,keyword,reg_prefix,reg_str,reg_surfix,input_str):
-        self.logger.debug("extract %s",keyword)
-        inner_str = str()
-        try:
-            pattern = reg_prefix+reg_str+reg_surfix
-            found = re.search(pattern,input_str).group(0)
-            lp = len(re.sub(r'\\([.*+()])', r'\1', reg_prefix))
-            ls = len(re.sub(r'\\([.*+()])', r'\1', reg_surfix))
-            inner_str = found[lp:-ls:]
-            self.logger.debug("Found %s: [%s]",keyword,inner_str)
-        except:
+    # def keyWordParser(self,keyword,reg_prefix,reg_str,reg_surfix,input_str):
+    #     self.logger.debug("extract %s",keyword)
+    #     inner_str = str()
+    #     try:
+    #         pattern = reg_prefix+reg_str+reg_surfix
+    #         found = re.search(pattern,input_str).group(0)
+    #         lp = len(re.sub(r'\\([.*+()])', r'\1', reg_prefix))
+    #         ls = len(re.sub(r'\\([.*+()])', r'\1', reg_surfix))
+    #         inner_str = found[lp:-ls:]
+    #         self.logger.debug("Found %s: [%s]",keyword,inner_str)
+    #     except:
             
-            self.logger.error("error when extract %s",keyword)
-            self.logger.error("pattern is %s",pattern)
-            self.logger.error("target is %s",input_str)
-            # self.logger.error(traceback.format_exc())
-            exit()  
-        output_str = input_str[lp+len(inner_str)+ls:]
-        self.logger.debug(repr(input_str))
-        return inner_str,output_str
+    #         self.logger.error("error when extract %s",keyword)
+    #         self.logger.error("pattern is %s",pattern)
+    #         self.logger.error("target is %s",input_str)
+    #         # self.logger.error(traceback.format_exc())
+    #         exit()  
+    #     output_str = input_str[lp+len(inner_str)+ls:]
+    #     self.logger.debug(repr(input_str))
+    #     return inner_str,output_str
 
 
 
-    def domainParser(self,domain_str):
+    def domainParser(self,raw_domain_str):
         actions = {}
         # checking the prefix and surface of the whole domain file
-        if not domain_str.startswith(PDDL_PREFIX):
+        if not raw_domain_str.startswith(PDDL_PREFIX):
             self.logger.error("the domain file does not start with '%s'",PDDL_PREFIX)
             exit()
-        elif not domain_str.endswith(PDDL_SURFIX):
+        elif not raw_domain_str.endswith(PDDL_SURFIX):
             self.logger.error("the domain file does not end with '%s'",PDDL_SURFIX)
             exit()
-        domain_str = domain_str[len(PDDL_PREFIX):-len(PDDL_SURFIX):]
-        self.logger.debug(repr(domain_str))
-        
-        sectional_text_list = find_each_section(domain_str)
-        self.logger.debug(repr(sectional_text_list))
+        raw_domain_str = raw_domain_str[len(PDDL_PREFIX):-len(PDDL_SURFIX):]
+        self.logger.debug(repr(raw_domain_str))
 
+        sectional_text_list = find_each_section(raw_domain_str)
         if len(sectional_text_list) < 4:
             raise ValueError("the domain file should at least contain 4 sections:\n domain_name,types,functions and at least one action")
         
         # extract domain name
-        domain_name_str = sectional_text_list[0]
+        domain_name_str = sectional_text_list.pop(0)
+        if not domain_name_str.startswith(DOMAIN_NAME_PREFIX):
+            raise ValueError("domain name string should start with %s",DOMAIN_NAME_PREFIX)
         domain_name = domain_name_str[len(DOMAIN_NAME_PREFIX):-len(DOMAIN_NAME_SURFIX)]
         self.logger.debug(domain_name)
 
 
         # extract typing
-        type_str = sectional_text_list[1]
-        # typing_str,_ = self.keyWordParser("types",TYPING_REG_PREFIX,TYPING_REG,TYPING_REG_SURFIX,type_str)
+        type_str = sectional_text_list.pop(0)
+        if not type_str.startswith(TYPE_PREFIX):
+            raise ValueError("type string should start with %s",TYPE_PREFIX)
         typing_str = type_str[len(TYPE_PREFIX):-len(TYPE_SURFIX)]
         self.logger.debug(typing_str)
 
@@ -570,7 +578,9 @@ class PDDLParser:
 
 
         # extra function_schemas
-        function_str = sectional_text_list[2]
+        function_str = sectional_text_list.pop(0)
+        if not function_str.startswith(FUNCTIONS_PREFIX):
+            raise ValueError("function string should start with %s",FUNCTIONS_PREFIX)
         function_schemas : typing.Dict[str,FunctionSchema] = {}
         # all_function_schema_str,domain_str = self.keyWordParser("function_schemas",FUNC_REG_PREFIX,FUNC_REG,FUNC_REG_SURFIX,function_str)
         all_function_schema_str = function_str[len(FUNCTIONS_PREFIX):-len(FUNCTIONS_SURFIX)]
@@ -595,11 +605,13 @@ class PDDLParser:
         action_schemas: typing.Dict[str,ActionSchema] = {}        
         # pattern = r"\(:action.*?(?=\(:action|$)"
         # action_str_list = re.findall(pattern, domain_str)
-        action_str_list = sectional_text_list[3:]
+        action_str_list = sectional_text_list
         self.logger.debug(action_str_list)
         for raw_action_str in action_str_list:
             self.logger.debug(raw_action_str)
             # action_content_str,_ = self.keyWordParser("action",ACTION_REG_PREFIX,ACTION_REG,ACTION_REG_SURFIX,action_str)
+            if not raw_action_str.startswith(ACTION_PREFIX):
+                raise ValueError("action string should start with %s",ACTION_PREFIX)
             action_content_str = raw_action_str[len(ACTION_PREFIX):-len(ACTION_SURFIX)]
             self.logger.debug(action_content_str)
             temp_list = action_content_str.split(LINE_BREAK)
