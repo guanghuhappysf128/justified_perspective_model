@@ -12,7 +12,7 @@ import traceback
 
 LOGGER_NAME = "pddl_model"
 LOGGER_LEVEL = logging.INFO
-# LOGGER_LEVEL = logging.DEBUG
+LOGGER_LEVEL = logging.DEBUG
 
 
 from util import setup_logger
@@ -310,6 +310,7 @@ class Problem:
                         new_ep_formula.ep_query = multiple_parameter_replace(old_ep_formula.ep_query,parameter_replacement,"")
                         
                         if new_ep_formula.epf_type == EPFType.EP:
+                            print("here")
                             new_ep_formula.ep_formula_str = multiple_parameter_replace_with_ep(old_ep_formula.ep_formula_str,parameter_replacement,"")
                             new_varphi = Condition()
                             old_varphi = old_ep_formula.ep_varphi
@@ -319,6 +320,7 @@ class Problem:
                             if old_varphi.target_variable == None:
                                 new_varphi.target_value = old_varphi.target_value
                             elif old_varphi.target_value == None:
+                                print("need to replace the target variable")
                                 new_varphi.target_variable = multiple_parameter_replace(old_varphi.target_variable,parameter_replacement,VARIABLE_FILLER)
                             else:
                                 raise ValueError("One of the condition target variable or value should not be None",precondition_name)

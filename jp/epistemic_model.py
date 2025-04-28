@@ -8,7 +8,7 @@ import copy
 
 LOGGER_NAME = "epistemic_model"
 LOGGER_LEVEL = logging.INFO
-# LOGGER_LEVEL = logging.DEBUG
+LOGGER_LEVEL = logging.DEBUG
 from util import setup_logger
 # from util import ActionList2DictKey,GLOBAL_PERSPECTIVE_INDEX, ROOT_NODE_ACTION
 # from util import raiseNotDefined,eval_var_from_str,Queue
@@ -83,7 +83,10 @@ class EpistemicModel:
 
                     
                 else:
-                    nesting_base = self.nesting_base.copy()
+                    if self.nesting_base:
+                        nesting_base = self.nesting_base.copy()
+                    else:
+                        nesting_base = None
                     self.generate_ps_from_jp_query(jp_str, GLOBAL_PERSPECTIVE_INDEX, state_sequence, nesting_base, p_dict)
                     if not p_key in p_dict.keys():
                         raise ValueError("p_key is not generated correctly",p_key,condition,p_dict.keys())
@@ -114,7 +117,10 @@ class EpistemicModel:
                 local_perspective = p_dict[p_key]
                 local_state = local_perspective[-1]                
             else:
-                nesting_base = self.nesting_base.copy()
+                if self.nesting_base:
+                    nesting_base = self.nesting_base.copy()
+                else:
+                    nesting_base = None
                 self.generate_ps_from_jp_query(jp_str, GLOBAL_PERSPECTIVE_INDEX, state_sequence, nesting_base, p_dict)
                 if not p_key in p_dict.keys():
                     raise ValueError("p_key is not generated correctly",p_key,p_dict.keys())
