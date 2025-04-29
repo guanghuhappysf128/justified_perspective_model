@@ -452,6 +452,19 @@ def global_state_evaluation(logger,operator,value1,value2):
 def evaluation(logger,operator,value1,value2):
     # logger.debug("operator: %s, value1: %s, value2: %s",operator,value1,value2)
     # self.logger.debug("operator: %s, value1: %s, value2: %s",operator,value1,value2)
+    if value2 == NONE_VALUE:
+        if operator == ConditionOperatorType.NOT_EQUAL:
+            if value1 == special_value.HAVENT_SEEN or value1 == special_value.UNSEEN:
+                return False
+            else:
+                return True
+        elif operator == ConditionOperatorType.EQUAL:
+            if value1 == special_value.HAVENT_SEEN or value1 == special_value.UNSEEN:
+                return True
+            else:
+                return False
+        else:
+            raise ValueError("jp.none in a jp formula should only hanlde equal or not equal, the current operator is: %s",operator)
     if operator == ConditionOperatorType.NOT_EQUAL:
         return bool2Ternary_dict[value1 != value2]
     
