@@ -40,25 +40,63 @@ class ExternalFunction:
         function = functions[var_name]
         function_schemas_name = function.function_schema_name
         target_list = function.entity_index_list
-        print(function)
+        # print(function)
         # for the bbl domain, all visibility function should be the same
         # based on whether the agents physically see the objects/agents or not
         # and all functions in bbl domain have only one entity
         if len(target_list) != 1:
             raise ValueError("all function in magic domain should have only one entity: [%s]",var_name)
 
-        print(entities)
-        print(types)
+        # print(entities)
+        # print(types)
         agent_types = []
         for type_name,item in types.items():
             type_obj : Type = item
             if agent_index in type_obj.entity_index_list:
                 agent_types.append(type_name)
 
-        # if 'magician' in agent_types:
-        #     return True
-        # elif 'audience' in 
-        
+        if 'magician' in agent_types:
+            if "peeking" == function_schemas_name:
+                return True
+            elif "peeked" ==  function_schemas_name:
+                return True
+            elif "selected" == function_schemas_name:
+                return True
+            elif "selecting" == function_schemas_name:
+                return True
+            elif "surprised" == function_schemas_name:
+                return True
+            elif "number" == function_schemas_name:
+                if f"peeked {agent_index}" in state and state[f"peeked {agent_index}"] == 1:
+                    return True
+                elif f"peeking {agent_index}" in state and state[f"peeking {agent_index}"] == 1:
+                    return True
+                else:
+                    return False
+            else:
+                raise NotImplementedError("seeing rule for function <%s> has not been defined",var_name)
+        elif 'audience' in agent_types:
+            if "peeking" == function_schemas_name:
+                return False
+            elif "peeked" ==  function_schemas_name:
+                return False
+            elif "selected" == function_schemas_name:
+                return True
+            elif "selecting" == function_schemas_name:
+                return True
+            elif "surprised" == function_schemas_name:
+                return True
+            elif "number" == function_schemas_name:
+                if f"selected {target_list[0]}" in state and state[f"selected {target_list[0]}"] == 1:
+                    return False
+                elif f"selecting {agent_index}" in state and state[f"selecting {agent_index}"] == 1:
+                    return True
+                else:
+                    return False
+            else:
+                raise NotImplementedError("seeing rule for function <%s> has not been defined",var_name)
+        else:
+            raise NotImplementedError("agent types <%s> has not been defined",agent_types)
 
 
         return False

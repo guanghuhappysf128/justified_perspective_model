@@ -30,7 +30,12 @@
         ; 
         (:goal 
             (and 
-                (= (surprised a) 1)
+                ; (= (surprised a) 1)
+                ; (= (peeked m) 1)
+                (!= (@jp ("b [a]") (number c)) jp.none)
+                (= (surprised a) 0)
+                (= (number c) '2')
+                (!= (@jp ("b [a]") (number c)) (number c))
             )
         )
 

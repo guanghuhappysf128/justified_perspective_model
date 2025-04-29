@@ -35,6 +35,7 @@
             (assign (selected ?c) 1)
         )
     )
+
     
     (:action magician_peeking
         :parameters (?m - magician ?c - card)
@@ -82,17 +83,17 @@
         )
     )
 
-    (:action surprise_by_reveal_known_the_value
-        :parameters (?m - magician ?a - audience ?c - card)
-        :precondition (and 
-            (!= (@jp ("b [?m]") (number ?c)) jp.none)
-            (= (@jp ("b [?a] b [?m]") (number ?c)) jp.none)
-            (= (surprised ?a) 0)
-        )
-        :effect (and 
-            (assign (surprised ?a) 1)
-        )
-    )
+    ; (:action surprise_by_reveal_known_the_value
+    ;     :parameters (?m - magician ?a - audience ?c - card)
+    ;     :precondition (and 
+    ;         (!= (@jp ("b [?m]") (number ?c)) jp.none)
+    ;         (= (@jp ("b [?a] b [?m]") (number ?c)) jp.none)
+    ;         (= (surprised ?a) 0)
+    ;     )
+    ;     :effect (and 
+    ;         (assign (surprised ?a) 1)
+    ;     )
+    ; )
     
  
 )
