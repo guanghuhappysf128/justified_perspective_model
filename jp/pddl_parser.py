@@ -41,7 +41,7 @@ TYPE_SURFIX = ")"
 FUNCTIONS_PREFIX = "(:functions"
 FUNCTIONS_SURFIX = ")"
 
-ACTION_PREFIX = "(:action"
+ACTION_PREFIX = "(:action "
 ACTION_SURFIX = ")"
 
 PROBLEM_NAME_PREFIX = "(problem "
@@ -237,7 +237,7 @@ class PDDLParser:
             else:
                 # generate all nesting based on agent's nesting level
                 nesting_base = self.generateNestingBase(local_agent_nesting_dict)
-        print(nesting_base)
+        # print(nesting_base)
 
 
         # extract objects
@@ -626,6 +626,7 @@ class PDDLParser:
         # pattern = r"\(:action.*?(?=\(:action|$)"
         # action_str_list = re.findall(pattern, domain_str)
         action_str_list = sectional_text_list
+        # print(action_str_list)
         self.logger.debug(action_str_list)
         for raw_action_str in action_str_list:
             self.logger.debug(raw_action_str)
