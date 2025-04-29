@@ -121,7 +121,7 @@ class Instance:
             
 
         logger.info(f'Initialize epistemic handler')
-        epistemic_model = EpistemicModel(logger_handlers,entities,functions,function_schemas,self.external_function,nesting_base)
+        epistemic_model = EpistemicModel(logger_handlers,entities,functions,function_schemas,types,self.external_function,nesting_base)
             
         logger.info(f'Initialize problem')
         problem = Problem(entities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,epistemic_model,self.external_function,handlers=logger_handlers)
@@ -208,7 +208,7 @@ class Instance:
             
             
         logger.info(f'Initialize epistemic handler')
-        epistemic_model = EpistemicModel(logger_handlers,entities,functions,function_schemas,self.external_function,nesting_base)
+        epistemic_model = EpistemicModel(logger_handlers,entities,functions,function_schemas,types,self.external_function,nesting_base)
             
         logger.info(f'Initialize problem')
         problem = Problem(entities,types,function_schemas,action_schemas,rules,functions,initial_state,goals,epistemic_model,self.external_function,handlers=logger_handlers)

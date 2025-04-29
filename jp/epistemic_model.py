@@ -26,7 +26,7 @@ class EpistemicModel:
 
     
     
-    def __init__(self, handlers, entities, functions, function_schemas, external,nesting_base=set()):
+    def __init__(self, handlers, entities, functions, function_schemas, types, external,nesting_base=set()):
         self.logger = setup_logger(LOGGER_NAME,handlers,logger_level=LOGGER_LEVEL) 
         self.logger.info("initialize epistemic model")
         # self.logger = setup_logger(LOGGER_NAME,handlers,logger_level=LOGGER_LEVEL) 
@@ -38,6 +38,7 @@ class EpistemicModel:
         self.goal_p_keys = None
         self.pre_p_keys = None
         self.all_p_keys = list()
+        self.types = types
         self.common_iteration_list = list()
 
     def epistemicConditionsHandler(self, epistemic_condition_dict: typing.Dict[str,Condition], path,p_dict):
@@ -429,7 +430,7 @@ class EpistemicModel:
     def get1o(self,parent_state,agt_id):
         new_state = dict()
         for var_index,value in parent_state.items():
-            if self.external.checkVisibility(parent_state,agt_id,var_index,self.entities,self.functions,self.function_schemas):
+            if self.external.checkVisibility(parent_state,agt_id,var_index,self.entities,self.functions,self.function_schemas,self.types):
                 new_state.update({var_index: value})
             else:
                 new_state.update({var_index: special_value.UNSEEN})

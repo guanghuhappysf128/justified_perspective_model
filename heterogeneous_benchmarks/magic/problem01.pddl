@@ -7,6 +7,11 @@
             a - audience
         )
 
+        (:agent_spec
+            (= (nesting a) 1)
+            (= (nesting m) 3)
+        )
+
         (:objects 
             c - card
         )
