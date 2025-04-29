@@ -886,12 +886,12 @@ class PDDLParser:
     
     def str2value(self,value_type,value_str):
         if value_type == VALUE_TYPE.ENUMERATE:
-            if value_str == '.none':##################################
+            if value_str == 'jp.none':##################################
                 value = special_value.HAVENT_SEEN################
             else:
                 value = value_str.replace("'",str())
         elif value_type == VALUE_TYPE.INTEGER:
-            if value_str == '.none':##################################
+            if value_str == 'jp.none':##################################
                 value = special_value.HAVENT_SEEN################
             else:
                 value = int(value_str)
