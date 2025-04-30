@@ -60,17 +60,26 @@ class ExternalFunction:
                 return True
             elif "peeked" ==  function_schemas_name:
                 return True
-            elif "selected" == function_schemas_name:
+            elif "shuffled" == function_schemas_name:
                 return True
-            elif "selecting" == function_schemas_name:
+            elif "shuffling" == function_schemas_name:
                 return True
             elif "surprised" == function_schemas_name:
                 return True
+            elif "revealed" == function_schemas_name:
+                return True
+            elif "initial_number" == function_schemas_name:
+                return False
+            elif "audience_chosen_number" == function_schemas_name:
+                return False
             elif "number" == function_schemas_name:
                 if f"peeked {agent_index}" in state and state[f"peeked {agent_index}"] == 1:
                     return True
                 elif f"peeking {agent_index}" in state and state[f"peeking {agent_index}"] == 1:
                     return True
+                elif f"revealed {target_list[0]}" in state and state[f"revealed {target_list[0]}"] == 1:
+                    return True
+                    
                 else:
                     return False
             else:
@@ -80,16 +89,32 @@ class ExternalFunction:
                 return False
             elif "peeked" ==  function_schemas_name:
                 return False
-            elif "selected" == function_schemas_name:
+            elif "shuffled" == function_schemas_name:
                 return True
-            elif "selecting" == function_schemas_name:
+            elif "shuffling" == function_schemas_name:
                 return True
             elif "surprised" == function_schemas_name:
                 return True
-            elif "number" == function_schemas_name:
-                if f"selected {target_list[0]}" in state and state[f"selected {target_list[0]}"] == 1:
+            elif "revealed" == function_schemas_name:
+                return True
+            elif "initial_number" == function_schemas_name:
+                if f"revealed {target_list[0]}" in state and state[f"revealed {target_list[0]}"] == 1:
+                    return True
+                else:
                     return False
-                elif f"selecting {agent_index}" in state and state[f"selecting {agent_index}"] == 1:
+            elif "audience_chosen_number" == function_schemas_name:
+                if f"shuffled {target_list[0]}" in state and state[f"shuffled {target_list[0]}"] == 1:
+                    return True
+                elif f"shuffling {agent_index}" in state and state[f"shuffling {agent_index}"] == 1:
+                    return True
+                else:
+                    return False
+            elif "number" == function_schemas_name:
+                if f"shuffled {target_list[0]}" in state and state[f"shuffled {target_list[0]}"] == 1:
+                    return False
+                elif f"shuffling {agent_index}" in state and state[f"shuffling {agent_index}"] == 1:
+                    return True
+                elif f"revealed {target_list[0]}" in state and state[f"revealed {target_list[0]}"] == 1:
                     return True
                 else:
                     return False
