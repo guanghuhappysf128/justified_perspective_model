@@ -60,7 +60,10 @@ class EpistemicModel:
             if ep_formula.epf_type == EPFType.EP:
                 eq_str = ep_formula.ep_query
                 condition = ep_formula.ep_varphi
-                nesting_base = self.nesting_base.copy()
+                if not self.nesting_base == None:
+                    nesting_base = self.nesting_base.copy()
+                else:
+                    nesting_base = None
                 output = self.eval_eq(eq_str,condition, GLOBAL_PERSPECTIVE_INDEX, state_sequence, nesting_base,p_dict)
                 if operator == ConditionOperatorType.EQUAL:
                     result = output == target_value
