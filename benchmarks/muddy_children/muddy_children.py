@@ -40,7 +40,7 @@ class ExternalFunction:
                         types:typing.Dict[str,Type]):
         if not agent_index in entities.keys():
             raise ValueError(f"agent_index [{agent_index}] not found in entities")
-        if not entities[agent_index].enetity_type == EntityType.AGENT:
+        if not entities[agent_index].entity_type == EntityType.AGENT:
             raise ValueError(f"agent_index [{agent_index}] is not an agent")
         if var_name not in functions.keys():
             raise ValueError(f"var_name [{var_name}] not found in functions")
@@ -78,9 +78,9 @@ class ExternalFunction:
                 # then the agent can see its own forehead and it should be muddy
                 if num_of_question == -1:
                     raise ValueError("num_of_question not found")
-                print(agent_index)
-                print(num_of_question)
-                print(visible_muddy_children_list)
+                # print(agent_index)
+                # print(num_of_question)
+                # print(visible_muddy_children_list)
                 if len(visible_muddy_children_list) == num_of_question-1:
 
                     # if state[f"muddy_{agent_index}"] == 'f':

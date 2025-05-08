@@ -88,7 +88,7 @@ class Problem:
             variable_name = effect.target_variable_name
             function_schema_name = self.functions[variable_name].function_schema_name
             value1 = extract_v_from_s(variable_name,new_state)
-            if effect.update_type == UpdateType.CONSTENT:
+            if effect.update_type == UpdateType.CONSTANT:
                 value2 = effect.update
                 self.logger.debug("comparing %s vs %s",value1,value2)
                 new_value =  updateEffect(self.logger,effect.effect_type,value1,value2,self.function_schemas[function_schema_name])
@@ -99,7 +99,7 @@ class Problem:
                 ep_formula :EP_formula = effect.update
                 if ep_formula.epf_type == EPFType.JP:
                     jp_dictionary.update({effect_name:ep_formula})
-                # going to handle the constent update first
+                # going to handle the CONSTANT update first
             elif effect.update_type == UpdateType.ONTIC:
                 ontic_name_list.append(effect_name)
 
@@ -123,8 +123,8 @@ class Problem:
                     return None
                 new_state[variable_name] = new_value
             else:
-                # going to handle the constent update first
-                pass
+                # constant has been updated already
+                raise ValueError("Update type [%s] from effect [%s] should be an ontic type update",effect.update_type,effect_name)
         # path = previous_path+[(new_state,action.name)]
 
         # self.logger.debug("new_state {new_state}")
@@ -271,8 +271,8 @@ class Problem:
                 temp_parameter_replacement = []
                 for new_parameter_replacement in new_parameter_replacement_list:
                     entity_index_list = self.types[parameter_type].entity_index_list
-                    for enetity_id in entity_index_list:
-                        new_replacements = new_parameter_replacement + [(parameter_name,enetity_id)]
+                    for entity_id in entity_index_list:
+                        new_replacements = new_parameter_replacement + [(parameter_name,entity_id)]
                         if self.checking_action_by_ontic_preconditions(ontic_preconditions,new_replacements,state):
                             temp_parameter_replacement.append(new_replacements)
                 new_parameter_replacement_list = temp_parameter_replacement
@@ -345,8 +345,11 @@ class Problem:
                     new_effect.effect_type = effect_item.effect_type
                     new_effect.target_variable_name = multiple_parameter_replace(effect_item.target_variable_name,parameter_replacement,VARIABLE_FILLER)
                     new_effect.update_type = effect_item.update_type
-                    if new_effect.update_type == UpdateType.CONSTENT:
-                        new_effect.update = effect_item.update
+                    if new_effect.update_type == UpdateType.CONSTANT:
+                        if type(effect_item.update) == str:
+                            new_effect.update = multiple_parameter_replace(effect_item.update,parameter_replacement,VARIABLE_FILLER)
+                        else:
+                            new_effect.update = effect_item.update
                     elif new_effect.update_type == UpdateType.ONTIC:
                         new_effect.update = multiple_parameter_replace(effect_item.update,parameter_replacement,VARIABLE_FILLER)
                     elif new_effect.update_type == UpdateType.EPSITEMIC:

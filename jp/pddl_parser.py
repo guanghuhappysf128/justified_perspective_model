@@ -20,7 +20,7 @@ JP_PREFIX = r"@jp"
 LOGGER_NAME = r"pddl_parser"
 LOGGER_LEVEL = logging.INFO
 # LOGGER_LEVEL = logging.DEBUG
-from util import setup_logger,find_each_section
+from util import setup_logger,find_each_section,remove_quotes
 from util import Type,FunctionSchema,Parameters,EffectType,Effect,UpdateType,ActionSchema,EntityType,Entity
 from util import VALUE_TYPE,value_type_dict,RULE_TYPE,rule_type_dict
 from util import Function,Rule,EP_formula,EPFType,Condition,ConditionType,Ternary,condition_operator_dict
@@ -330,6 +330,8 @@ class PDDLParser:
             value_type = value_type_dict[value_type_str]
             value_range_str = range_content_list[2]
             
+            if not value_type_str in value_type_dict.keys():
+                raise ValueError("value type %s does not exist",value_type_str)
             if value_type == VALUE_TYPE.ENUMERATE:
                 self.logger.debug(value_range_str[1:-1:].replace("'",str()).split(","))
                 function_schemas[function_schema_name].value_range = value_range_str[1:-1:].replace("'",str()).split(",")
@@ -339,11 +341,18 @@ class PDDLParser:
                     function_schemas[function_schema_name].value_range = (int(bounds[0]),int(bounds[1]))
                 else:
                     raise ValueError("integer range should have 2 components: %s",bounds)
-            
-            # elif value_type_str == VALUE_TYPE.STRING:
-            #     pass
+            elif value_type == VALUE_TYPE.FLOAT:
+                bounds = value_range_str[1:-1:].split(",")
+                if len(bounds) == 2:
+                    function_schemas[function_schema_name].value_range = (float(bounds[0]),float(bounds[1]))
+                else:
+                    raise ValueError("float range should have 2 components: %s",bounds)
+            elif value_type == VALUE_TYPE.BOOLEAN:
+                function_schemas[function_schema_name].value_range = [True,False]
+            elif value_type == VALUE_TYPE.STRING:
+                function_schemas[function_schema_name].value_range = None
             else:
-                raise ValueError("value type %s does not exist",value_type)
+                raise ValueError("value type %s not implemented",value_type)
             function_schemas[function_schema_name].value_type = value_type
 
 
@@ -522,7 +531,7 @@ class PDDLParser:
                     if effect.update_type == UpdateType.ONTIC:
                         # there is nothing to change for an ontic effect
                         pass
-                    elif effect.update_type == UpdateType.CONSTENT:
+                    elif effect.update_type == UpdateType.CONSTANT:
                         function_schema_name = self.precondition_variable2function_schema_name(effect.target_variable_name)
                         value_type = function_schemas[function_schema_name].value_type
                         effect.update = self.str2value(value_type,effect.update)
@@ -845,7 +854,7 @@ class PDDLParser:
                 self.logger.debug("udpdate is a variable")
             else:
                 new_effect.update = update_str
-                new_effect.update_type = UpdateType.CONSTENT
+                new_effect.update_type = UpdateType.CONSTANT
         return new_effect
     
     def formatDocument(self,input_str):
@@ -885,16 +894,24 @@ class PDDLParser:
         return input_str      
     
     def str2value(self,value_type,value_str):
+        if value_str == 'jp.none':
+            return special_value.HAVENT_SEEN
+
         if value_type == VALUE_TYPE.ENUMERATE:
-            if value_str == 'jp.none':##################################
-                value = special_value.HAVENT_SEEN################
-            else:
-                value = value_str.replace("'",str())
+            value = remove_quotes(value_str)
         elif value_type == VALUE_TYPE.INTEGER:
-            if value_str == 'jp.none':##################################
-                value = special_value.HAVENT_SEEN################
+            value = int(value_str)
+        elif value_type == VALUE_TYPE.FLOAT:
+            value = float(value_str)
+        elif value_type == VALUE_TYPE.BOOLEAN:
+            if value_str == "True":
+                value = True
+            elif value_str == "False":
+                value = False
             else:
-                value = int(value_str)
+                raise ValueError("boolean value %s does not exist, it should be one of the True or False",value_str)
+        elif value_type == VALUE_TYPE.STRING:
+            value = remove_quotes(value_str)
         else:
             raise ValueError("value type %s does not exist %s",value_type,value_str)
         

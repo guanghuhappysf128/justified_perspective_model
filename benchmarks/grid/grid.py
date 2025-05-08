@@ -3,6 +3,8 @@ import typing
 from util import Function,FunctionSchema,Entity,EntityType,setup_logger,Type
 from datetime import datetime
 
+VARIABLE_FILLER = " "
+
 LOGGER_NAME = "grid"
 LOGGER_LEVEL = logging.INFO
 # LOGGER_LEVEL = logging.DEBUG
@@ -24,7 +26,7 @@ class ExternalFunction:
                         types:typing.Dict[str,Type]):
         if not agent_index in entities.keys():
             raise ValueError(f"agent_index [{agent_index}] not found in entities")
-        if not entities[agent_index].enetity_type == EntityType.AGENT:
+        if not entities[agent_index].entity_type == EntityType.AGENT:
             raise ValueError(f"agent_index [{agent_index}] is not an agent")
         if var_name not in functions.keys():
             raise ValueError(f"var_name [{var_name}] not found in functions")

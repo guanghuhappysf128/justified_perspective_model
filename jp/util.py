@@ -159,8 +159,14 @@ class FunctionSchema:
 
         if self.value_type == VALUE_TYPE.INTEGER:
             output_str += f" {self.value_range}, {self.value_type}."
+        elif self.value_type == VALUE_TYPE.FLOAT:
+            output_str += f" [{self.value_range[0]},{self.value_range[1]}], {self.value_type}."
         elif self.value_type == VALUE_TYPE.ENUMERATE:
             output_str += f" [{','.join(self.value_range)}], {self.value_type}."
+        elif self.value_type == VALUE_TYPE.BOOLEAN:
+            output_str += f" [{','.join(self.value_range)}], {self.value_type}."
+        elif self.value_type == VALUE_TYPE.STRING:
+            output_str += f" No Range, {self.value_type}."
         else:
             output_str += f"{self.value_range}, {self.value_type}."
             # raise ValueError("Value type not found. Probably did not define %s in the problem :ranges",self.name)
@@ -195,11 +201,14 @@ class Rule:
         self.rule_content = rule_content
         pass
 
-VALUE_TYPE = Enum("VALUE_TYPE", "ENUMERATE INTEGER")
+VALUE_TYPE = Enum("VALUE_TYPE", "ENUMERATE INTEGER BOOLEAN STRING FLOAT")
 
 value_type_dict = {
     "enumerate": VALUE_TYPE.ENUMERATE,
     "integer": VALUE_TYPE.INTEGER,
+    "boolean": VALUE_TYPE.BOOLEAN,
+    "string": VALUE_TYPE.STRING,
+    "float": VALUE_TYPE.FLOAT,
 }
 
 
@@ -223,7 +232,7 @@ class EffectType(Enum):
     DECREASE = 3
 
 class UpdateType(Enum):
-    CONSTENT = 1
+    CONSTANT = 1
     ONTIC = 2
     EPSITEMIC = 3
 
@@ -256,12 +265,33 @@ def updateEffect(logger,effect_type:EffectType,value1,value2,function_schema: Fu
                     return None
                 else:
                     return value2
+        elif function_schema.value_type == VALUE_TYPE.FLOAT:
+            if not type(value2) == float or not type(value2) == int:
+                raise ValueError("Effect Error: the second value in Assign should be a float or an integer")
+            else:
+                if value2 < function_schema.value_range[0] or value2 > function_schema.value_range[1]:
+                    logger.error("value out of range: when assign %s in function_schema: %s",value2,function_schema.name)
+                    return None
+                else:
+                    return value2
         elif function_schema.value_type == VALUE_TYPE.ENUMERATE:
             if not value2 in function_schema.value_range:
                 # self.logger.debug(value2,function_schema.value_range)
                 raise ValueError("Effect Error: the second value in Assign should be in the value range")
             else:
                 return value2
+        elif function_schema.value_type == VALUE_TYPE.BOOLEAN:
+            if not type(value2) == bool:
+                raise ValueError("Effect Error: the second value in Assign should be a boolean")
+            else:
+                return value2
+        elif function_schema.value_type == VALUE_TYPE.STRING:
+            if not type(value2) == str:
+                raise ValueError("Effect Error: the second value in Assign should be a string")
+            else:
+                return value2
+        else:
+            raise ValueError("Effect Error: the effect type %s of %s is not defined in the function schema",function_schema.value_type,function_schema.name)
     elif effect_type == EffectType.INCREASE:
         if function_schema.value_type == VALUE_TYPE.INTEGER:
             if not type(value2) == int:
@@ -272,15 +302,48 @@ def updateEffect(logger,effect_type:EffectType,value1,value2,function_schema: Fu
                     return None
                 else:
                     return value1 + value2
+        elif function_schema.value_type == VALUE_TYPE.FLOAT:
+            if not type(value2) == float or not type(value2) == int:
+                raise ValueError("Effect Error: the second value in Increase should be a float or an integer")
+            else:
+                if value1 + value2 < function_schema.value_range[0] or value1 + value2 > function_schema.value_range[1]:
+                    logger.error("value out of range: when increase %s + %s in function_schema: %s",value1,value2,function_schema.name)
+                    return None
+                else:
+                    return value1 + value2
         elif function_schema.value_type == VALUE_TYPE.ENUMERATE:
             if not type(value2) == int:
-                raise ValueError("Effect Error: the second value in Increase should be an integer")
+                raise ValueError("Effect Error: the second value in Increase should be an integer for enumerate type")
             else:
                 return function_schema.value_range[(function_schema.value_range.index(value1)+value2)%len(function_schema.value_range)]
+        elif function_schema.value_type == VALUE_TYPE.BOOLEAN:
+            if not type(value2) == int and not value2 == 1:
+                raise ValueError("Effect Error: the second value in Increase should be 1 for boolean type if you want to change the value")
+            else:
+                if value1 == special_value.UNSEEN or value1 == special_value.HAVENT_SEEN:
+                    return value1
+                else:
+                    return not value1
+        elif function_schema.value_type == VALUE_TYPE.STRING:
+            if not type(value2) == str:
+                raise ValueError("Effect Error: the second value in Increase should be a string")
+            else:
+                return value1+value2
+        else:
+            raise ValueError("Effect Error: the effect type %s of %s is not defined in the function schema",function_schema.value_type,function_schema.name)
     elif effect_type == EffectType.DECREASE:
         if function_schema.value_type == VALUE_TYPE.INTEGER:
             if not type(value2) == int:
                 raise ValueError("Effect Error: the second value in Decrease should be an integer")
+            else:
+                if value1 - value2 < function_schema.value_range[0] or value1 - value2 > function_schema.value_range[1]:
+                    logger.error("value out of range: when decrease %s - %s in function_schema: %s",value1,value2,function_schema.name)
+                    return None
+                else:
+                    return value1 - value2
+        elif function_schema.value_type == VALUE_TYPE.FLOAT:
+            if not type(value2) == float or not type(value2) == int:
+                raise ValueError("Effect Error: the second value in Decrease should be a float or an integer")
             else:
                 if value1 - value2 < function_schema.value_range[0] or value1 - value2 > function_schema.value_range[1]:
                     logger.error("value out of range: when decrease %s - %s in function_schema: %s",value1,value2,function_schema.name)
@@ -292,6 +355,24 @@ def updateEffect(logger,effect_type:EffectType,value1,value2,function_schema: Fu
                 raise ValueError("Effect Error: the second value in Decrease should be an integer")
             else:
                 return function_schema.value_range[(function_schema.value_range.index(value1)-value2)%len(function_schema.value_range)]
+        elif function_schema.value_type == VALUE_TYPE.BOOLEAN:
+            if not type(value2) == int and not value2 == 1:
+                raise ValueError("Effect Error: the second value in Decrease should be 1 for boolean type if you want to change the value")
+            else:
+                if value1 == special_value.UNSEEN or value1 == special_value.HAVENT_SEEN:
+                    return value1
+                else:
+                    return not value1
+        elif function_schema.value_type == VALUE_TYPE.STRING:
+            if not type(value2) == str:
+                raise ValueError("Effect Error: the second value in Decrease should be a string")
+            else:
+                if value1.endswith(value2):
+                    return value1[:-len(value2)]
+                else:
+                    raise ValueError("Effect Error: the second value [%s] in Decrease should be a string that is the suffix of the first string [%s]",value2,value1)
+        else:
+            raise ValueError("Effect Error: the effect type %s of %s is not defined in the function schema",function_schema.value_type,function_schema.name)
 
 class ActionSchema:
     def __init__(self,name,parameters,preconditions,effects) -> None:
@@ -329,13 +410,13 @@ class EntityType(Enum):
 
 class Entity:
    
-    def __init__(self,enetity_name, enetity_type):
-        self.enetity_name = enetity_name
-        self.enetity_type = enetity_type
+    def __init__(self,entity_name, entity_type):
+        self.entity_name = entity_name
+        self.entity_type = entity_type
         self.nesting_level = 0
 
     def __str__(self): # show only in the print(object)
-        return f"<Entity: e_name: {self.enetity_name}; e_type: {self.enetity_type}; nesting_level: {self.nesting_level}>\n"
+        return f"<Entity: e_name: {self.entity_name}; e_type: {self.entity_type}; nesting_level: {self.nesting_level}>\n"
 
     def __repr__(self): # show when in a dictionary
         return self.__str__()
@@ -421,8 +502,16 @@ def find_each_section(s):
                 start = stack.pop()
                 if stack == []:
                     pairs.append(s[start:i+1])
-
     return pairs
+
+def remove_quotes(s):
+    # Remove leading and trailing quotes
+    if s.startswith('"') and s.endswith('"'):
+        return s[1:-1]
+    elif s.startswith("'") and s.endswith("'"):
+        return s[1:-1]
+    else:
+        return s
 
 
 

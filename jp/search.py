@@ -678,7 +678,7 @@ class Search:
         agents= set()
         for k,item in problem.entities.items():
             entity : Entity = item
-            if entity.enetity_type == EntityType.AGENT:
+            if entity.entity_type == EntityType.AGENT:
                 agents.add(k)
         self.result.update({'agents':list(agents)})
         self.result.update({'num_of_agents':len(agents)})

@@ -1,9 +1,8 @@
-(define 
+(define
     (domain muddy_children)
 
     (:types ;todo: enumerate types and their hierarchy here, e.g. car truck bus - vehicle
-        teacher
-        children
+        teacher children
     )
 
 
@@ -36,9 +35,4 @@
             (increase (num_of_question ?i) 1)
         )
     )
-
-
-    
-
- 
 )
