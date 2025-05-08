@@ -526,7 +526,8 @@ class PDDLParser:
                     else:
                         raise ValueError("precondition %s condition_type is invalid",precondition)
             
-            for effect in action_schema.effects.values():
+            for item in action_schema.effects.values():
+                effect: Effect = item
                 if not effect.target_variable_name == None:
                     if effect.update_type == UpdateType.ONTIC:
                         # there is nothing to change for an ontic effect
@@ -534,9 +535,14 @@ class PDDLParser:
                     elif effect.update_type == UpdateType.CONSTANT:
                         function_schema_name = self.precondition_variable2function_schema_name(effect.target_variable_name)
                         value_type = function_schemas[function_schema_name].value_type
-                        effect.update = self.str2value(value_type,effect.update)
-                        if effect.effect_type == EffectType.INCREASE or effect.effect_type == EffectType.DECREASE:
-                            effect.update = int(effect.update)
+                        effect_type = effect.effect_type
+                        if effect_type == EffectType.ASSIGN:
+                            effect.update = self.str2value(value_type,effect.update)
+                        else:
+                            effect.update = self.str2value_ID(value_type,effect.update)
+                        # print(value_type)
+                        # if effect.effect_type == EffectType.INCREASE or effect.effect_type == EffectType.DECREASE:
+                        #     effect.update = int(effect.update)
                     elif effect.update_type == UpdateType.EPSITEMIC:
                         # there is nothing to change for an epistemic effect
                         pass
@@ -808,8 +814,7 @@ class PDDLParser:
     def parsingEffect(self,effect_str,action_name):
     
         new_effect = Effect()
-        effect_content_list = effect_str.split(" ")
-        effect_type_str = effect_content_list[0]
+        effect_type_str = effect_str.split(" ")[0]
         if not effect_type_str in EFFECT_TYPE_DICT.keys():
             raise ValueError("Error effect [%s] for action [%s] is not a valid effect from: [%s]",effect_str,action_name,EFFECT_TYPE_DICT.keys())
         effect_type = EFFECT_TYPE_DICT[effect_type_str]
@@ -840,21 +845,39 @@ class PDDLParser:
             self.logger.debug(effect_content_list)
         else:
             self.logger.debug(effect_str)
-            if not len(effect_content_list) == 3:
-                raise ValueError("Error when parsing effect [%s] for action [%s]: a normal effect should have 3 components",effect_str,action_name)
-            target_variable_name = effect_content_list[1][1:-1]
-            new_effect.target_variable_name = target_variable_name
-            update_str = effect_content_list[2]
-            pattern = r'^\(\w*\??\w*\)$'
-            self.logger.debug(repr(update_str))
-            if re.match(pattern, update_str):
-                # then this is a variable too
-                new_effect.update_type = UpdateType.ONTIC
-                new_effect.update = update_str[1:-1]
-                self.logger.debug("udpdate is a variable")
-            else:
-                new_effect.update = update_str
+            effect_section_list = find_each_section(effect_str)
+            self.logger.debug(effect_section_list)
+            if len(effect_section_list) == 1:
+                # this means the second part is not a variable
                 new_effect.update_type = UpdateType.CONSTANT
+                effect_variable_str = effect_section_list[0]
+                self.logger.debug(effect_variable_str)
+                new_effect.target_variable_name = effect_variable_str[1:-1]
+                update_str = effect_str[len(effect_type_str)+1+len(effect_variable_str)+1:]
+                self.logger.debug(update_str)
+                new_effect.update = update_str
+            elif len(effect_section_list) == 2:
+                # this means the second part is a variable
+                new_effect.update_type = UpdateType.ONTIC
+                effect_variable_str = effect_section_list[0]
+                new_effect.target_variable_name = effect_variable_str[1:-1]
+                update_str = effect_section_list[1][1:-1]
+                new_effect.update = update_str
+            # if not len(effect_content_list) == 3:
+            #     raise ValueError("Error when parsing effect [%s] for action [%s]: a normal effect should have 3 components",effect_str,action_name)
+            # target_variable_name = effect_content_list[1][1:-1]
+            # new_effect.target_variable_name = target_variable_name
+            # update_str = effect_content_list[2]
+            # pattern = r'^\(\w*\??\w*\)$'
+            # self.logger.debug(repr(update_str))
+            # if re.match(pattern, update_str):
+            #     # then this is a variable too
+            #     new_effect.update_type = UpdateType.ONTIC
+            #     new_effect.update = update_str[1:-1]
+            #     self.logger.debug("udpdate is a variable")
+            # else:
+            #     new_effect.update = update_str
+            #     new_effect.update_type = UpdateType.CONSTANT
         return new_effect
     
     def formatDocument(self,input_str):
@@ -916,6 +939,40 @@ class PDDLParser:
             raise ValueError("value type %s does not exist %s",value_type,value_str)
         
         return value
+    
+    # this is slightly different
+    def str2value_ID(self,value_type,value_str):
+        if value_str == 'jp.none':
+            return special_value.HAVENT_SEEN
+
+        if value_type == VALUE_TYPE.ENUMERATE:
+            try:
+                value = int(value_str)
+            except:
+                raise ValueError("value %s should be an integer when increase or decrease a enumerate",value_str)
+        elif value_type == VALUE_TYPE.BOOLEAN:
+            try:
+                value = int(value_str)
+                if not value == 1:
+                    raise ValueError("value %s should be 1 when increase or decrease a boolean",value_str)
+            except:
+                raise ValueError("value %s should be 1 when increase or decrease a boolean",value_str)
+        elif value_type == VALUE_TYPE.INTEGER:
+            try:
+                value = int(value_str)
+            except:
+                raise ValueError("value %s should be an integer when increase or decrease a integer",value_str)
+        elif value_type == VALUE_TYPE.FLOAT:
+            try:
+                value = float(value_str)
+            except:
+                raise ValueError("value %s should be a float when increase or decrease a float",value_str)
+        elif value_type == VALUE_TYPE.STRING:
+            value = remove_quotes(value_str)
+        else:
+            raise ValueError("value type %s does not exist %s",value_type,value_str)
+        return value
+
 
 
     def isValidNB(self,nesting_dict:typing.Dict[str,int],nesting_base_string:str):
