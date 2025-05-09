@@ -40,6 +40,8 @@ class EpistemicModel:
         self.all_p_keys = list()
         self.types = types
         self.common_iteration_list = list()
+        if hasattr(self.external, 'get1o'):
+            self.get1o = self.external.get1o
 
     def epistemicConditionsHandler(self, epistemic_condition_dict: typing.Dict[str,Condition], path,p_dict):
         self.logger.debug('epistemicConditionHandler')
