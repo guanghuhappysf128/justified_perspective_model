@@ -42,6 +42,8 @@ class Search:
         self.unknown_goal_name = list()
         self.novelty_dict = dict()
         self.sorted_goal_list = list()
+        self.action_list = list()
+        self.stop_at_goal = True
 
     class SearchNode:
         def __init__(self,state,remaining_goal_num,perspective_dict,path):
@@ -68,6 +70,13 @@ class Search:
         path = node.path
         return len(path)-1
     
+    def logging_actions(self,actions):
+        # this is a placeholder for logging all possible actions
+        pass
+    
+    def output(self,output_file):
+        # this is a placeholder for outputting the actions
+        pass
     
     
     def _duplication_check(self,state,sgp_p_dict):
@@ -103,7 +112,7 @@ class Search:
 
     #BFS with duplicate check on the state + epistemic formula
     # for novelty checking purpose, we need to move the goal check process at where the node is generated
-    def searching(self,problem:Problem,time_out:int,memory_out:int):
+    def searching(self,problem:Problem,time_out:int,memory_out:int,output_file:str=None):
         self.timeout = datetime.timedelta(seconds=time_out)
         self.memoryout = memory_out*1024 
         self.logger.info("starting searching using [%s]",self.search_name)
@@ -163,7 +172,7 @@ class Search:
             self.logger.debug("path: %s",actions)
 
             goal_checking = (0 == current_node.remaining_goal)
-            if goal_checking:
+            if goal_checking and self.stop_at_goal:
                 # self.logger.info(path)
                 actions = [ a  for s,a in path]
                 actions = actions[1:]
@@ -227,6 +236,7 @@ class Search:
             self.logger.debug("action generated: %s",all_legal_action_name)
             
             if self._duplication_check(state,sgp_p_dict):
+                self.logging_actions(actions)
                 # self.logger.debug("path [%s] get in visited",actions)
                 # self.logger.debug("ep_state_str is [%s]",ep_state_str)
                 self.expanded +=1
@@ -283,6 +293,7 @@ class Search:
         self.result.update({'memoryout':self.memoryout})
         self._finalise_result(problem)
         self.logger.debug(self.result)
+        self.output(output_file)
         return self.result
 
     def validating(self,plan,problem:Problem,time_out:int,memory_out:int,save_belief:str=None,schemas=None):

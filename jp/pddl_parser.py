@@ -659,7 +659,7 @@ class PDDLParser:
             self.logger.debug(content_str_list)
             
             if not len(content_str_list) == 3:
-                raise ValueError("The content of an action should contain three section: parameters, precondition and effect")
+                raise ValueError("The content of an action should contain three section: parameters, precondition and effect: [%s]",content_str_list)
             parameter_content_str= content_str_list[0]
             precondition_content_str = content_str_list[1]
             effect_content_str = content_str_list[2]

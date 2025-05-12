@@ -147,7 +147,7 @@ class Instance:
             # result = search_algorithm.searching(problem)
             # print(result)
 
-    def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False):
+    def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False,output_file:str=None):
         
         start_time = datetime.datetime.now().astimezone(TIMEZONE)
         result = dict()
@@ -189,13 +189,12 @@ class Instance:
         # loading external function
         if type(self.external_function) ==str:
             logger.info(f"loading external function: {self.external_function}")
-            external_path = self.external_function
-            external_path = external_path.replace('.py','').replace('\\','.').replace('/','.').replace('..','')
+            external_path = os.path.abspath(self.external_function)
             try:
-                external_module = importlib.import_module(external_path)
+                external_module = load_module_from_path(external_path)
                 self.external_function = external_module.ExternalFunction(logger_handlers)
-                
                 logger.info(f"finish loading external function")
+
             except (NameError, ImportError, IOError):
                 traceback.print_exc()
                 exit()
@@ -223,13 +222,13 @@ class Instance:
         if time_debug:
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.searching(problem,time_out,memory_out)
+            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file)
             # result = search_algorithm.searching(problem)
         else:
         
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.searching(problem,time_out,memory_out)
+            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file)
 
         end_search_time = datetime.datetime.now().astimezone(TIMEZONE)
         
