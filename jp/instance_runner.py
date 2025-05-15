@@ -63,7 +63,7 @@ class Instance:
         self.external_function = external_function
         self.search_name = search_name
 
-    def validate(self,output_path,time_out, memory_out, time_debug=False,log_debug=False, plan_actions="",save_belief:str=None,schemas=None):
+    def validate(self,output_path,time_out, memory_out, time_debug=False,log_debug=False, plan_actions="",save_belief:str=None,key_variables:list=None):
         if plan_actions:
             plan = plan_actions.split(',')
             plan = [action.strip() for action in plan]
@@ -147,7 +147,7 @@ class Instance:
             # result = search_algorithm.searching(problem)
             # print(result)
 
-    def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False,output_file:str=None):
+    def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False,output_file:str=None,key_variables:list=None):
         
         start_time = datetime.datetime.now().astimezone(TIMEZONE)
         result = dict()
@@ -222,13 +222,13 @@ class Instance:
         if time_debug:
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file)
+            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file,key_variables)
             # result = search_algorithm.searching(problem)
         else:
         
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file)
+            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file,key_variables)
 
         end_search_time = datetime.datetime.now().astimezone(TIMEZONE)
         

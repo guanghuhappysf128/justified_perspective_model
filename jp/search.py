@@ -6,7 +6,7 @@ import psutil
 import os
 from pddl_model import Problem
 
-from util import setup_logger, PriorityQueue, GLOBAL_PERSPECTIVE_INDEX,make_hashable
+from util import setup_logger, PriorityQueue, GLOBAL_PERSPECTIVE_INDEX,make_hashable,special_value
 from util import Entity,EntityType,Condition,ConditionType,EP_formula,Ternary,EPFType,Action
 # import util
 
@@ -44,6 +44,7 @@ class Search:
         self.sorted_goal_list = list()
         self.action_list = list()
         self.stop_at_goal = True
+        self.indifference_set = list()
 
     class SearchNode:
         def __init__(self,state,remaining_goal_num,perspective_dict,path):
@@ -70,7 +71,7 @@ class Search:
         path = node.path
         return len(path)-1
     
-    def logging_actions(self,actions):
+    def logging_actions(self,actions,p_dict,key_variables):
         # this is a placeholder for logging all possible actions
         pass
     
@@ -112,7 +113,7 @@ class Search:
 
     #BFS with duplicate check on the state + epistemic formula
     # for novelty checking purpose, we need to move the goal check process at where the node is generated
-    def searching(self,problem:Problem,time_out:int,memory_out:int,output_file:str=None):
+    def searching(self,problem:Problem,time_out:int,memory_out:int,output_file:str=None,key_variables:list=None):
         self.timeout = datetime.timedelta(seconds=time_out)
         self.memoryout = memory_out*1024 
         self.logger.info("starting searching using [%s]",self.search_name)
@@ -236,7 +237,7 @@ class Search:
             self.logger.debug("action generated: %s",all_legal_action_name)
             
             if self._duplication_check(state,sgp_p_dict):
-                self.logging_actions(actions)
+                self.logging_actions(actions,sgp_p_dict,key_variables)
                 # self.logger.debug("path [%s] get in visited",actions)
                 # self.logger.debug("ep_state_str is [%s]",ep_state_str)
                 self.expanded +=1
@@ -296,7 +297,7 @@ class Search:
         self.output(output_file)
         return self.result
 
-    def validating(self,plan,problem:Problem,time_out:int,memory_out:int,save_belief:str=None,schemas=None):
+    def validating(self,plan,problem:Problem,time_out:int,memory_out:int,save_belief:str=None,key_variables=None):
         self.timeout = datetime.timedelta(seconds=time_out)
         self.memoryout = memory_out*1024 
         self.logger.info("starting searching using [%s]",self.search_name)
@@ -360,7 +361,7 @@ class Search:
             #     for key in belief_keys:
             #         for idx, world in enumerate(sg_p_dict[key]):
             #             for k in world.keys():
-            #                 if not schemas or any(s in k for s in schemas):
+            #                 if not key_variables or any(s in k for s in key_variables):
             #                     all_world_keys.add(k)
 
 
@@ -372,7 +373,7 @@ class Search:
             #         for i, world in enumerate(sg_p_dict[belief_key]):
             #             row = {"Belief Key": belief_key, "World Index": i}
             #             for k in all_world_keys:
-            #                 if not schemas or any(s in k for s in schemas):
+            #                 if not key_variables or any(s in k for s in key_variables):
             #                     v = world.get(k, "")
             #                     if hasattr(v, "name"):
             #                         v = v.name
@@ -546,7 +547,7 @@ class Search:
             for key in belief_keys:
                 for idx, world in enumerate(sg_p_dict[key]):
                     for k in world.keys():
-                        if not schemas or any(s in k for s in schemas):
+                        if not key_variables or any(s in k for s in key_variables):
                             all_world_keys.add(k)
 
 
@@ -558,7 +559,7 @@ class Search:
                 for i, world in enumerate(sg_p_dict[belief_key]):
                     row = {"Belief Key": belief_key, "World Index": i}
                     for k in all_world_keys:
-                        if not schemas or any(s in k for s in schemas):
+                        if not key_variables or any(s in k for s in key_variables):
                             v = world.get(k, "")
                             if hasattr(v, "name"):
                                 v = v.name
