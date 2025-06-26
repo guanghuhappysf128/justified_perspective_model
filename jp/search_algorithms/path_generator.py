@@ -52,6 +52,9 @@ class path_generator(Search):
         #             break
         prune = True
         
+        # pruning if all values of the key variables are unknown (unseen)
+        # also pruning when everyone is seeing all target variables (all perspective values are the same as global perspective)
+        
         for var_name,value in global_state.items():
             all_unknown = True
             all_same_as_global = True
@@ -76,20 +79,22 @@ class path_generator(Search):
                 break
         # print(key_variables)
         
-        if not prune:
-            for key in key_variables:
-                has_valid_value = False
-                for k,local_p in p_dict.items():
-                    if k == GLOBAL_PERSPECTIVE_INDEX:
-                        continue
-                    if local_p[key] == special_value.UNSEEN or local_p[key] == special_value.HAVENT_SEEN:
-                        pass
-                    else:
-                        has_valid_value = True
-                        break
-                if not has_valid_value:
-                    prune = True
-                    break
+        
+        # this is the pruning design to make everyone has at least one valid value, it seems not working.
+        # if not prune:
+        #     for key in key_variables:
+        #         has_valid_value = False
+        #         for k,local_p in p_dict.items():
+        #             if k == GLOBAL_PERSPECTIVE_INDEX:
+        #                 continue
+        #             if local_p[key] == special_value.UNSEEN or local_p[key] == special_value.HAVENT_SEEN:
+        #                 pass
+        #             else:
+        #                 has_valid_value = True
+        #                 break
+        #         if not has_valid_value:
+        #             prune = True
+        #             break
         
         # if not prune:
         #     # print(actions)
@@ -109,31 +114,94 @@ class path_generator(Search):
         #         # print(key_variables)
         #         self.action_list.append(actions)
         
-        # pruning based on levels
+        # pruning based on levels, not 100% sure this works with more than 2 agents
+        # this is the pruning design to capture the actions that lead to the similar epistemic states due to the indifference of agents
         if not prune:
-            level_based_dict = dict()
+            # generate indifference perspective set and observation set
+            level_based_perspective_dict = dict()
+            level_based_observation_dict = dict()
             for key,local_p in p_dict.items():
-                new_key = len(key)
-                if new_key not in level_based_dict:
-                    level_based_dict[new_key] = []
-                key_variable_dict = dict()
-                for var_name in key_variables:
-                    value = local_p[var_name]
-                    key_variable_dict[var_name] = value
-                key_variable_str = state_to_string(key_variable_dict)
-                level_based_dict[new_key].append(key_variable_str)
-            for key in level_based_dict.keys():
-                level_based_dict[key].sort()
-            level_based_str = state_to_string(level_based_dict)
-            if level_based_str not in self.indifference_set:
-                self.indifference_set.append(level_based_str)
-                print("logging actions")
-                print(actions)
+                # remove the global perspectives when checking whether the belief are the same
+                if key == GLOBAL_PERSPECTIVE_INDEX:
+                    continue
+                
+                # print(f"[{key}]")
+                # first check whether the last is an observation
+                p_key_indicator = key.split(" ")[-3]
+                if p_key_indicator == "o":
+                    # this is an observation, so we do not need to check the belief                        
+                    new_key = len(key)
+                    if new_key not in level_based_observation_dict:
+                        level_based_observation_dict[new_key] = []
+                    key_variable_dict = dict()
+                    for var_name in key_variables:
+                        value = local_p[var_name]
+                        key_variable_dict[var_name] = value
+                    key_variable_str = state_to_string(key_variable_dict)
+                    level_based_observation_dict[new_key].append(key_variable_str)
+            
+                elif p_key_indicator == "f":
+                    # this is a perspective, so we need to check the belief
+                    new_key = len(key)
+                    if new_key not in level_based_perspective_dict:
+                        level_based_perspective_dict[new_key] = []
+                    key_variable_dict = dict()
+                    for var_name in key_variables:
+                        value = local_p[var_name]
+                        key_variable_dict[var_name] = value
+                    key_variable_str = state_to_string(key_variable_dict)
+                    level_based_perspective_dict[new_key].append(key_variable_str)
+            
+            
+            for key in level_based_observation_dict.keys():
+                level_based_observation_dict[key].sort()
+                level_based_observation_dict[key] = str(level_based_observation_dict[key])
+            # level_based_observation_str = state_to_string(level_based_observation_dict)
+            
+            for key in level_based_perspective_dict.keys():
+                level_based_perspective_dict[key].sort()
+            level_based_perspective_str = state_to_string(level_based_perspective_dict)
+            
+            action_str  = str(actions)
+            # print(f"action_str: {action_str}")
+            # print(f"level_based_perspective_str: {level_based_perspective_str}")
+            if level_based_perspective_str not in self.indifference_perspective_dict.keys():
+                
+                self.indifference_perspective_dict[level_based_perspective_str] = action_str
+                self.indifference_observation_dict[level_based_perspective_str] = level_based_observation_dict
+                self.action_dict[action_str] = actions
+                # print("logging actions")
+                # print(actions)
                 # print(level_based_str)
                 # print(p_dict)
                 # print(key_variables)
                 self.action_list.append(actions)
-                time.sleep(5)
+                # time.sleep(5)
+            else:
+                # check whether need to remove the previous one if the current observation is less
+                old_observation_dict = self.indifference_observation_dict[level_based_perspective_str]
+                # print(old_observation_dict)
+                for new_key, observation_str in old_observation_dict.items():
+                    old_special_value = observation_str.count('.')
+                    new_special_value = level_based_observation_dict[new_key].count('.')
+                    old_action_str = self.indifference_perspective_dict[level_based_perspective_str]
+                    if new_special_value > old_special_value:
+                        # update the old one
+                        self.indifference_observation_dict[level_based_perspective_str] = level_based_observation_dict
+                        self.indifference_perspective_dict[level_based_perspective_str] = action_str
+                        
+                        # remove the old actions
+                        self.action_list.remove(self.action_dict[old_action_str])
+                        
+                        # # remove the old perspective
+                        # del self.indifference_perspective_dict[old_action_str]
+                        
+                        
+                        # add the new actions
+                        self.action_dict[action_str] = actions
+                        self.action_list.append(actions)
+                        
+                
                     
     
     # adding action_list if an change is not visible to everyone

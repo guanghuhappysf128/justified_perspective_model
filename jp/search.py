@@ -44,7 +44,10 @@ class Search:
         self.sorted_goal_list = list()
         self.action_list = list()
         self.stop_at_goal = True
-        self.indifference_set = list()
+        self.indifference_perspective_dict = dict()
+        self.indifference_observation_dict = dict()
+        self.action_dict = dict()
+        
 
     class SearchNode:
         def __init__(self,state,remaining_goal_num,perspective_dict,path):
@@ -74,6 +77,10 @@ class Search:
     def logging_actions(self,actions,p_dict,key_variables):
         # this is a placeholder for logging all possible actions
         pass
+    
+    # def output_actions(self,p_dict,key_variables):
+    #     # this is a placeholder for outputting the actions
+    #     pass
     
     def output(self,output_file):
         # this is a placeholder for outputting the actions
@@ -286,6 +293,8 @@ class Search:
                 self.logger.debug("path [%s] already visited",actions)
             # self.logger.debug(open_list.count)
             
+        # self.output_actions(sgp_p_dict,key_variables)    
+        
         self.logger.info(f'Problem is not solvable')
         self.result.update({'plan':[]})
         self.result.update({'path_length':0})
