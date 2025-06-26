@@ -135,7 +135,7 @@ class Instance:
         if time_debug:
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief,schemas)
+            temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief,key_variables)
             
             # result = search_algorithm.searching(problem)
             # print(result)
@@ -143,7 +143,7 @@ class Instance:
         
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief,schemas)
+            temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief,key_variables)
             # result = search_algorithm.searching(problem)
             # print(result)
 
