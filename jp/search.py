@@ -548,45 +548,86 @@ class Search:
             # self.logger.debug(open_list.count)
 
         if save_belief:
-            belief_keys = [key for key in sg_p_dict.keys() if "o [" not in key]
+            # sg_p_dict = sorted(sg_p_dict.items(), key=lambda item: (len(item[0]), item[0]))
+            sorted_keys = sorted(sg_p_dict.keys(), key=lambda k: (len(k), k))
+            belief_keys = [key for key in sorted_keys if "o [" not in key]
+            # belief_keys = [key for key in sg_p_dict.keys() if "o [" not in key]
             belief_data = []
 
-            # Collect all possible keys that appear in any belief world
-            all_world_keys = set()
-            for key in belief_keys:
-                for idx, world in enumerate(sg_p_dict[key]):
-                    for k in world.keys():
-                        if not key_variables or any(s in k for s in key_variables):
-                            all_world_keys.add(k)
+            # # Collect all possible keys that appear in any belief world
+            # all_world_keys = set()
+            # for key in belief_keys:
+            #     for idx, world in enumerate(sg_p_dict[key]):
+            #         for k in world.keys():
+            #             if not key_variables or any(s in k for s in key_variables):
+            #                 all_world_keys.add(k)
 
 
-            # Sort for consistency
-            all_world_keys = sorted(all_world_keys)
+            # # Sort for consistency
+            # all_world_keys = sorted(all_world_keys)
 
+            # # Build rows
+            # for belief_key in belief_keys:
+            #     for i, world in enumerate(sg_p_dict[belief_key]):
+            #         row = {"Belief Key": belief_key, "World Index": i}
+            #         for k in all_world_keys:
+            #             if not key_variables or any(s in k for s in key_variables):
+            #                 v = world.get(k, "")
+            #                 if hasattr(v, "name"):
+            #                     v = v.name
+            #                 elif not isinstance(v, str):
+            #                     v = str(v)
+            #                 row[k] = v
+            #         belief_data.append(row)
+
+            # # Write to CSV
+            # with open(save_belief, mode='w', newline='') as file:
+            #     fieldnames = ["Belief Key", "World Index"] + all_world_keys
+            #     writer = csv.DictWriter(file, fieldnames=fieldnames)
+            #     writer.writeheader()
+            #     for row in belief_data:
+            #         writer.writerow(row)
+
+            # print(f"Saved belief data to {save_belief}")
+            
             # Build rows
+            
+            rows = []
             for belief_key in belief_keys:
-                for i, world in enumerate(sg_p_dict[belief_key]):
-                    row = {"Belief Key": belief_key, "World Index": i}
-                    for k in all_world_keys:
-                        if not key_variables or any(s in k for s in key_variables):
-                            v = world.get(k, "")
-                            if hasattr(v, "name"):
-                                v = v.name
-                            elif not isinstance(v, str):
-                                v = str(v)
-                            row[k] = v
-                    belief_data.append(row)
-
+                column_name = []
+                row = [belief_key]
+                column_name.append("Belief Key")
+                for key in key_variables:
+                    row.append("")
+                    column_name.append(key)
+                    for i, world in enumerate(sg_p_dict[belief_key]):
+                        column_name.append(i)
+                        row.append(world.get(key, ""))
+                rows.append(row)
+                    
+                # for i, world in enumerate(sg_p_dict[belief_key]):
+                #     row = {"Belief Key": belief_key, "World Index": i}
+                #     for k in all_world_keys:
+                #         if not key_variables or any(s in k for s in key_variables):
+                #             v = world.get(k, "")
+                #             if hasattr(v, "name"):
+                #                 v = v.name
+                #             elif not isinstance(v, str):
+                #                 v = str(v)
+                #             row[k] = v
+                #     belief_data.append(row)
+            rows.insert(0, column_name)
             # Write to CSV
             with open(save_belief, mode='w', newline='') as file:
-                fieldnames = ["Belief Key", "World Index"] + all_world_keys
-                writer = csv.DictWriter(file, fieldnames=fieldnames)
-                writer.writeheader()
-                for row in belief_data:
-                    writer.writerow(row)
+                # fieldnames = ["Belief Key", "World Index"] + all_world_keys
+                # writer = csv.DictWriter(file, fieldnames=fieldnames)
+                # writer.writeheader()
+                # for row in belief_data:
+                #     writer.writerow(row)
+                writer = csv.writer(file)
+                writer.writerows(rows)
 
             print(f"Saved belief data to {save_belief}")
-        
         self.logger.info(f'Problem is not solvable') #
         self.result.update({'plan':[]})
         self.result.update({'path_length':0})
