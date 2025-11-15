@@ -1,6 +1,7 @@
 import logging
 import datetime
 import csv
+import copy
 # import resource
 import psutil
 import os
@@ -88,14 +89,14 @@ class Search:
     
     
     def _duplication_check(self,state,sgp_p_dict):
-        
+        temp_sgp_p_dict = {}
         # self.logger.debug(sgp_p_dict.keys())
         for k, item in sgp_p_dict.items():
-            sgp_p_dict[k] = item[-1]
+            temp_sgp_p_dict[k] = item[-1]
         
-        sgp_p_dict.update({GLOBAL_PERSPECTIVE_INDEX:state})
+        temp_sgp_p_dict.update({GLOBAL_PERSPECTIVE_INDEX:state})
         
-        hsgp_p_dict = make_hashable(sgp_p_dict)
+        hsgp_p_dict = make_hashable(temp_sgp_p_dict)
         if not hsgp_p_dict in self.visited:
             self.visited.add(hsgp_p_dict)
             return True
@@ -117,6 +118,10 @@ class Search:
     # this can be customized
     def action_filter(self,all_legal_action_name,path,given_plan:list=None):
         return all_legal_action_name
+    
+    def jp_logging(self,sgp_p_dict,key_variables,output_file):
+        raise NotImplementedError("this should be not be called for any normal search algorithm")
+        pass
 
     #BFS with duplicate check on the state + epistemic formula
     # for novelty checking purpose, we need to move the goal check process at where the node is generated
@@ -174,7 +179,6 @@ class Search:
             path = current_node.path
             actions = [ a  for s,a in path]
             actions = actions[1:]
-
             # if len(path) > 3:
             #     exit()
             self.logger.debug("path: %s",actions)
@@ -193,6 +197,7 @@ class Search:
                 self.result.update({'timeout':self.timeout.seconds})
                 self.result.update({'memoryout':self.memoryout})
                 self._finalise_result(problem)
+                print("successfully found the goal")
                 self.jp_logging(sg_p_dict,key_variables,output_file)
                 return self.result
 
@@ -231,7 +236,7 @@ class Search:
                 self.result.update({'memoryout':self.memoryout})
                 self._finalise_result(problem)
                 return self.result
-
+            
             all_legal_actions,sgp_p_dict = problem.get_all_legal_actions(state,path,sg_p_dict)
             
             all_legal_action_name = list(all_legal_actions.keys())
@@ -306,6 +311,7 @@ class Search:
         self._finalise_result(problem)
         self.logger.debug(self.result)
         self.output(output_file)
+        print("Done searching but no solution found")
         self.jp_logging(sg_p_dict,key_variables,output_file)
         return self.result
 
