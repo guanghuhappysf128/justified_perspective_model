@@ -193,6 +193,7 @@ class Search:
                 self.result.update({'timeout':self.timeout.seconds})
                 self.result.update({'memoryout':self.memoryout})
                 self._finalise_result(problem)
+                self.jp_logging(sg_p_dict,key_variables,output_file)
                 return self.result
 
             current_time = datetime.datetime.now()
@@ -305,8 +306,11 @@ class Search:
         self._finalise_result(problem)
         self.logger.debug(self.result)
         self.output(output_file)
+        self.jp_logging(sg_p_dict,key_variables,output_file)
         return self.result
 
+
+    """
     def validating(self,plan,problem:Problem,time_out:int,memory_out:int,save_belief:str=None,key_variables=None):
         self.timeout = datetime.timedelta(seconds=time_out)
         self.memoryout = memory_out*1024 
@@ -643,9 +647,9 @@ class Search:
         #     print("The input plan not valid")
 
         return self.result
+    """
     
     
-
     def _finalise_result(self,problem:Problem):
         # logger output
         ontic_goal_list = list()

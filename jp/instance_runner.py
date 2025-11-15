@@ -219,6 +219,9 @@ class Instance:
 
         logger.info(f'starting search')
         start_search_time = datetime.datetime.now().astimezone(TIMEZONE)
+
+        if output_file:
+            output_file = os.path.join(output_path,output_file)
         
         if time_debug:
             search_class_ref = getattr( self.search_module, self.search_name)
@@ -305,6 +308,8 @@ def loadParameter():
     parser.add_option('-t', '--time_out', dest="time_out", help='time_out, default 300s', type='int', default=300)
     parser.add_option('-m', '--memory_out', dest="memory_out", help='memoryout, default 8GB', type='int', default=8)
     parser.add_option('--plan_actions', dest="plan_actions", help='comma-separated list of plan actions', default='')
+    parser.add_option('--key_variables', dest="key_variables", help='comma-separated list of key variables for jp logging', default='')
+    parser.add_option('--output_file', dest="output_file", help='special file name for output some results', default=None)
     
     options, otherjunk = parser.parse_args(sys.argv[1:] )
     assert len(otherjunk) == 0, "Unrecognized options: " + str(otherjunk)
@@ -387,11 +392,16 @@ if __name__ == '__main__':
         # if options.plan_actions:
         #     ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
         # else:
+        key_variables = None
+        if options.key_variables:
+            key_variables = [var.strip() for var in options.key_variables.split(',') if var.strip()]
         ins.solve(
             output_path = output_path,
             time_out=time_out, 
             memory_out = memory_out,
-            given_plan=plan_action)
+            given_plan=plan_action,
+            output_file=options.output_file,
+            key_variables=key_variables)
         
         
         pr.disable()
@@ -414,11 +424,16 @@ if __name__ == '__main__':
     else:
         ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module=search_module,search_name=search_name)
         #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+        key_variables = None
+        if options.key_variables:
+            key_variables = [var.strip() for var in options.key_variables.split(',') if var.strip()]
 
         ins.solve(
             output_path = output_path,
             time_out=time_out, 
             memory_out = memory_out,
-            given_plan=plan_action
+            given_plan=plan_action,
+            output_file=options.output_file,
+            key_variables=key_variables
             )
 
