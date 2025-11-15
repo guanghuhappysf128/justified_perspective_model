@@ -114,13 +114,13 @@ class Search:
                     return False
         return True
             
-
-    def action_filter(self,problem,all_legal_action_name):
+    # this can be customized
+    def action_filter(self,all_legal_action_name,path,given_plan:list=None):
         return all_legal_action_name
 
     #BFS with duplicate check on the state + epistemic formula
     # for novelty checking purpose, we need to move the goal check process at where the node is generated
-    def searching(self,problem:Problem,time_out:int,memory_out:int,output_file:str=None,key_variables:list=None):
+    def searching(self,problem:Problem,time_out:int,memory_out:int,output_file:str=None,key_variables:list=None,given_plan:list=None):
         self.timeout = datetime.timedelta(seconds=time_out)
         self.memoryout = memory_out*1024 
         self.logger.info("starting searching using [%s]",self.search_name)
@@ -234,6 +234,7 @@ class Search:
             all_legal_actions,sgp_p_dict = problem.get_all_legal_actions(state,path,sg_p_dict)
             
             all_legal_action_name = list(all_legal_actions.keys())
+            all_legal_action_name = self.action_filter(all_legal_action_name,path,given_plan)
             all_legal_action_name.sort()
             # filtered_action_name = self.action_filter(problem,all_legal_action_name)
 

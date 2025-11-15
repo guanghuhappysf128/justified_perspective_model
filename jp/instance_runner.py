@@ -147,7 +147,7 @@ class Instance:
             # result = search_algorithm.searching(problem)
             # print(result)
 
-    def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False,output_file:str=None,key_variables:list=None):
+    def solve(self,output_path,time_out, memory_out, time_debug=False,log_debug=False,output_file:str=None,key_variables:list=None,given_plan=None):
         
         start_time = datetime.datetime.now().astimezone(TIMEZONE)
         result = dict()
@@ -223,13 +223,24 @@ class Instance:
         if time_debug:
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file,key_variables)
+            # normalize given_plan (accept str or list)
+            plan_list = None
+            if isinstance(given_plan, str) and given_plan.strip():
+                plan_list = [a.strip() for a in given_plan.split(',') if a.strip()]
+            elif isinstance(given_plan, (list, tuple)):
+                plan_list = [str(a).strip() for a in given_plan if str(a).strip()]
+            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file,key_variables,given_plan=plan_list)
             # result = search_algorithm.searching(problem)
         else:
         
             search_class_ref = getattr( self.search_module, self.search_name)
             search_algorithm = search_class_ref(logger_handlers,self.search_name)
-            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file,key_variables)
+            plan_list = None
+            if isinstance(given_plan, str) and given_plan.strip():
+                plan_list = [a.strip() for a in given_plan.split(',') if a.strip()]
+            elif isinstance(given_plan, (list, tuple)):
+                plan_list = [str(a).strip() for a in given_plan if str(a).strip()]
+            temp_result = search_algorithm.searching(problem,time_out,memory_out,output_file,key_variables,given_plan=plan_list)
 
         end_search_time = datetime.datetime.now().astimezone(TIMEZONE)
         
@@ -287,7 +298,7 @@ def loadParameter():
     parser.add_option('-p', '--problem', dest="problem_path", help='path to the problem file', default='')
     parser.add_option('-e', '--external', dest="external_path", help='path to the external function file', default='')
     parser.add_option('-o', '--output', dest="output_path", help='output directory for the running results (default: output/timestamp)',default='')
-    parser.add_option('-s', '--search_path', dest="search_path", help='the name of the search algorithm', default='bfs')
+    parser.add_option('-s', '--search_path', dest="search_path", help='the name of the search algorithm: including the option of plan validation: path_validator', default='bfs')
     parser.add_option('--log_debug', dest="log_debug", action='store_true', help='enable logging level to debug', default=False)
     parser.add_option('-b', '--belief_mode', dest="belief_mode", type='int', help='should between 0-3', default=1)
     parser.add_option('--time_debug', dest="time_debug", action='store_true', help='enable cProfile', default=False)
@@ -373,10 +384,14 @@ if __name__ == '__main__':
         pr.enable()
         ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module= search_module, search_name = search_name)
         #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
-        if options.plan_actions:
-            ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
-        else:
-            ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+        # if options.plan_actions:
+        #     ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
+        # else:
+        ins.solve(
+            output_path = output_path,
+            time_out=time_out, 
+            memory_out = memory_out,
+            given_plan=plan_action)
         
         
         pr.disable()
@@ -399,8 +414,11 @@ if __name__ == '__main__':
     else:
         ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module=search_module,search_name=search_name)
         #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
-        if options.plan_actions:
-            ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
-        else:
-            ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
+
+        ins.solve(
+            output_path = output_path,
+            time_out=time_out, 
+            memory_out = memory_out,
+            given_plan=plan_action
+            )
 
