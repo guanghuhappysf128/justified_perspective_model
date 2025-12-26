@@ -48,6 +48,7 @@ class Search:
         self.indifference_perspective_dict = dict()
         self.indifference_observation_dict = dict()
         self.action_dict = dict()
+        self.key_variables = list()
         
 
     class SearchNode:
@@ -150,12 +151,36 @@ class Search:
                             elif temp_str == '$' and negation_flag:
                                 self.unknown_goal_name.append(key)
         self.logger.debug(f'unknown goal name: {self.unknown_goal_name}')
-                
+        
+        # let's find all key variables from the goal conditions
+        for key,item in problem.goals.items():
+            print(item)
+            condition : Condition = item
+            if condition.condition_type == ConditionType.ONTIC:
+                if not condition.condition_variable in self.key_variables:
+                    self.key_variables.append(condition.condition_variable)
+            elif condition.condition_type == ConditionType.EP:
+                ep_formula: EP_formula = condition.condition_formula
+                print(ep_formula)
+                print(ep_formula.ep_varphi)
+                varphi_condition : Condition = ep_formula.ep_varphi
+                if varphi_condition.condition_type == ConditionType.ONTIC:
+                    if not varphi_condition.condition_variable in self.key_variables:
+                        self.key_variables.append(varphi_condition.condition_variable)
+                else:
+                    raise ValueError("Goal formula nested in the wrong way",ep_formula.ep_query)
+                # if not ep_formula.ep_variable in self.key_variables:
+                #     self.key_variables.append(ep_formula.ep_variable)
+            else:
+                raise ValueError("Unknown condition type")
+
+        print(f'key variables are: {self.key_variables}')
         
         # check whether the initial state is the goal state
         init_state = problem.initial_state
         init_path = [(init_state,'')]
         remaining_goal_num,init_goal_dict,init_p_dict = problem.is_goal(init_path)
+        print(init_p_dict.keys())
         self.goal_checked +=1
        
         # init_epistemic_item_set = dict()
@@ -179,6 +204,7 @@ class Search:
             path = current_node.path
             actions = [ a  for s,a in path]
             actions = actions[1:]
+            states = [ s  for s,a in path]
             # if len(path) > 3:
             #     exit()
             self.logger.debug("path: %s",actions)
@@ -240,12 +266,25 @@ class Search:
             all_legal_actions,sgp_p_dict = problem.get_all_legal_actions(state,path,sg_p_dict)
             
             all_legal_action_name = list(all_legal_actions.keys())
+
+            # domain specific action filter to reduce the search space
+            # there might be a better way to do this
+            # such as only have sa modeled in the pddl
+            # we find this by search whether problem.external has the action_filter method
+            if hasattr(problem.external,'action_filter'):
+                all_legal_action_name = problem.external.action_filter(self.key_variables,problem.entities,all_legal_action_name)
+
+            
+            # this action filter is for verifying the given plan
             all_legal_action_name = self.action_filter(all_legal_action_name,path,given_plan)
             all_legal_action_name.sort()
             # filtered_action_name = self.action_filter(problem,all_legal_action_name)
 
+            # adding global perspective
+            sgp_p_dict.update({GLOBAL_PERSPECTIVE_INDEX:states})
+
             
-            self.logger.debug(sgp_p_dict.keys())
+            # print(sgp_p_dict.keys())
             self.logger.debug(sgp_p_dict)
             self.logger.debug(all_legal_actions.keys())
             self.logger.debug("action generated: %s",all_legal_action_name)
@@ -312,7 +351,7 @@ class Search:
         self.logger.debug(self.result)
         self.output(output_file)
         print("Done searching but no solution found")
-        self.jp_logging(sg_p_dict,key_variables,output_file)
+        # self.jp_logging(sg_p_dict,key_variables,output_file)
         return self.result
 
 
