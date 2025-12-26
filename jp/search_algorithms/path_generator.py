@@ -35,11 +35,15 @@ class path_generator(Search):
     # since this not pruning, it will not affect the completeness of the search
     # adding agent identity indifference to the action_list
     def logging_actions(self,actions,p_dict,key_variables):
-        # print(actions)
-        # print(actions.keys())
+        print(actions)
         # prune = False
         # narrow = False # prune the path if all value of a variable is unknown.
-        global_state = p_dict[GLOBAL_PERSPECTIVE_INDEX]
+        # print(p_dict.keys())
+        # for key in p_dict.keys():
+        #     print(f"perspective key: {key}")
+        #     print(f"perspective value: {p_dict[key]}")
+
+        global_state = p_dict[GLOBAL_PERSPECTIVE_INDEX][-1]
         # for key,local_p in p_dict.items():
         #     if key == GLOBAL_PERSPECTIVE_INDEX:
         #         continue
@@ -55,16 +59,17 @@ class path_generator(Search):
         # pruning if all values of the key variables are unknown (unseen)
         # also pruning when everyone is seeing all target variables (all perspective values are the same as global perspective)
         
-        for var_name,value in global_state.items():
+        for var_name in key_variables:
+            value = global_state[var_name]
             all_unknown = True
             all_same_as_global = True
             for key,local_p in p_dict.items():
                 if key == GLOBAL_PERSPECTIVE_INDEX:
                     continue
                 else:
-                    if local_p[var_name] == value:
+                    if local_p[-1][var_name] == value:
                         all_unknown = False
-                    elif local_p[var_name] == special_value.UNSEEN or local_p[var_name] == special_value.HAVENT_SEEN:
+                    elif local_p[-1][var_name] == special_value.UNSEEN or local_p[-1][var_name] == special_value.HAVENT_SEEN:
                         all_same_as_global = False
                         pass
                     else:
@@ -135,7 +140,7 @@ class path_generator(Search):
                         level_based_observation_dict[new_key] = []
                     key_variable_dict = dict()
                     for var_name in key_variables:
-                        value = local_p[var_name]
+                        value = local_p[-1][var_name]
                         key_variable_dict[var_name] = value
                     key_variable_str = state_to_string(key_variable_dict)
                     level_based_observation_dict[new_key].append(key_variable_str)
@@ -147,7 +152,7 @@ class path_generator(Search):
                         level_based_perspective_dict[new_key] = []
                     key_variable_dict = dict()
                     for var_name in key_variables:
-                        value = local_p[var_name]
+                        value = local_p[-1][var_name]
                         key_variable_dict[var_name] = value
                     key_variable_str = state_to_string(key_variable_dict)
                     level_based_perspective_dict[new_key].append(key_variable_str)
@@ -164,9 +169,12 @@ class path_generator(Search):
             
             action_str  = str(actions)
             # print(f"action_str: {action_str}")
-            # print(f"level_based_perspective_str: {level_based_perspective_str}")
+            
             if level_based_perspective_str not in self.indifference_perspective_dict.keys():
                 
+                # print("not in indifference perspective dict")
+                # print(f"level_based_perspective_str: {level_based_perspective_str}")
+                # print(f"p_dict: {p_dict}")
                 self.indifference_perspective_dict[level_based_perspective_str] = action_str
                 self.indifference_observation_dict[level_based_perspective_str] = level_based_observation_dict
                 self.action_dict[action_str] = actions
@@ -178,28 +186,44 @@ class path_generator(Search):
                 self.action_list.append(actions)
                 # time.sleep(5)
             else:
+                # print("it is there")
                 # check whether need to remove the previous one if the current observation is less
                 old_observation_dict = self.indifference_observation_dict[level_based_perspective_str]
-                # print(old_observation_dict)
+                # print("size of old observation dict:", len(old_observation_dict))
+            
+                old_action_str = self.indifference_perspective_dict[level_based_perspective_str]
+                
+                # print("old action str:", old_action_str)
+                old_special_value = 0
+                new_special_value = 0
                 for new_key, observation_str in old_observation_dict.items():
-                    old_special_value = observation_str.count('.')
-                    new_special_value = level_based_observation_dict[new_key].count('.')
-                    old_action_str = self.indifference_perspective_dict[level_based_perspective_str]
-                    if new_special_value > old_special_value:
-                        # update the old one
-                        self.indifference_observation_dict[level_based_perspective_str] = level_based_observation_dict
-                        self.indifference_perspective_dict[level_based_perspective_str] = action_str
-                        
-                        # remove the old actions
-                        self.action_list.remove(self.action_dict[old_action_str])
-                        
-                        # # remove the old perspective
-                        # del self.indifference_perspective_dict[old_action_str]
-                        
-                        
-                        # add the new actions
-                        self.action_dict[action_str] = actions
-                        self.action_list.append(actions)
+                    old_special_value += observation_str.count('.')
+                    new_special_value += level_based_observation_dict[new_key].count('.')
+                    
+                if new_special_value > old_special_value:
+                    # print("update the action str")
+                    # print("old action str:", old_action_str)
+                    # print("new action str:", actions)
+                    # print(f"level_based_perspective_str: {level_based_perspective_str}")
+                    # print("old observation dict:", old_observation_dict)
+                    # print("old special value:", old_special_value)
+                    # print("new observation dict:", level_based_observation_dict)
+                    # print("new special value:", new_special_value)
+                    
+                    # update the old one
+                    self.indifference_observation_dict[level_based_perspective_str] = level_based_observation_dict
+                    self.indifference_perspective_dict[level_based_perspective_str] = action_str
+                    
+                    # remove the old actions
+                    self.action_list.remove(self.action_dict[old_action_str])
+                    
+                    # # remove the old perspective
+                    # del self.indifference_perspective_dict[old_action_str]
+                    
+
+                    # add the new actions
+                    self.action_dict[action_str] = actions
+                    self.action_list.append(actions)
                         
                 
                     
