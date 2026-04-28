@@ -26,6 +26,10 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+.vscode/
+
+*.out
+output_before_optimization/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -127,3 +131,26 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+logs/
+output/
+results/
+temp/
+
+
+*.xlsx
+
+epistemic_pddl_domains
+
+scripts/figs/
+
+epistemic_pddl_domains/
+
+overview/
+
+scripts/configs/
+scripts/unused_config/
+scripts/figs_sharedyF/
+
+
+*.png

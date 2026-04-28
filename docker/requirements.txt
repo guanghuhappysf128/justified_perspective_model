@@ -1,0 +1,12 @@
+exceptiongroup==1.2.1
+importlib_metadata==7.1.0
+importlib_resources==6.4.0
+# json5==0.9.25
+matplotlib==3.7.5
+numpy==1.24.4
+pandas==2.0.3
+psutil==5.9.8
+pymongo==4.7.1
+pytz==2024.1
+seaborn==0.13.2
+PyYAML==5.3.1

@@ -1,0 +1,165 @@
+(define 
+        (problem grapevine07) 
+        (:domain grapevine)
+
+        (:agents
+            a b c d e f g h - agent
+        )
+            
+        (:objects
+            as bs cs ds es fs gs hs - secret
+        )
+
+        (:init
+            (assign (agent_loc a) 1)
+            (assign (agent_loc b) 1)
+            (assign (agent_loc c) 1)
+            (assign (agent_loc d) 1)
+            (assign (agent_loc e) 1)
+            (assign (agent_loc f) 1)
+            (assign (agent_loc g) 1)
+            (assign (agent_loc h) 1)
+
+            (assign (shared_loc as) 0)
+            (assign (shared_loc bs) 0)
+            (assign (shared_loc cs) 0)
+            (assign (shared_loc ds) 0)
+            (assign (shared_loc es) 0)
+            (assign (shared_loc fs) 0)
+            (assign (shared_loc gs) 0)
+            (assign (shared_loc hs) 0)
+
+
+            (assign (own a as) 1)
+            (assign (own a bs) 0)
+            (assign (own a cs) 0)
+            (assign (own a ds) 0)
+            (assign (own a es) 0)
+            (assign (own a fs) 0)
+            (assign (own a gs) 0)
+            (assign (own a hs) 0)
+
+
+            (assign (own b as) 0)
+            (assign (own b bs) 1)
+            (assign (own b cs) 0)
+            (assign (own b ds) 0)
+            (assign (own b es) 0)
+            (assign (own b fs) 0)
+            (assign (own b gs) 0)
+            (assign (own b hs) 0)
+
+
+            (assign (own c as) 0)
+            (assign (own c bs) 0)
+            (assign (own c cs) 1)
+            (assign (own c ds) 0)
+            (assign (own c es) 0)
+            (assign (own c fs) 0)
+            (assign (own c gs) 0)
+            (assign (own c hs) 0)
+
+            (assign (own d as) 0)
+            (assign (own d bs) 0)
+            (assign (own d cs) 0)
+            (assign (own d ds) 1)
+            (assign (own d es) 0)
+            (assign (own d fs) 0)
+            (assign (own d gs) 0)
+            (assign (own d hs) 0)
+
+            (assign (own e as) 0)
+            (assign (own e bs) 0)
+            (assign (own e cs) 0)
+            (assign (own e ds) 0)
+            (assign (own e es) 1)
+            (assign (own e fs) 0)
+            (assign (own e gs) 0)
+            (assign (own e hs) 0)
+
+            (assign (own f as) 0)
+            (assign (own f bs) 0)
+            (assign (own f cs) 0)
+            (assign (own f ds) 0)
+            (assign (own f es) 0)
+            (assign (own f fs) 1)
+            (assign (own f gs) 0)
+            (assign (own f hs) 0)
+
+            (assign (own g as) 0)
+            (assign (own g bs) 0)
+            (assign (own g cs) 0)
+            (assign (own g ds) 0)
+            (assign (own g es) 0)
+            (assign (own g fs) 0)
+            (assign (own g gs) 1)
+            (assign (own g hs) 0)
+
+            (assign (own h as) 0)
+            (assign (own h bs) 0)
+            (assign (own h cs) 0)
+            (assign (own h ds) 0)
+            (assign (own h es) 0)
+            (assign (own h fs) 0)
+            (assign (own h gs) 0)
+            (assign (own h hs) 1)
+
+
+
+            (assign (sharing) 0)
+
+            (assign (secret_value as) 't')
+            (assign (secret_value bs) 't')
+            (assign (secret_value cs) 't')
+            (assign (secret_value ds) 't')
+            (assign (secret_value es) 't')
+            (assign (secret_value fs) 't')
+            (assign (secret_value gs) 't')
+            (assign (secret_value hs) 't')
+
+            (assign (secret_lyging_value as) 'f')
+            (assign (secret_lyging_value bs) 'f')
+            (assign (secret_lyging_value cs) 'f')
+            (assign (secret_lyging_value ds) 'f')
+            (assign (secret_lyging_value es) 'f')
+            (assign (secret_lyging_value fs) 'f')
+            (assign (secret_lyging_value gs) 'f')
+            (assign (secret_lyging_value hs) 'f')
+
+            (assign (shared_value as) 't')
+            (assign (shared_value bs) 't')
+            (assign (shared_value cs) 't')
+            (assign (shared_value ds) 't')
+            (assign (shared_value es) 't')
+            (assign (shared_value fs) 't')
+            (assign (shared_value gs) 't')
+            (assign (shared_value hs) 't')
+        )
+
+    
+        (:goal (and 
+                ; (= (@ep ("+ b [b] $ b [c]") (= (secret_value as) 't')) ep.true)
+                ; (= (@jp ("b [b] b [a]") (secret_value as)) 't')
+                ; (= (@ep ("! s [b] $ s [c]") (= (secret_value as) 't')) ep.true)
+                (= (@ep ("+ b [b]") (= (shared_value as) 't')) ep.true)
+                (= (@ep ("+ b [c]") (= (shared_value as) 'f')) ep.true)
+                ;seeing -> knowing whether
+                ;K observer S action box1
+            )
+        )
+
+        (:ranges
+            (agent_loc integer [1,2])
+            (shared_loc integer [0,2])
+            (own integer [0,1])
+            (sharing integer [0,1])
+            (secret_value enumerate ['t','f'])
+            (secret_lyging_value enumerate ['t','f'])
+            (shared_value enumerate ['t','f'])
+        )
+
+        (:rules
+
+        )
+    )
+    
