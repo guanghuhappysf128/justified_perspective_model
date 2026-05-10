@@ -1,0 +1,12 @@
+{
+  "generated_problem_files": [
+    "amc_1_from_epddl.pddl"
+  ],
+  "grounded_json_files": [
+    "problem_1.json"
+  ],
+  "grounding_failures": [],
+  "notes": "Converted to the muddy_children F-PDDL family with generated problems.",
+  "source_domain": "Active-Muddy-Child",
+  "support_level": "supported"
+}

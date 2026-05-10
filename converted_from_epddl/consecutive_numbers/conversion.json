@@ -1,0 +1,12 @@
+{
+  "grounded_json_files": [
+    "cn5.json"
+  ],
+  "grounding_failures": [],
+  "notes": "No corresponding F-PDDL benchmark family is present yet.",
+  "source_domain": "Consecutive-Numbers",
+  "source_problem_files": [
+    "benchmarks/domains/Consecutive-Numbers/instances/cn5.epddl"
+  ],
+  "support_level": "unsupported"
+}

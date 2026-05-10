@@ -1,0 +1,20 @@
+{
+  "generated_problem_files": [
+    "cb_1_from_epddl.pddl",
+    "cb_2_from_epddl.pddl",
+    "cb_3_from_epddl.pddl",
+    "cb_4_from_epddl.pddl",
+    "cb_5_from_epddl.pddl"
+  ],
+  "grounded_json_files": [
+    "problem_1.json",
+    "problem_2.json",
+    "problem_3.json",
+    "problem_4.json",
+    "problem_5.json"
+  ],
+  "grounding_failures": [],
+  "notes": "Converted to a generated Coin-in-the-Box F-PDDL family with event-based visibility. The core open/signal/distract/peek/shout structure is preserved, while the common and higher-order modal goals are approximated with the closest JPM-expressible belief formulas.",
+  "source_domain": "Coin-in-the-Box",
+  "support_level": "supported"
+}

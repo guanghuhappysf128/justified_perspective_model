@@ -1,0 +1,69 @@
+(define (domain grapevine)
+    (:requirements
+        :equality :list-comprehensions :lists :partial-observability :ontic-actions
+        :negative-preconditions :modal-preconditions :negative-obs-conditions
+    )
+
+    ; (:action-type-libraries intermediate)
+
+    (:predicates
+        (in-left-room ?i - agent)
+        (secret ?i - agent)
+    )
+
+    (:event nil)
+
+    ;--------------------LEFT------------------
+
+    (:event e-left
+        :parameters (?i - agent)
+        :precondition (not (in-left-room ?i))
+        :effects (in-left-room ?i)
+    )
+
+    (:action left
+        :parameters (?i - agent)
+        :action-type (public-ontic (e-left ?i))
+        :observability-conditions (default Fully)
+    )
+
+    ;--------------------LEFT------------------
+
+    (:event e-right
+        :parameters (?i - agent)
+        :precondition (in-left-room ?i)
+        :effects (not (in-left-room ?i))
+    )
+
+    (:action right
+        :parameters (?i - agent)
+        :action-type (public-ontic (e-right ?i))
+        :observability-conditions (default Fully)
+    )
+
+    ;--------------------TELL------------------
+
+    (:event e-tell
+        :parameters (?i - agent)
+        :precondition (secret ?i)
+    )
+
+    ; Agent ?i tells ?j's secret to all agents in ?i's room
+    (:action tell
+        :parameters (?i ?j - agent)
+        :action-type (private-announcement (e-tell ?j) (nil))
+        :observability-conditions
+            (:and
+                (?i Fully)
+                (:forall (?k - agent | (/= ?k ?i))
+                    (?k
+                        (if (and (imply (in-left-room ?i) (in-left-room ?k)) (imply (in-left-room ?k) (in-left-room ?i)))
+                            Fully
+                         else
+                            Oblivious
+                        )
+                    )
+                )
+            )
+    )
+)

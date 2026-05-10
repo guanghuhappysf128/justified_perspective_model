@@ -1,0 +1,4795 @@
+{
+  "planning-task-info": {
+    "problem": "cc_2_2_3-4",
+    "domain": "collaboration-through-communication",
+    "libraries": [
+      "intermediate"
+    ],
+    "requirements": [
+      ":common-knowledge",
+      ":conditional-effects",
+      ":disjunctive-list-formulas",
+      ":disjunctive-obs-conditions",
+      ":disjunctive-preconditions",
+      ":equality",
+      ":events-conditions",
+      ":existential-obs-conditions",
+      ":existential-preconditions",
+      ":facts",
+      ":finitary-S5-theories",
+      ":group-modalities",
+      ":knowing-whether",
+      ":list-comprehensions",
+      ":lists",
+      ":modal-preconditions",
+      ":multi-pointed-models",
+      ":negative-list-formulas",
+      ":negative-obs-conditions",
+      ":negative-preconditions",
+      ":ontic-actions",
+      ":partial-observability",
+      ":static-common-knowledge",
+      ":typing"
+    ],
+    "agents-number": 2,
+    "atoms-number": 27,
+    "facts-number": 4,
+    "actions-number": 28,
+    "initial-worlds-number": 16,
+    "goal-modal-depth": 1,
+    "goal-size": 11
+  },
+  "language": {
+    "atoms": [
+      "rightmost_room1",
+      "rightmost_room2",
+      "rightmost_room3",
+      "leftmost_room1",
+      "leftmost_room2",
+      "leftmost_room3",
+      "neighbor_room1_room1",
+      "neighbor_room1_room2",
+      "neighbor_room1_room3",
+      "neighbor_room2_room1",
+      "neighbor_room2_room2",
+      "neighbor_room2_room3",
+      "neighbor_room3_room1",
+      "neighbor_room3_room2",
+      "neighbor_room3_room3",
+      "at-box_box1_room1",
+      "at-box_box1_room2",
+      "at-box_box1_room3",
+      "at-box_box2_room1",
+      "at-box_box2_room2",
+      "at-box_box2_room3",
+      "at-ag_A_room1",
+      "at-ag_A_room2",
+      "at-ag_A_room3",
+      "at-ag_B_room1",
+      "at-ag_B_room2",
+      "at-ag_B_room3"
+    ],
+    "agents": [
+      "A",
+      "B"
+    ]
+  },
+  "facts": [
+    "neighbor_room1_room2",
+    "neighbor_room2_room3",
+    "leftmost_room1",
+    "rightmost_room3"
+  ],
+  "initial-state": {
+    "worlds": [
+      "w0",
+      "w1",
+      "w2",
+      "w3",
+      "w4",
+      "w5",
+      "w6",
+      "w7",
+      "w8",
+      "w9",
+      "w10",
+      "w11",
+      "w12",
+      "w13",
+      "w14",
+      "w15"
+    ],
+    "relations": {
+      "A": {
+        "w0": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w1": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w2": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w3": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w4": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w5": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w6": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w7": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w8": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w9": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w10": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w11": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w12": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w13": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w14": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w15": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ]
+      },
+      "B": {
+        "w0": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w1": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w2": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w3": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w4": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w5": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w6": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w7": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w8": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w9": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w10": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w11": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w12": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w13": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w14": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ],
+        "w15": [
+          "w0",
+          "w1",
+          "w2",
+          "w3",
+          "w4",
+          "w5",
+          "w6",
+          "w7",
+          "w8",
+          "w9",
+          "w10",
+          "w11",
+          "w12",
+          "w13",
+          "w14",
+          "w15"
+        ]
+      }
+    },
+    "labels": {
+      "w0": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room3",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w1": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room3",
+        "at-box_box2_room2",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w2": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room3",
+        "at-box_box2_room1",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w3": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room3",
+        "at-box_box2_room1",
+        "at-box_box2_room2",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w4": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room2",
+        "at-box_box1_room3",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w5": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room2",
+        "at-box_box1_room3",
+        "at-box_box2_room2",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w6": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room2",
+        "at-box_box1_room3",
+        "at-box_box2_room1",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w7": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room2",
+        "at-box_box1_room3",
+        "at-box_box2_room1",
+        "at-box_box2_room2",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w8": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w9": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box2_room2",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w10": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box2_room1",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w11": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box2_room1",
+        "at-box_box2_room2",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w12": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box1_room2",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w13": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box1_room2",
+        "at-box_box2_room2",
+        "at-box_box2_room3",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w14": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box1_room2",
+        "at-box_box2_room1",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ],
+      "w15": [
+        "rightmost_room3",
+        "leftmost_room1",
+        "neighbor_room1_room2",
+        "neighbor_room2_room3",
+        "at-box_box1_room1",
+        "at-box_box1_room2",
+        "at-box_box2_room1",
+        "at-box_box2_room2",
+        "at-ag_A_room2",
+        "at-ag_B_room2"
+      ]
+    },
+    "designated": [
+      "w8"
+    ]
+  },
+  "actions": {
+    "left_A": {
+      "action-type": "public-ontic",
+      "events": [
+        "e-left"
+      ],
+      "relations": {
+        "Fully": {
+          "e-left": [
+            "e-left"
+          ]
+        }
+      },
+      "designated": [
+        "e-left"
+      ],
+      "preconditions": {
+        "e-left": {
+          "formula": {
+            "connective": "not",
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    "leftmost_room1"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    "leftmost_room2"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    "leftmost_room3"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "effects": {
+        "e-left": {
+          "at-ag_A_room3": {
+            "formula": {
+              "connective": "and",
+              "formulas": [
+                "at-ag_A_room3",
+                {
+                  "connective": "not",
+                  "formula": "at-ag_A_room3"
+                }
+              ]
+            }
+          },
+          "at-ag_A_room2": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                "at-ag_A_room3",
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "at-ag_A_room1": {
+            "formula": "at-ag_A_room2"
+          }
+        }
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "left_B": {
+      "action-type": "public-ontic",
+      "events": [
+        "e-left"
+      ],
+      "relations": {
+        "Fully": {
+          "e-left": [
+            "e-left"
+          ]
+        }
+      },
+      "designated": [
+        "e-left"
+      ],
+      "preconditions": {
+        "e-left": {
+          "formula": {
+            "connective": "not",
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    "leftmost_room1"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    "leftmost_room2"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    "leftmost_room3"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "effects": {
+        "e-left": {
+          "at-ag_B_room3": {
+            "formula": {
+              "connective": "and",
+              "formulas": [
+                "at-ag_B_room3",
+                {
+                  "connective": "not",
+                  "formula": "at-ag_B_room3"
+                }
+              ]
+            }
+          },
+          "at-ag_B_room2": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                "at-ag_B_room3",
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "at-ag_B_room1": {
+            "formula": "at-ag_B_room2"
+          }
+        }
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "right_A": {
+      "action-type": "public-ontic",
+      "events": [
+        "e-right"
+      ],
+      "relations": {
+        "Fully": {
+          "e-right": [
+            "e-right"
+          ]
+        }
+      },
+      "designated": [
+        "e-right"
+      ],
+      "preconditions": {
+        "e-right": {
+          "formula": {
+            "connective": "not",
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    "rightmost_room1"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    "rightmost_room2"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    "rightmost_room3"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "effects": {
+        "e-right": {
+          "at-ag_A_room3": {
+            "formula": "at-ag_A_room2"
+          },
+          "at-ag_A_room2": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                "at-ag_A_room1",
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "at-ag_A_room1": {
+            "formula": {
+              "connective": "and",
+              "formulas": [
+                "at-ag_A_room1",
+                {
+                  "connective": "not",
+                  "formula": "at-ag_A_room1"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "right_B": {
+      "action-type": "public-ontic",
+      "events": [
+        "e-right"
+      ],
+      "relations": {
+        "Fully": {
+          "e-right": [
+            "e-right"
+          ]
+        }
+      },
+      "designated": [
+        "e-right"
+      ],
+      "preconditions": {
+        "e-right": {
+          "formula": {
+            "connective": "not",
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    "rightmost_room1"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    "rightmost_room2"
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    "rightmost_room3"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      },
+      "effects": {
+        "e-right": {
+          "at-ag_B_room3": {
+            "formula": "at-ag_B_room2"
+          },
+          "at-ag_B_room2": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                "at-ag_B_room1",
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "at-ag_B_room1": {
+            "formula": {
+              "connective": "and",
+              "formulas": [
+                "at-ag_B_room1",
+                {
+                  "connective": "not",
+                  "formula": "at-ag_B_room1"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_A_box1_room1": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room1",
+              "at-box_box1_room1"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room1",
+              {
+                "connective": "not",
+                "formula": "at-box_box1_room1"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_A_box1_room2": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room2",
+              "at-box_box1_room2"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room2",
+              {
+                "connective": "not",
+                "formula": "at-box_box1_room2"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_A_box1_room3": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room3",
+              "at-box_box1_room3"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room3",
+              {
+                "connective": "not",
+                "formula": "at-box_box1_room3"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_A_box2_room1": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room1",
+              "at-box_box2_room1"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room1",
+              {
+                "connective": "not",
+                "formula": "at-box_box2_room1"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_A_box2_room2": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room2",
+              "at-box_box2_room2"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room2",
+              {
+                "connective": "not",
+                "formula": "at-box_box2_room2"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_A_box2_room3": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room3",
+              "at-box_box2_room3"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_A_room3",
+              {
+                "connective": "not",
+                "formula": "at-box_box2_room3"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_B_box1_room1": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room1",
+              "at-box_box1_room1"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room1",
+              {
+                "connective": "not",
+                "formula": "at-box_box1_room1"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_B_box1_room2": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room2",
+              "at-box_box1_room2"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room2",
+              {
+                "connective": "not",
+                "formula": "at-box_box1_room2"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_B_box1_room3": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room3",
+              "at-box_box1_room3"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room3",
+              {
+                "connective": "not",
+                "formula": "at-box_box1_room3"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_B_box2_room1": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room1",
+              "at-box_box2_room1"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room1",
+              {
+                "connective": "not",
+                "formula": "at-box_box2_room1"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_B_box2_room2": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room2",
+              "at-box_box2_room2"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room2",
+              {
+                "connective": "not",
+                "formula": "at-box_box2_room2"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "sense_B_box2_room3": {
+      "action-type": "private-sensing",
+      "events": [
+        "e-sense-pos",
+        "e-sense-neg",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-sense-pos": [
+            "e-sense-pos"
+          ],
+          "e-sense-neg": [
+            "e-sense-neg"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-sense-pos": [
+            "nil"
+          ],
+          "e-sense-neg": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-sense-pos",
+        "e-sense-neg"
+      ],
+      "preconditions": {
+        "e-sense-pos": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room3",
+              "at-box_box2_room3"
+            ]
+          }
+        },
+        "e-sense-neg": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              "at-ag_B_room3",
+              {
+                "connective": "not",
+                "formula": "at-box_box2_room3"
+              }
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-sense-pos": null,
+        "e-sense-neg": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Oblivious": {
+            "formula": "true"
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": "true"
+          }
+        }
+      }
+    },
+    "tell_A_box1_room1": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "A"
+                ],
+                "formula": "at-box_box1_room1"
+              },
+              "at-box_box1_room1"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_A_box1_room2": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "A"
+                ],
+                "formula": "at-box_box1_room2"
+              },
+              "at-box_box1_room2"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_A_box1_room3": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "A"
+                ],
+                "formula": "at-box_box1_room3"
+              },
+              "at-box_box1_room3"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_A_box2_room1": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "A"
+                ],
+                "formula": "at-box_box2_room1"
+              },
+              "at-box_box2_room1"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_A_box2_room2": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "A"
+                ],
+                "formula": "at-box_box2_room2"
+              },
+              "at-box_box2_room2"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_A_box2_room3": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "A"
+                ],
+                "formula": "at-box_box2_room3"
+              },
+              "at-box_box2_room3"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_A_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_A_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_B_box1_room1": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "B"
+                ],
+                "formula": "at-box_box1_room1"
+              },
+              "at-box_box1_room1"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_B_box1_room2": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "B"
+                ],
+                "formula": "at-box_box1_room2"
+              },
+              "at-box_box1_room2"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_B_box1_room3": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "B"
+                ],
+                "formula": "at-box_box1_room3"
+              },
+              "at-box_box1_room3"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_B_box2_room1": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "B"
+                ],
+                "formula": "at-box_box2_room1"
+              },
+              "at-box_box2_room1"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_B_box2_room2": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "B"
+                ],
+                "formula": "at-box_box2_room2"
+              },
+              "at-box_box2_room2"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "tell_B_box2_room3": {
+      "action-type": "private-announcement",
+      "events": [
+        "e-tell",
+        "nil"
+      ],
+      "relations": {
+        "Fully": {
+          "e-tell": [
+            "e-tell"
+          ],
+          "nil": [
+            "nil"
+          ]
+        },
+        "Oblivious": {
+          "e-tell": [
+            "nil"
+          ],
+          "nil": [
+            "nil"
+          ]
+        }
+      },
+      "designated": [
+        "e-tell"
+      ],
+      "preconditions": {
+        "e-tell": {
+          "formula": {
+            "connective": "and",
+            "formulas": [
+              {
+                "modality-name": "box",
+                "modality-index": [
+                  "B"
+                ],
+                "formula": "at-box_box2_room3"
+              },
+              "at-box_box2_room3"
+            ]
+          }
+        },
+        "nil": {
+          "formula": "true"
+        }
+      },
+      "effects": {
+        "e-tell": null,
+        "nil": null
+      },
+      "observability-conditions": {
+        "A": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_A_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_A_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "B": {
+          "Fully": {
+            "formula": {
+              "connective": "not",
+              "formula": {
+                "connective": "or",
+                "formulas": [
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room1",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room1"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room2",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room2"
+                      }
+                    ]
+                  },
+                  {
+                    "connective": "and",
+                    "formulas": [
+                      "at-ag_B_room3",
+                      {
+                        "connective": "not",
+                        "formula": "at-ag_B_room3"
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          },
+          "Oblivious": {
+            "formula": {
+              "connective": "or",
+              "formulas": [
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room1",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room1"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room2",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room2"
+                    }
+                  ]
+                },
+                {
+                  "connective": "and",
+                  "formulas": [
+                    "at-ag_B_room3",
+                    {
+                      "connective": "not",
+                      "formula": "at-ag_B_room3"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "goal": {
+    "formula": {
+      "connective": "and",
+      "formulas": [
+        {
+          "modality-name": "box",
+          "modality-index": [
+            "B"
+          ],
+          "formula": "at-box_box1_room1"
+        },
+        {
+          "modality-name": "box",
+          "modality-index": [
+            "B"
+          ],
+          "formula": "at-box_box2_room3"
+        },
+        {
+          "modality-name": "box",
+          "modality-index": [
+            "A",
+            "B"
+          ],
+          "formula": "at-box_box2_room3"
+        },
+        {
+          "modality-name": "box",
+          "modality-index": [
+            "A"
+          ],
+          "formula": "at-ag_A_room2"
+        },
+        {
+          "modality-name": "box",
+          "modality-index": [
+            "B"
+          ],
+          "formula": "at-ag_A_room2"
+        }
+      ]
+    }
+  }
+}

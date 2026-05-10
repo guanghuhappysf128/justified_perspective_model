@@ -32,3 +32,8 @@ python runner.py -d examples/coin/domain.pddl -p examples/coin/problem01.pddl -e
 - `-d` or `--domain`: Path to the PDDL domain file
 - `-p` or `--problem`: Path to the PDDL problem file
 - `-e` or `--external`: Path to the external Python function file associated with the domain
+
+## Guides
+
+- [EPDDL_TO_FPDDL_WORKFLOW.md](EPDDL_TO_FPDDL_WORKFLOW.md): end-to-end workflow for grounding an EPDDL instance, converting it to F-PDDL, solving it with JPM, translating the plan back, and validating it in `plank`
+- [converted_from_epddl/README.md](converted_from_epddl/README.md): current converted-benchmark status table and validation summary

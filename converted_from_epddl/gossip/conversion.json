@@ -1,0 +1,12 @@
+{
+  "generated_problem_files": [
+    "gos_1_from_epddl.pddl"
+  ],
+  "grounded_json_files": [
+    "problem_1.json"
+  ],
+  "grounding_failures": [],
+  "notes": "Converted to a generated gossip-call F-PDDL domain with gossip4 visibility semantics.",
+  "source_domain": "Gossip",
+  "support_level": "supported"
+}

@@ -1,0 +1,135 @@
+(define (domain tiger)
+    (:requirements
+        :typing :partial-observability :list-comprehensions :lists :facts
+        :ontic-actions :conditional-effects :knowing-whether
+        :negative-preconditions :existential-preconditions :modal-preconditions
+    )
+
+    (:action-type-libraries intermediate)
+
+    (:types room)
+
+    (:constants
+        Knight - agent
+    )
+
+    (:predicates
+        (at-knight   ?r - room)
+        (at-princess ?r - room)
+        (tiger       ?r - room)
+        (opened      ?r - room)
+        (saved-princess)
+        ;; Facts
+        (:fact neighbor  ?r1 ?r2 - room)
+        (:fact leftmost  ?r      - room)
+        (:fact rightmost ?r      - room)
+    )
+
+    ;--------------------LEFT------------------
+
+    (:event e-left
+        :precondition
+            (not
+                (exists (?room-from - room)
+                    (and (at-knight ?room-from) (leftmost ?room-from)) ))
+        :effects
+            (:forall (?room-from - (either room room))
+                (when (at-knight ?room-from)
+                    (:and
+                        (not (at-knight ?room-from))
+                        (:forall (?room-to - room | (neighbor ?room-to ?room-from))
+                            (at-knight ?room-to) ))))
+    )
+
+    (:action left
+        :parameters ()
+        :action-type (public-ontic (e-left))
+        :observability-conditions (Knight Fully)
+    )
+
+    ;--------------------RIGHT------------------
+
+    (:event e-right
+        :precondition
+            (not
+                (exists (?room-from - room)
+                    (and (at-knight ?room-from) (rightmost ?room-from)) ))
+        :effects
+            (:forall (?room-from - room)
+                (when (at-knight ?room-from)
+                    (:and
+                        (not (at-knight ?room-from))
+                        (:forall (?room-to - room | (neighbor ?room-from ?room-to))
+                            (at-knight ?room-to) ))))
+    )
+
+    (:action right
+        :parameters ()
+        :action-type (public-ontic (e-right))
+        :observability-conditions (Knight Fully)
+    )
+
+    ;--------------------OPEN------------------
+
+    (:event e-open
+        :parameters (?room - room)
+        :precondition (and (at-knight ?room) (not (opened ?room)) ([Knight] (not (tiger ?room))))
+        :effects (opened ?room)
+    )
+
+    (:action open
+        :parameters (?room - room)
+        :action-type (public-ontic (e-open ?room))
+        :observability-conditions (Knight Fully)
+    )
+
+    ;--------------------SAVE-PRINCESS------------------
+
+    (:event e-save-princess
+        :parameters (?room - room)
+        :precondition (and (at-knight ?room) (opened ?room) ([Knight] (at-princess ?room)))
+        :effects (saved-princess)
+    )
+
+    (:action save-princess
+        :parameters (?room - room)
+        :action-type (public-ontic (e-save-princess ?room))
+        :observability-conditions (Knight Fully)
+    )
+
+    ;--------------------LISTEN------------------
+
+    (:event e-listen-pos
+        :parameters (?room - room)
+        :precondition (and (tiger ?room) (at-knight ?room) (<Kw. Knight> (tiger ?room)))
+    )
+
+    (:event e-listen-neg
+        :parameters (?room - room)
+        :precondition (and (not (tiger ?room)) (at-knight ?room) (<Kw. Knight> (tiger ?room)))
+    )
+
+    (:action listen
+        :parameters (?room - room)
+        :action-type (public-sensing (e-listen-pos ?room) (e-listen-neg ?room))
+        :observability-conditions (Knight Fully)
+    )
+
+    ;--------------------LOOK------------------
+
+    (:event e-look-pos
+        :parameters (?room - room)
+        :precondition (and (at-princess ?room) (at-knight ?room) (<Kw. Knight> (at-princess ?room)))
+    )
+
+    (:event e-look-neg
+        :parameters (?room - room)
+        :precondition (and (not (at-princess ?room)) (at-knight ?room) (<Kw. Knight> (at-princess ?room)))
+    )
+
+    (:action look
+        :parameters (?room - room)
+        :action-type (public-sensing (e-look-pos ?room) (e-look-neg ?room))
+        :observability-conditions (Knight Fully)
+    )
+)

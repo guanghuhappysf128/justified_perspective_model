@@ -1,0 +1,12 @@
+{
+  "generated_problem_files": [
+    "gra_1_from_epddl.pddl"
+  ],
+  "grounded_json_files": [
+    "problem_1.json"
+  ],
+  "grounding_failures": [],
+  "notes": "Converted to the existing grapevine-style F-PDDL family.",
+  "source_domain": "Grapevine",
+  "support_level": "supported"
+}
