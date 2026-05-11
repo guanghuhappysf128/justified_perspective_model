@@ -315,7 +315,7 @@ if __name__ == '__main__':
     # initialise with path, the function will load it later
     external_function = options.external_path
     search_path = options.search_path
-    output_path = ''
+    output_path = options.output_path
     plan_action = options.plan_actions
 
     

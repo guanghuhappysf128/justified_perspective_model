@@ -1,0 +1,35 @@
+suite_name: full
+cores: 4
+
+defaults:
+  time_limit_seconds: 300
+  memory_limit_gb: 8
+
+solvers:
+  - name: bfs
+  - name: bfsdc
+  - name: bfsdcu
+  - name: astar
+  - name: greedy
+  - name: ngreedy
+  - name: solution_finder
+
+domains:
+  - name: bbl
+    instances: all
+  - name: coin
+    instances: all
+  - name: corridor
+    instances: all
+  - name: gossip4
+    instances: all
+  - name: grapevine
+    instances: all
+  - name: grid
+    instances: all
+  - name: muddy_children
+    instances: all
+  - name: new_corridor
+    instances: all
+  - name: thief
+    instances: all

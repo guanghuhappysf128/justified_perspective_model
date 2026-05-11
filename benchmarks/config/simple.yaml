@@ -1,0 +1,17 @@
+suite_name: smoke
+cores: 1
+
+defaults:
+  time_limit_seconds: 300
+  memory_limit_gb: 8
+
+solvers:
+  - name: bfsdc
+
+domains:
+  - name: coin
+    instances:
+      - problem_07.pddl
+  - name: bbl
+    instances:
+      - problem01.pddl
