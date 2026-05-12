@@ -74,6 +74,14 @@ solvers:
   - name: greedy
     time_limit_seconds: 120
     memory_limit_gb: 4
+  - name: acps
+    search_path: jp/search_algorithms/acps.py
+    search_options:
+      init: 1
+      step: 1
+      width_bound: 16
+      base_heuristic: goal_counting
+      novelty_heuristic: iw_gc
 
 domains:
   - name: coin
@@ -89,5 +97,8 @@ Notes:
 
 - `cores` limits how many solver processes run concurrently.
 - Solver entries can override the default time and memory limits.
+- Solver entries can also provide `search_options`, a YAML mapping that is passed into solvers that accept per-algorithm settings. The benchmark runner serializes it into the subprocess call, so the same config works for dry runs and full runs.
 - Domain `instances` accepts exact filenames or glob patterns. Use `all` or omit the field to include every problem in that domain.
 - If a benchmark domain has more than one `.py` file, add `external: <path>` to the domain entry.
+
+Available modern search modules under [jp/search_algorithms](jp/search_algorithms) now include `cbfs`, `acps`, and a repo-native sequential `lnbs` implementation in addition to `best_first`, `beam_search`, `weighted_astar`, `dfbb`, and `cabs`.

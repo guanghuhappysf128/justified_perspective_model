@@ -3,16 +3,32 @@ from __future__ import annotations
 import datetime
 import math
 
+from search_algorithm_config import read_bool_option, read_int_option, normalise_search_options
 from search_algorithms.beam_search import beam_search
 from search_core import BestFirstSearchEngine
 
 
 class cabs(BestFirstSearchEngine):
-    def __init__(self, handlers, search_name):
+    def __init__(self, handlers, search_name, search_options=None):
         super().__init__(handlers, search_name)
-        self.initial_beam_size = 1
-        self.max_beam_size = 64
-        self.keep_all_layers = False
+        self.search_options = normalise_search_options(search_options)
+        self.initial_beam_size = read_int_option(
+            self.search_options,
+            "initial_beam_size",
+            1,
+            minimum=1,
+        )
+        self.max_beam_size = read_int_option(
+            self.search_options,
+            "max_beam_size",
+            64,
+            minimum=self.initial_beam_size,
+        )
+        self.keep_all_layers = read_bool_option(
+            self.search_options,
+            "keep_all_layers",
+            False,
+        )
 
     def searching(self, problem, time_out: int, memory_out: int):
         self._reset_search_state()
@@ -43,7 +59,11 @@ class cabs(BestFirstSearchEngine):
             runs_remaining = int(math.log2(self.max_beam_size / beam_size)) + 1
             run_time_limit = max(1, remaining_seconds // runs_remaining)
 
-            solver = beam_search(self.logger.handlers, f"{self.search_name}_beam_{beam_size}")
+            solver = beam_search(
+                self.logger.handlers,
+                f"{self.search_name}_beam_{beam_size}",
+                self.search_options,
+            )
             solver.beam_size = beam_size
             solver.keep_all_layers = self.keep_all_layers
             solver_result = solver.searching(problem, run_time_limit, memory_out)

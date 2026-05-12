@@ -21,6 +21,32 @@ solvers:
   - name: beamsearch
     search_path: jp/search_algorithms/beam_search.py
   - name: cabs
+  - name: cbfs
+    search_path: jp/search_algorithms/cbfs.py
+    search_options:
+      base_heuristic: goal_counting
+      novelty_heuristic: iw_gc
+  - name: acps
+    search_path: jp/search_algorithms/acps.py
+    search_options:
+      base_heuristic: goal_counting
+      novelty_heuristic: iw_gc
+      init: 1
+      step: 1
+      width_bound: 16
+      reset: false
+  - name: lnbs
+    search_path: jp/search_algorithms/lnbs.py
+    search_options:
+      base_heuristic: goal_counting
+      novelty_heuristic: iw_gc
+      initial_beam_size: 4
+      max_beam_size: 16
+      keep_all_layers: true
+      seed: 2023
+      max_repair_attempts: 6
+      cabs_initial_beam_size: 1
+      cabs_max_beam_size: 16
 
 domains:
   - name: bbl

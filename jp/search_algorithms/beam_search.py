@@ -3,17 +3,21 @@ from __future__ import annotations
 import datetime
 
 from pddl_model import Problem
+from search_algorithm_config import (
+    configure_novelty_search_engine,
+    read_bool_option,
+    read_int_option,
+)
 from search_core import NoveltyGuidedSearchEngine, SearchNode
 from util import Action
 
 
 class beam_search(NoveltyGuidedSearchEngine):
-    def __init__(self, handlers, search_name):
+    def __init__(self, handlers, search_name, search_options=None):
         super().__init__(handlers, search_name)
-        self.h_weight = 1
-        self.g_weight = 1
-        self.beam_size = 32
-        self.keep_all_layers = False
+        options = configure_novelty_search_engine(self, search_options)
+        self.beam_size = read_int_option(options, "beam_size", 32, minimum=1)
+        self.keep_all_layers = read_bool_option(options, "keep_all_layers", False)
 
     def searching(self, problem: Problem, time_out: int, memory_out: int):
         self._reset_search_state()

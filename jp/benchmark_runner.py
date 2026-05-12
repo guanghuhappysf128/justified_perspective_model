@@ -195,6 +195,11 @@ def _run_job(job: BenchmarkJob, output_path: Path) -> dict[str, Any]:
         "-m",
         str(job.memory_limit_gb),
     ]
+    if job.search_options:
+        command.extend([
+            "--search_options_json",
+            json.dumps(job.search_options, sort_keys=True),
+        ])
 
     started_perf = time.perf_counter()
     try:
@@ -289,6 +294,7 @@ def _build_result_record(
         "artifact_instance_name": job.artifact_instance_name,
         "solver_name": job.solver_name,
         "search_path": job.search_path,
+        "search_options": job.search_options,
         "domain_name": job.domain_name,
         "domain_path": job.domain_path,
         "problem_name": job.problem_name,

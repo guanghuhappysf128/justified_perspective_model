@@ -1,6 +1,7 @@
 
 import datetime
 import importlib
+import inspect
 import json
 import os
 
@@ -50,7 +51,7 @@ class Instance:
     external_function = None
     search = None
     
-    def __init__(self,instance_name="",problem_path="",domain_path="",external_function= "",search_module= None,search_name = "", debug=False):
+    def __init__(self,instance_name="",problem_path="",domain_path="",external_function= "",search_module= None,search_name = "", search_options=None, debug=False):
         self.problem_path = ""
         self.domain_path = ""
         self.instance_name = ""
@@ -62,6 +63,28 @@ class Instance:
         self.domain_path = domain_path
         self.external_function = external_function
         self.search_name = search_name
+        self.search_options = dict(search_options or {})
+
+    def _create_search_algorithm(self, logger_handlers):
+        search_class_ref = getattr(self.search_module, self.search_name)
+        init_signature = inspect.signature(search_class_ref.__init__)
+        init_parameters = list(init_signature.parameters.values())[1:]
+        supports_search_options = any(
+            parameter.kind in (
+                inspect.Parameter.VAR_POSITIONAL,
+                inspect.Parameter.VAR_KEYWORD,
+            )
+            for parameter in init_parameters
+        ) or len(init_parameters) >= 3
+
+        if supports_search_options:
+            return search_class_ref(
+                logger_handlers,
+                self.search_name,
+                dict(self.search_options),
+            )
+
+        return search_class_ref(logger_handlers,self.search_name)
 
     def validate(self,output_path,time_out, memory_out, time_debug=False,log_debug=False, plan_actions="",save_belief:str=None,schemas=None):
         if plan_actions:
@@ -133,16 +156,14 @@ class Instance:
         start_search_time = datetime.datetime.now().astimezone(TIMEZONE)
         
         if time_debug:
-            search_class_ref = getattr( self.search_module, self.search_name)
-            search_algorithm = search_class_ref(logger_handlers,self.search_name)
+            search_algorithm = self._create_search_algorithm(logger_handlers)
             temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief,schemas)
             
             # result = search_algorithm.searching(problem)
             # print(result)
         else:
         
-            search_class_ref = getattr( self.search_module, self.search_name)
-            search_algorithm = search_class_ref(logger_handlers,self.search_name)
+            search_algorithm = self._create_search_algorithm(logger_handlers)
             temp_result = search_algorithm.validating(plan,problem,time_out,memory_out,save_belief,schemas)
             # result = search_algorithm.searching(problem)
             # print(result)
@@ -221,14 +242,12 @@ class Instance:
         start_search_time = datetime.datetime.now().astimezone(TIMEZONE)
         
         if time_debug:
-            search_class_ref = getattr( self.search_module, self.search_name)
-            search_algorithm = search_class_ref(logger_handlers,self.search_name)
+            search_algorithm = self._create_search_algorithm(logger_handlers)
             temp_result = search_algorithm.searching(problem,time_out,memory_out)
             # result = search_algorithm.searching(problem)
         else:
         
-            search_class_ref = getattr( self.search_module, self.search_name)
-            search_algorithm = search_class_ref(logger_handlers,self.search_name)
+            search_algorithm = self._create_search_algorithm(logger_handlers)
             temp_result = search_algorithm.searching(problem,time_out,memory_out)
 
         end_search_time = datetime.datetime.now().astimezone(TIMEZONE)
@@ -293,6 +312,7 @@ def loadParameter():
     parser.add_option('--time_debug', dest="time_debug", action='store_true', help='enable cProfile', default=False)
     parser.add_option('-t', '--time_out', dest="time_out", help='time_out, default 300s', type='int', default=300)
     parser.add_option('-m', '--memory_out', dest="memory_out", help='memoryout, default 8GB', type='int', default=8)
+    parser.add_option('--search_options_json', dest="search_options_json", help='JSON object with solver-specific search options', default='')
     parser.add_option('--plan_actions', dest="plan_actions", help='comma-separated list of plan actions', default='')
     
     options, otherjunk = parser.parse_args(sys.argv[1:] )
@@ -317,6 +337,15 @@ if __name__ == '__main__':
     search_path = options.search_path
     output_path = options.output_path
     plan_action = options.plan_actions
+    search_options = {}
+    if options.search_options_json:
+        try:
+            parsed_search_options = json.loads(options.search_options_json)
+        except json.JSONDecodeError as exc:
+            raise ValueError(f"Invalid --search_options_json payload: {exc}") from exc
+        if not isinstance(parsed_search_options, dict):
+            raise ValueError("--search_options_json must decode to a JSON object")
+        search_options = parsed_search_options
 
     
     
@@ -371,7 +400,7 @@ if __name__ == '__main__':
         print("starting profiling")
         pr = cProfile.Profile()
         pr.enable()
-        ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module= search_module, search_name = search_name)
+        ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module= search_module, search_name = search_name, search_options=search_options)
         #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
         if options.plan_actions:
             ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)
@@ -397,7 +426,7 @@ if __name__ == '__main__':
 
         
     else:
-        ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module=search_module,search_name=search_name)
+        ins = Instance(instance_name=instance_name,problem_path=problem_path,domain_path=domain_path,external_function= external_function,search_module=search_module,search_name=search_name, search_options=search_options)
         #ins.solve(output_path = output_path,time_out=time_out, memory_out = memory_out)
         if options.plan_actions:
             ins.validate(output_path = output_path,time_out=time_out, memory_out = memory_out, plan_actions=plan_action)

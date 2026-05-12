@@ -17,6 +17,7 @@ SEARCH_ALGORITHM_ROOT = PROJECT_ROOT / "jp" / "search_algorithms"
 class SolverConfig:
     name: str
     cli_search_path: str
+    search_options: dict[str, Any]
     time_limit_seconds: int
     memory_limit_gb: int
 
@@ -24,6 +25,7 @@ class SolverConfig:
         return {
             "name": self.name,
             "search_path": self.cli_search_path,
+            "search_options": self.search_options,
             "time_limit_seconds": self.time_limit_seconds,
             "memory_limit_gb": self.memory_limit_gb,
         }
@@ -80,6 +82,7 @@ class BenchmarkJob:
     suite_name: str
     solver_name: str
     search_path: str
+    search_options: dict[str, Any]
     time_limit_seconds: int
     memory_limit_gb: int
     domain_name: str
@@ -105,6 +108,7 @@ class BenchmarkJob:
             "suite_name": self.suite_name,
             "solver_name": self.solver_name,
             "search_path": self.search_path,
+            "search_options": self.search_options,
             "time_limit_seconds": self.time_limit_seconds,
             "memory_limit_gb": self.memory_limit_gb,
             "domain_name": self.domain_name,
@@ -181,6 +185,7 @@ def build_benchmark_jobs(config: BenchmarkSuiteConfig) -> list[BenchmarkJob]:
                         suite_name=config.suite_name,
                         solver_name=solver.name,
                         search_path=solver.cli_search_path,
+                        search_options=solver.search_options,
                         time_limit_seconds=solver.time_limit_seconds,
                         memory_limit_gb=solver.memory_limit_gb,
                         domain_name=domain.name,
@@ -216,6 +221,7 @@ def _parse_solver_config(
     solver_names.add(solver_name)
 
     search_path = _resolve_search_path(solver_name, solver_dict.get("search_path"))
+    search_options = _read_solver_options(solver_dict, solver_name)
     time_limit_seconds = _read_positive_int(
         solver_dict,
         "time_limit_seconds",
@@ -229,6 +235,7 @@ def _parse_solver_config(
     return SolverConfig(
         name=solver_name,
         cli_search_path=_to_repo_string(search_path),
+        search_options=search_options,
         time_limit_seconds=time_limit_seconds,
         memory_limit_gb=memory_limit_gb,
     )
@@ -388,6 +395,30 @@ def _read_optional_string(value: Any) -> str | None:
         raise ValueError("output_path must be a string when provided")
     stripped_value = value.strip()
     return stripped_value or None
+
+
+def _read_solver_options(solver_dict: dict[str, Any], solver_name: str) -> dict[str, Any]:
+    raw_search_options = solver_dict.get("search_options")
+    raw_config = solver_dict.get("config")
+
+    if raw_search_options is not None and raw_config is not None:
+        raise ValueError(
+            f"Solver {solver_name} cannot define both search_options and config"
+        )
+
+    raw_options = raw_search_options if raw_search_options is not None else raw_config
+    if raw_options is None:
+        return {}
+
+    options = _expect_mapping(raw_options, f"search options for solver {solver_name}")
+    normalised_options: dict[str, Any] = {}
+    for raw_key, value in options.items():
+        if not isinstance(raw_key, str) or not raw_key.strip():
+            raise ValueError(
+                f"search options for solver {solver_name} must use non-empty string keys"
+            )
+        normalised_options[raw_key.strip()] = value
+    return normalised_options
 
 
 def _read_positive_int(source: dict[str, Any], key: str, default: int | None = None) -> int:
