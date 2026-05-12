@@ -405,6 +405,27 @@ class PDDLParser:
                 value_str = single_init_str.split(") ")[1]
                 function_schema_name = functions[variable_name].function_schema_name
                 value_type = function_schemas[function_schema_name].value_type
+                if value_type is None:
+                    if (
+                        (value_str.startswith("'") and value_str.endswith("'"))
+                        or (value_str.startswith('"') and value_str.endswith('"'))
+                    ):
+                        inferred_value = remove_quotes(value_str)
+                        function_schemas[function_schema_name].value_type = VALUE_TYPE.ENUMERATE
+                        if inferred_value in ["t", "f"]:
+                            function_schemas[function_schema_name].value_range = ["t", "f"]
+                        else:
+                            function_schemas[function_schema_name].value_range = [inferred_value]
+                    else:
+                        try:
+                            inferred_value = int(value_str)
+                            function_schemas[function_schema_name].value_type = VALUE_TYPE.INTEGER
+                            function_schemas[function_schema_name].value_range = (inferred_value, inferred_value)
+                        except ValueError:
+                            inferred_value = remove_quotes(value_str)
+                            function_schemas[function_schema_name].value_type = VALUE_TYPE.STRING
+                            function_schemas[function_schema_name].value_range = None
+                    value_type = function_schemas[function_schema_name].value_type
                 value = self.str2value(value_type,value_str)
                 init.update({variable_name:value})
                   
@@ -893,28 +914,28 @@ class PDDLParser:
         input_str = re.sub('^ *| *$|^\n',str(),input_str,flags =re.MULTILINE)
         input_str = re.sub(' *, *',",",input_str,flags =re.MULTILINE)
         input_str = re.sub(' *- *',"-",input_str,flags =re.MULTILINE)
-        input_str = re.sub('\[ *',"[",input_str,flags =re.MULTILINE)
-        input_str = re.sub(' *\]',"]",input_str,flags =re.MULTILINE)
+        input_str = re.sub(r'\[ *',"[",input_str,flags =re.MULTILINE)
+        input_str = re.sub(r' *\]',"]",input_str,flags =re.MULTILINE)
         input_str = re.sub(':goal *',":goal",input_str,flags =re.MULTILINE)
         input_str = re.sub(':action *',":action ",input_str,flags =re.MULTILINE)
         input_str = re.sub(':parameters *',":parameters",input_str,flags =re.MULTILINE)
         input_str = re.sub(':precondition *',":precondition",input_str,flags =re.MULTILINE)
         input_str = re.sub(':effect *',":effect",input_str,flags =re.MULTILINE)
-        input_str = re.sub(' \?',"?",input_str,flags =re.MULTILINE)
+        input_str = re.sub(r' \?',"?",input_str,flags =re.MULTILINE)
         self.logger.debug(repr(input_str))
         
         # removing useless \n
-        input_str = re.sub('\( *|(\n)*\((\n)*',"(",input_str,flags =re.MULTILINE)
-        input_str = re.sub(' *\)|(\n)*\)(\n)*',")",input_str,flags =re.MULTILINE)
-        input_str = re.sub('\)\n',")",input_str,flags =re.MULTILINE)
+        input_str = re.sub(r'\( *|(\n)*\((\n)*',"(",input_str,flags =re.MULTILINE)
+        input_str = re.sub(r' *\)|(\n)*\)(\n)*',")",input_str,flags =re.MULTILINE)
+        input_str = re.sub(r'\)\n',")",input_str,flags =re.MULTILINE)
         self.logger.debug(repr(input_str))
         
         input_str = re.sub('\n',LINE_BREAK,input_str,flags =re.MULTILINE)
         self.logger.debug(repr(input_str)) 
 
         # adding back space for negative number
-        input_str = re.sub('\)-',') -',input_str,flags =re.MULTILINE)
-        return input_str      
+        input_str = re.sub(r'\)-',') -',input_str,flags =re.MULTILINE)
+        return input_str.strip(LINE_BREAK).strip()
     
     def str2value(self,value_type,value_str):
         if value_str == 'jp.none':

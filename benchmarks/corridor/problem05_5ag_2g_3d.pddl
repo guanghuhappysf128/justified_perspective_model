@@ -16,7 +16,7 @@
             (assign (agent_loc a) 1)
             (assign (agent_loc b) 2)
             (assign (agent_loc c) 3)
-            (assign (agent_loc d) 0)
+            (assign (agent_loc d) 1)
             (assign (agent_loc e) 3)
 
 
