@@ -1,5 +1,5 @@
 suite_name: full
-cores: 4
+cores: 30
 
 defaults:
   time_limit_seconds: 300
