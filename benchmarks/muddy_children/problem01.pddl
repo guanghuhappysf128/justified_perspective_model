@@ -45,6 +45,7 @@
         (:ranges
             (num_of_question integer [0,99])
             (muddy enumerate ['t','f'])
+            (shouted enumerate ['t','f'])
         )
 
         (:rules

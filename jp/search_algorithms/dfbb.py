@@ -3,11 +3,11 @@ from __future__ import annotations
 import datetime
 
 from pddl_model import Problem
-from search_core import BestFirstSearchEngine, SearchNode
+from search_core import NoveltyGuidedSearchEngine, SearchNode
 from util import Action
 
 
-class dfbb(BestFirstSearchEngine):
+class dfbb(NoveltyGuidedSearchEngine):
     def __init__(self, handlers, search_name):
         super().__init__(handlers, search_name)
         self.h_weight = 1
@@ -102,9 +102,7 @@ class dfbb(BestFirstSearchEngine):
                     continue
 
                 self.generated += 1
-                heuristic = self._h(successor_node, goal_dict, problem)
-                successor_node.heuristic = heuristic
-                successor_node.priority = self._f(heuristic, successor_node.depth)
+                self._populate_node_evaluation(successor_node, goal_dict, problem)
                 successors.append(successor_node)
 
             successors.sort(

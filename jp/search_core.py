@@ -22,8 +22,9 @@ class SearchNode:
     parent: SearchNode | None
     action_name: str
     depth: int
-    heuristic: float = 0.0
-    priority: float = 0.0
+    heuristic: Any = 0
+    novelty: int | None = None
+    priority: Any = 0
     _path_cache: list[tuple[dict[str, Any], str]] | None = field(default=None, repr=False)
 
     @property
@@ -51,16 +52,26 @@ class BestFirstSearchEngine(Search):
     def _gn(self, node):
         return node.depth
 
+    def _evaluate_node(self, node, goal_dict, problem):
+        heuristic = self._h(node, goal_dict, problem)
+        path_cost = self._gn(node)
+        priority = self._f(heuristic, path_cost)
+        return heuristic, None, priority
+
+    def _populate_node_evaluation(self, node, goal_dict, problem):
+        heuristic, novelty, priority = self._evaluate_node(node, goal_dict, problem)
+        node.heuristic = heuristic
+        node.novelty = novelty
+        node.priority = priority
+        return priority
+
     def searching(self, problem: Problem, time_out: int, memory_out: int):
         self._reset_search_state()
         self._initialise_problem_context(problem, time_out, memory_out)
         start_time = datetime.datetime.now()
 
         root_node, root_goal_dict = self._build_root_node(problem)
-        root_h = self._h(root_node, root_goal_dict, problem)
-        root_g = self._gn(root_node)
-        root_node.heuristic = root_h
-        root_node.priority = self._f(root_h, root_g)
+        self._populate_node_evaluation(root_node, root_goal_dict, problem)
 
         open_list: list[tuple[float, int, SearchNode]] = []
         heapq.heappush(open_list, (root_node.priority, next(self.priority_counter), root_node))
@@ -97,6 +108,7 @@ class BestFirstSearchEngine(Search):
                 current_node.perspective_dict,
             )
             all_legal_action_names = sorted(all_legal_actions.keys())
+            filtered_action_names = self._ordered_action_names(problem, all_legal_action_names)
 
             self.logger.debug(expansion_p_dict.keys())
             self.logger.debug(expansion_p_dict)
@@ -110,10 +122,11 @@ class BestFirstSearchEngine(Search):
 
             self.expanded += 1
             self.branch_factors.append(len(all_legal_action_names))
+            self.filtered_branching_factors.append(len(filtered_action_names))
             temp_successor = 0
             temp_actions: list[str] = []
 
-            for action_name in all_legal_action_names:
+            for action_name in filtered_action_names:
                 action: Action = all_legal_actions[action_name]
                 self.logger.debug("action [%s] passed the precondition check", action_name)
                 successor_state = problem.generate_successor(state, action, path)
@@ -140,11 +153,7 @@ class BestFirstSearchEngine(Search):
                     continue
 
                 self.generated += 1
-                heuristic = self._h(successor_node, goal_dict, problem)
-                path_cost = self._gn(successor_node)
-                priority = self._f(heuristic, path_cost)
-                successor_node.heuristic = heuristic
-                successor_node.priority = priority
+                priority = self._populate_node_evaluation(successor_node, goal_dict, problem)
                 heapq.heappush(
                     open_list,
                     (priority, next(self.priority_counter), successor_node),
@@ -178,6 +187,8 @@ class BestFirstSearchEngine(Search):
         self.timeout = None
         self.memoryout = None
         self.unknown_goal_name = []
+        self.goal_agents = set()
+        self.agent_names = set()
         self.novelty_dict = {}
         self.sorted_goal_list = []
         self.best_cost_by_state = {}
@@ -189,6 +200,7 @@ class BestFirstSearchEngine(Search):
         self.logger.info("starting searching using [%s]", self.search_name)
         self.max_goal_num = len(list(problem.goals.keys()))
         self.sorted_goal_list = list(problem.goals.keys())
+        self._initialise_goal_action_context(problem)
         self.unknown_goal_name = []
 
         for key, item in problem.goals.items():
@@ -298,3 +310,18 @@ class BestFirstSearchEngine(Search):
         self.result.update({"memoryout": self.memoryout})
         self._finalise_result(problem)
         return self.result
+
+
+class NoveltyGuidedSearchEngine(BestFirstSearchEngine):
+    def __init__(self, handlers, search_name):
+        super().__init__(handlers, search_name)
+        self.base_heuristic = self.goal_counting
+        self.novelty_heuristic = self.iw_gc
+
+    def _evaluate_node(self, node, goal_dict, problem):
+        goal_distance = self.base_heuristic(node, goal_dict, problem)
+        novelty = self.novelty_heuristic(node, goal_dict, problem)
+        path_cost = self._gn(node)
+        weighted_score = self._f(goal_distance, path_cost)
+        priority = (goal_distance, novelty, weighted_score, path_cost)
+        return goal_distance, novelty, priority

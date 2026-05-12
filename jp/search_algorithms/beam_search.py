@@ -3,11 +3,11 @@ from __future__ import annotations
 import datetime
 
 from pddl_model import Problem
-from search_core import BestFirstSearchEngine, SearchNode
+from search_core import NoveltyGuidedSearchEngine, SearchNode
 from util import Action
 
 
-class beam_search(BestFirstSearchEngine):
+class beam_search(NoveltyGuidedSearchEngine):
     def __init__(self, handlers, search_name):
         super().__init__(handlers, search_name)
         self.h_weight = 1
@@ -59,6 +59,7 @@ class beam_search(BestFirstSearchEngine):
                     current_node.perspective_dict,
                 )
                 all_legal_action_names = sorted(all_legal_actions.keys())
+                filtered_action_names = self._ordered_action_names(problem, all_legal_action_names)
 
                 if self.keep_all_layers:
                     current_key = self._make_state_key(state, expansion_p_dict)
@@ -70,8 +71,9 @@ class beam_search(BestFirstSearchEngine):
 
                 self.expanded += 1
                 self.branch_factors.append(len(all_legal_action_names))
+                self.filtered_branching_factors.append(len(filtered_action_names))
 
-                for action_name in all_legal_action_names:
+                for action_name in filtered_action_names:
                     action: Action = all_legal_actions[action_name]
                     successor_state = problem.generate_successor(state, action, path)
                     if successor_state is None:
@@ -95,9 +97,7 @@ class beam_search(BestFirstSearchEngine):
                         continue
 
                     self.generated += 1
-                    heuristic = self._h(successor_node, goal_dict, problem)
-                    successor_node.heuristic = heuristic
-                    successor_node.priority = self._f(heuristic, successor_node.depth)
+                    self._populate_node_evaluation(successor_node, goal_dict, problem)
 
                     successor_key = self._make_state_key(successor_state, goal_p_dict)
                     incumbent = next_beam_by_state.get(successor_key)

@@ -1,6 +1,7 @@
 import logging
 import datetime
 import csv
+import re
 # import resource
 import psutil
 import os
@@ -42,6 +43,8 @@ class Search:
         self.unknown_goal_name = list()
         self.novelty_dict = dict()
         self.sorted_goal_list = list()
+        self.goal_agents = set()
+        self.agent_names = set()
 
     class SearchNode:
         def __init__(self,state,remaining_goal_num,perspective_dict,path):
@@ -101,6 +104,45 @@ class Search:
     def action_filter(self,problem,all_legal_action_name):
         return all_legal_action_name
 
+    def _initialise_goal_action_context(self, problem):
+        self.goal_agents = self._extract_goal_agents(problem)
+        self.agent_names = {
+            entity_name
+            for entity_name, entity in problem.entities.items()
+            if entity.entity_type == EntityType.AGENT
+        }
+
+    def _extract_goal_agents(self, problem):
+        goal_agents = set()
+        for item in problem.goals.values():
+            goal_condition: Condition = item
+            if goal_condition.condition_type != ConditionType.EP:
+                continue
+            ep_formula: EP_formula = goal_condition.condition_formula
+            for agent_group in re.findall(r"\[([^\]]*)\]", ep_formula.ep_query):
+                for agent_name in agent_group.split(','):
+                    stripped_agent_name = agent_name.strip()
+                    if stripped_agent_name:
+                        goal_agents.add(stripped_agent_name)
+        return goal_agents
+
+    def _ordered_action_names(self, problem, all_legal_action_name):
+        filtered_action_name = list(self.action_filter(problem, all_legal_action_name))
+        if not filtered_action_name or not self.goal_agents or not self.agent_names:
+            return filtered_action_name
+        return sorted(filtered_action_name, key=self._action_relevance_key)
+
+    def _action_relevance_key(self, action_name):
+        action_tokens = action_name.split(' ')[1:]
+        action_agents = [token for token in action_tokens if token in self.agent_names]
+        if not action_agents:
+            return (1, 0, action_name)
+        if all(agent_name in self.goal_agents for agent_name in action_agents):
+            return (0, len(action_agents), action_name)
+        if any(agent_name in self.goal_agents for agent_name in action_agents):
+            return (1, len(action_agents), action_name)
+        return (2, len(action_agents), action_name)
+
     #BFS with duplicate check on the state + epistemic formula
     # for novelty checking purpose, we need to move the goal check process at where the node is generated
     def searching(self,problem:Problem,time_out:int,memory_out:int):
@@ -111,6 +153,7 @@ class Search:
 
         self.max_goal_num = len(list(problem.goals.keys()))
         self.sorted_goal_list = list(problem.goals.keys())
+        self._initialise_goal_action_context(problem)
         # intitalise unknown goal name
         for key,item in problem.goals.items():
             goal_condition: Condition = item
@@ -218,7 +261,7 @@ class Search:
             
             all_legal_action_name = list(all_legal_actions.keys())
             all_legal_action_name.sort()
-            # filtered_action_name = self.action_filter(problem,all_legal_action_name)
+            filtered_action_name = self._ordered_action_names(problem, all_legal_action_name)
 
             
             self.logger.debug(sgp_p_dict.keys())
@@ -231,9 +274,10 @@ class Search:
                 # self.logger.debug("ep_state_str is [%s]",ep_state_str)
                 self.expanded +=1
                 self.branch_factors.append(len(all_legal_action_name))
+                self.filtered_branching_factors.append(len(filtered_action_name))
                 temp_successor = 0
                 temp_actions = []
-                for action_name in all_legal_action_name:
+                for action_name in filtered_action_name:
                     action :Action = all_legal_actions[action_name]
                 # for action_name,action in all_legal_actions.items():
                     self.logger.debug("action [%s] passed the precondition check", action_name)
@@ -293,6 +337,7 @@ class Search:
         start_time = datetime.datetime.now()
 
         self.max_goal_num = len(list(problem.goals.keys()))
+        self._initialise_goal_action_context(problem)
         # intitalise unknown goal name
         for key,item in problem.goals.items():
             goal_condition: Condition = item
