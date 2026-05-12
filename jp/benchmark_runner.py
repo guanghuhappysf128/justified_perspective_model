@@ -171,8 +171,8 @@ def _resolve_output_path(config_output_path: str | None, cli_output_path: str) -
 
 def _run_job(job: BenchmarkJob, output_path: Path) -> dict[str, Any]:
     started_at = _now()
-    expected_result_path = output_path / f"{job.instance_name}.json"
-    expected_log_path = output_path / f"{job.instance_name}.log"
+    expected_result_path = output_path / f"{job.artifact_instance_name}.json"
+    expected_log_path = output_path / f"{job.artifact_instance_name}.log"
     expected_result_path.unlink(missing_ok=True)
     expected_log_path.unlink(missing_ok=True)
 
@@ -268,8 +268,8 @@ def _build_result_record(
     started_at: datetime.datetime,
     finished_at: datetime.datetime,
 ) -> dict[str, Any]:
-    result_path = output_path / f"{job.instance_name}.json"
-    log_path = output_path / f"{job.instance_name}.log"
+    result_path = output_path / f"{job.artifact_instance_name}.json"
+    log_path = output_path / f"{job.artifact_instance_name}.log"
     init_time = _read_float(raw_result, "init_time")
     search_time = _read_float(raw_result, "search_time")
     reported_total_time = None
@@ -286,6 +286,7 @@ def _build_result_record(
     return {
         "suite_name": job.suite_name,
         "instance_name": job.instance_name,
+        "artifact_instance_name": job.artifact_instance_name,
         "solver_name": job.solver_name,
         "search_path": job.search_path,
         "domain_name": job.domain_name,

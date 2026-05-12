@@ -92,6 +92,14 @@ class BenchmarkJob:
     def instance_name(self) -> str:
         return f"{self.solver_name}_{self.domain_name}_{self.problem_name}"
 
+    @property
+    def artifact_search_name(self) -> str:
+        return Path(self.search_path).stem
+
+    @property
+    def artifact_instance_name(self) -> str:
+        return f"{self.artifact_search_name}_{self.domain_name}_{self.problem_name}"
+
     def to_dict(self) -> dict[str, Any]:
         return {
             "suite_name": self.suite_name,
@@ -105,6 +113,7 @@ class BenchmarkJob:
             "problem_name": self.problem_name,
             "problem_path": self.problem_path,
             "instance_name": self.instance_name,
+            "artifact_instance_name": self.artifact_instance_name,
         }
 
 
