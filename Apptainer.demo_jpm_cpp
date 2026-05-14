@@ -95,7 +95,7 @@ Stage: run
     export PATH=/opt/jpm_cpp/app/cpp/build:$PATH
     export JPM_CPP_APP=/opt/jpm_cpp/app
     export SEARCH=cbfs
-    export TIMEOUT=30
+    export TIMEOUT=300
     export MAX_EXPANDED=1000000
 
 %runscript
