@@ -1,0 +1,15 @@
+{
+  "grounded_json_files": [],
+  "grounding_failures": [
+    {
+      "error": "plank export did not create problem_1.json for /home/guangh_ubuntu/projects/competition/iepc/plank/benchmarks/domains/Selective-Communication/instances/problem_1.epddl: [===] plank 1.0 - The DEL-based epistemic planning toolkit.\n[===]\nParsing...\nIn file '/home/guangh_ubuntu/projects/competition/iepc/plank/benchmarks/domains/Selective-Communication/sc.epddl' at (44:23):\n. . In declaration of domain 'selective-communication':\n. . . . Use of undeclared type name 'ontic'.",
+      "problem": "benchmarks/domains/Selective-Communication/instances/problem_1.epddl"
+    }
+  ],
+  "notes": "The bundled EPDDL domain currently has action-type parse issues and no F-PDDL mapping yet.",
+  "source_domain": "Selective-Communication",
+  "source_problem_files": [
+    "benchmarks/domains/Selective-Communication/instances/problem_1.epddl"
+  ],
+  "support_level": "unsupported"
+}

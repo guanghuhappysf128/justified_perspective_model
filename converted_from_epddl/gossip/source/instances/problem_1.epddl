@@ -1,0 +1,23 @@
+(define (problem gos-1)
+    (:domain gossip)
+
+    (:requirements
+        :finitary-S5-theories :universal-goals :modal-goals
+    )
+
+    (:agents A B C D E)
+
+    (:init
+        (:and
+            (secret A) (secret B) (secret C) (secret D) (secret E)
+            ;; It is common knowledge that each agent knows whether her secret holds
+            (:forall (?i - agent)
+                ([C. All] ([Kw. ?i] (secret ?i)))
+            )
+        )
+    )
+
+    (:goal
+        (forall (?i - agent) ([Kw. All] (secret ?i)))
+    )
+)

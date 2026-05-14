@@ -1,0 +1,199 @@
+{
+  "Active-Muddy-Child": {
+    "attempted": 0,
+    "details": [
+      {
+        "problem_file": "amc_1_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": null,
+        "validation": null
+      }
+    ],
+    "validated": 0
+  },
+  "Coin-in-the-Box": {
+    "attempted": 5,
+    "details": [
+      {
+        "problem_file": "cb_1_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "open_A",
+          "peek_A"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cb_2_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "open_A",
+          "peek_A",
+          "signal_A_B",
+          "shout-tails_A"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cb_3_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "open_A",
+          "peek_A",
+          "shout-tails_A",
+          "signal_A_B",
+          "shout-tails_A",
+          "signal_A_C",
+          "shout-tails_A"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cb_4_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "open_A",
+          "peek_A",
+          "signal_A_B",
+          "shout-tails_A",
+          "distract_B_A",
+          "peek_C"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cb_5_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "open_A",
+          "peek_A",
+          "shout-tails_A",
+          "signal_A_C",
+          "shout-tails_A",
+          "distract_C_A",
+          "peek_B"
+        ],
+        "validation": "true"
+      }
+    ],
+    "validated": 5
+  },
+  "Collaboration-through-Communication": {
+    "attempted": 6,
+    "details": [
+      {
+        "problem_file": "cc_2_2_3_1_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "left_A",
+          "sense_A_box1_room1",
+          "left_B",
+          "tell_A_box1_room1"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cc_2_2_3_2_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "left_A",
+          "sense_A_box1_room1",
+          "left_B",
+          "sense_B_box2_room1"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cc_2_2_3_3_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "right_A",
+          "sense_A_box2_room3",
+          "left_B",
+          "sense_B_box1_room1",
+          "sense_B_box2_room1",
+          "right_B",
+          "right_B",
+          "tell_A_box2_room3"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cc_2_2_3_4_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "left_B",
+          "sense_B_box1_room1",
+          "sense_B_box2_room1",
+          "right_B",
+          "tell_B_box2_room3"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cc_2_2_3_5_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "right_A",
+          "sense_A_box2_room3",
+          "left_B",
+          "sense_B_box1_room1",
+          "sense_B_box2_room1"
+        ],
+        "validation": "true"
+      },
+      {
+        "problem_file": "cc_2_2_3_6_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "right_A",
+          "sense_A_box1_room3",
+          "sense_A_box2_room3",
+          "left_B",
+          "sense_B_box1_room1",
+          "sense_B_box2_room1"
+        ],
+        "validation": "true"
+      }
+    ],
+    "validated": 6
+  },
+  "Gossip": {
+    "attempted": 1,
+    "details": [
+      {
+        "problem_file": "gos_1_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "tell_A_B",
+          "tell_A_C",
+          "tell_A_D",
+          "tell_A_E",
+          "tell_A_B",
+          "tell_A_C",
+          "tell_A_D"
+        ],
+        "validation": "false (tell_A_B is not applicable in 'init (X) tell_A_B (X) tell_A_C (X) tell_A_D (X) tell_A_E')"
+      }
+    ],
+    "validated": 0
+  },
+  "Grapevine": {
+    "attempted": 1,
+    "details": [
+      {
+        "problem_file": "gra_1_from_epddl.pddl",
+        "status": "solved",
+        "translated_plan": [
+          "tell_A_A",
+          "tell_B_B",
+          "tell_C_C",
+          "tell_D_D",
+          "tell_E_E"
+        ],
+        "validation": "true"
+      }
+    ],
+    "validated": 1
+  }
+}

@@ -1,0 +1,155 @@
+(define (domain coin-in-the-box)
+    (:requirements
+        :equality :partial-observability :list-comprehensions :lists
+        :ontic-actions :group-modalities
+        :negative-preconditions :universal-preconditions :modal-preconditions
+    )
+
+    (:action-type-libraries intermediate)
+
+    (:predicates
+        (tails)
+        (opened)
+        (looking ?i - agent)
+        (has-key ?i - agent)
+    )
+
+    (:event nil)
+
+    ;--------------------OPEN------------------
+
+    (:event e-open
+        :parameters (?i - agent)
+        :precondition (and (not (opened)) (looking ?i) (has-key ?i))
+        :effects (opened)
+    )
+
+    (:action open
+        :parameters (?i - agent)
+        :action-type (private-ontic (e-open ?i) (nil))
+        :observability-conditions
+            (:and
+                (?i Fully)
+                (default Oblivious)
+            )
+    )
+
+    ;--------------------SIGNAL------------------
+
+    (:event e-signal
+        :parameters (?i ?j - agent)
+        :precondition
+            (and
+                (looking ?i)            ; Agent ?i is looking
+                (not (looking ?j))      ; Agent ?j is not looking
+                ([(?i ?j)]              ; And both agents believe this
+                    (and
+                        (looking ?i)
+                        (not (looking ?j)) )))
+        :effects (looking ?j)
+    )
+
+    (:action signal
+        :parameters (?i ?j - agent | (/= ?i ?j))
+        :action-type (private-ontic (e-signal ?i ?j) (nil))
+        :observability-conditions
+            (:and
+                (?i Fully)
+                (?j Fully)
+                (default Oblivious)
+            )
+    )
+
+    ;--------------------DISTRACT------------------
+
+    (:event e-distract
+        :parameters (?i ?j - agent)
+        :precondition
+            (and
+                (looking ?i)            ; Agent ?i is looking
+                (looking ?j)            ; Agent ?j is looking
+                ([(?i ?j)]              ; And both agents believe this
+                    (and
+                        (looking ?i)
+                        (looking ?j)) ))
+        :effects (not (looking ?j))
+    )
+
+    (:action distract
+        :parameters   (?i ?j - agent | (/= ?i ?j))
+        :action-type  (private-ontic (e-distract ?i ?j) (nil))
+        :observability-conditions
+            (:and
+                (?i Fully)
+                (?j Fully)
+                (default Oblivious)
+            )
+    )
+
+    ;--------------------PEEK------------------
+
+    (:event e-peek-pos
+        :parameters (?i - agent)
+        :precondition
+            (and
+                (forall (?j - agent)
+                    (imply
+                        (looking ?j)
+                        ([?j] (and (opened) (looking ?i)) )))
+                (tails) )
+    )
+
+     (:event e-peek-neg
+         :parameters (?i - agent)
+         :precondition
+             (and
+                 (forall (?j - agent)
+                     (imply
+                         (looking ?j)
+                         ([?j] (and (opened) (looking ?i)) )))
+                 (not (tails)) )
+     )
+
+     (:action peek
+         :parameters (?i - agent)
+         :action-type (quasi-private-sensing
+             (e-peek-pos ?i)
+             (e-peek-neg ?i)
+             (nil) )
+         :observability-conditions
+             (:and
+                 (?i Fully)
+                 (:forall (?j - agent | (/= ?i ?j))
+                     (?j (if (looking ?j) Partially else Oblivious))
+                 )
+             )
+     )
+
+    ;--------------------SHOUT-TAILS------------------
+
+     (:event e-shout-tails
+         :parameters (?i - agent)
+         :precondition
+             (and
+                 ([?i] (tails))
+                 (forall (?j - agent)
+                     (imply
+                         (looking ?j)
+                         ([?j] (looking ?i)) ))
+                 (looking ?i) )
+     )
+
+    (:action shout-tails
+        :parameters   (?i - agent)
+        :action-type  (private-announcement
+            (e-shout-tails ?i)
+            (nil) )
+        :observability-conditions
+            (:and
+                (?i Fully)
+                (:forall (?j - agent | (/= ?i ?j))
+                    (?j (if (looking ?j) Fully else Oblivious))
+                )
+            )
+    )
+)

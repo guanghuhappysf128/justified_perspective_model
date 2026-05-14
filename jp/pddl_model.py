@@ -232,11 +232,29 @@ class Problem:
             # if self.check_conditions(action.preconditions,path,p_dict):
             #     legal_actions.update({action_name:action})
             precondition_flag = True
-            for precondition_name in action_item.preconditions.keys():
-                if precondition_name in ep_condition_actionname_dict.keys():
-                    if not ep_condition_result_dict[precondition_name]:
-                        precondition_flag = False
-                        break
+            for precondition_name, precondition_item in action_item.preconditions.items():
+                if precondition_item.condition_type == ConditionType.EP:
+                    if precondition_name in ep_condition_actionname_dict.keys():
+                        if not ep_condition_result_dict[precondition_name]:
+                            precondition_flag = False
+                            break
+                    continue
+
+                variable_name = precondition_item.condition_variable
+                value1 = extract_v_from_s(variable_name, state)
+                if precondition_item.target_variable is not None:
+                    value2 = extract_v_from_s(precondition_item.target_variable, state)
+                elif precondition_item.target_value is not None:
+                    value2 = precondition_item.target_value
+                else:
+                    raise ValueError(
+                        "One of the condition target variable or value should not be None",
+                        precondition_name,
+                    )
+
+                if global_state_evaluation(self.logger, precondition_item.condition_operator, value1, value2) == False:
+                    precondition_flag = False
+                    break
             if precondition_flag:
                 legal_actions.update({action_name:action_item})
         

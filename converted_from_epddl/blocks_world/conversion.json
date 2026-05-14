@@ -1,0 +1,12 @@
+{
+  "grounded_json_files": [
+    "problem_1.json"
+  ],
+  "grounding_failures": [],
+  "notes": "No corresponding F-PDDL benchmark family is present yet.",
+  "source_domain": "Blocks-World",
+  "source_problem_files": [
+    "benchmarks/domains/Blocks-World/instances/problem_1.epddl"
+  ],
+  "support_level": "unsupported"
+}

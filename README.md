@@ -102,3 +102,9 @@ Notes:
 - If a benchmark domain has more than one `.py` file, add `external: <path>` to the domain entry.
 
 Available modern search modules under [jp/search_algorithms](jp/search_algorithms) now include `cbfs`, `acps`, and a repo-native sequential `lnbs` implementation in addition to `best_first`, `beam_search`, `weighted_astar`, `dfbb`, and `cabs`.
+
+## Guides
+
+- [EPDDL_TO_FPDDL_WORKFLOW.md](EPDDL_TO_FPDDL_WORKFLOW.md): end-to-end workflow for grounding an EPDDL instance, converting it to F-PDDL, solving it with JPM, translating the plan back, and validating it in `plank`
+- [converted_from_epddl/README.md](converted_from_epddl/README.md): current converted-benchmark status table and validation summary
+- [cpp/README.md](cpp/README.md): first C++ JPM runtime prototype and smoke-test commands

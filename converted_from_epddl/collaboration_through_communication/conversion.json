@@ -1,0 +1,22 @@
+{
+  "generated_problem_files": [
+    "cc_2_2_3_1_from_epddl.pddl",
+    "cc_2_2_3_2_from_epddl.pddl",
+    "cc_2_2_3_3_from_epddl.pddl",
+    "cc_2_2_3_4_from_epddl.pddl",
+    "cc_2_2_3_5_from_epddl.pddl",
+    "cc_2_2_3_6_from_epddl.pddl"
+  ],
+  "grounded_json_files": [
+    "problem_1.json",
+    "problem_2.json",
+    "problem_3.json",
+    "problem_4.json",
+    "problem_5.json",
+    "problem_6.json"
+  ],
+  "grounding_failures": [],
+  "notes": "Converted to a generated Collaboration-through-Communication F-PDDL family with explicit per-agent box beliefs and second-order meta-belief state. The converter targets the bundled 2-agent, 2-box, 3-room instance family and bakes the room-elimination sanity check into sensing and telling updates.",
+  "source_domain": "Collaboration-through-Communication",
+  "support_level": "supported"
+}

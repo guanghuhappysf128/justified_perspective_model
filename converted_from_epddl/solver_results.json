@@ -1,0 +1,1530 @@
+{
+  "epddl_manifest": "/home/guangh_ubuntu/projects/competition/iepc/plank/output/all_epddl_plans/manifest.json",
+  "epddl_summary": {
+    "Active-Muddy-Child": {
+      "counts": {
+        "timeout": 1
+      },
+      "items": [
+        {
+          "domain": "Active-Muddy-Child",
+          "elapsed_seconds": 20.048,
+          "library_file": "intermediate.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": "Solving...",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 124,
+          "status": "timeout",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    },
+    "Blocks-World": {
+      "counts": {
+        "no_plan": 1
+      },
+      "items": [
+        {
+          "domain": "Blocks-World",
+          "elapsed_seconds": 0.027,
+          "library_file": "basic.epddl",
+          "plan_file": "blocks_world/problem_1/plan.json",
+          "plan_length": 0,
+          "planner_last_line": "No plan found.",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 0,
+          "status": "no_plan",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    },
+    "Coin-in-the-Box": {
+      "counts": {
+        "solved": 5
+      },
+      "items": [
+        {
+          "domain": "Coin-in-the-Box",
+          "elapsed_seconds": 0.012,
+          "library_file": "intermediate.epddl",
+          "plan_file": "coin_in_the_box/problem_1/plan.json",
+          "plan_length": 2,
+          "planner_last_line": "1. peek_A",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "coin_in_the_box/problem_1/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Coin-in-the-Box",
+          "elapsed_seconds": 0.019,
+          "library_file": "intermediate.epddl",
+          "plan_file": "coin_in_the_box/problem_2/plan.json",
+          "plan_length": 4,
+          "planner_last_line": "3. shout-tails_A",
+          "problem": "instances/problem_2.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "coin_in_the_box/problem_2/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Coin-in-the-Box",
+          "elapsed_seconds": 0.037,
+          "library_file": "intermediate.epddl",
+          "plan_file": "coin_in_the_box/problem_3/plan.json",
+          "plan_length": 5,
+          "planner_last_line": "4. shout-tails_A",
+          "problem": "instances/problem_3.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "coin_in_the_box/problem_3/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Coin-in-the-Box",
+          "elapsed_seconds": 0.097,
+          "library_file": "intermediate.epddl",
+          "plan_file": "coin_in_the_box/problem_4/plan.json",
+          "plan_length": 6,
+          "planner_last_line": "5. peek_C",
+          "problem": "instances/problem_4.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "coin_in_the_box/problem_4/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Coin-in-the-Box",
+          "elapsed_seconds": 0.037,
+          "library_file": "intermediate.epddl",
+          "plan_file": "coin_in_the_box/problem_5/plan.json",
+          "plan_length": 5,
+          "planner_last_line": "4. shout-tails_A",
+          "problem": "instances/problem_5.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "coin_in_the_box/problem_5/validation.json",
+          "validation_result": "true"
+        }
+      ],
+      "solved_lengths": [
+        2,
+        4,
+        5,
+        6,
+        5
+      ]
+    },
+    "Collaboration-through-Communication": {
+      "counts": {
+        "solved": 5,
+        "timeout": 1
+      },
+      "items": [
+        {
+          "domain": "Collaboration-through-Communication",
+          "elapsed_seconds": 5.517,
+          "library_file": "intermediate.epddl",
+          "plan_file": "collaboration_through_communication/problem_1/plan.json",
+          "plan_length": 5,
+          "planner_last_line": ". . Warning: Use of negation requires ':negative-list-formulas'.",
+          "problem": "instances/cc_2_2_3/problem_1.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "collaboration_through_communication/problem_1/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Collaboration-through-Communication",
+          "elapsed_seconds": 0.752,
+          "library_file": "intermediate.epddl",
+          "plan_file": "collaboration_through_communication/problem_2/plan.json",
+          "plan_length": 4,
+          "planner_last_line": ". . Warning: Use of modalities requires ':modal-goals'.",
+          "problem": "instances/cc_2_2_3/problem_2.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "collaboration_through_communication/problem_2/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Collaboration-through-Communication",
+          "elapsed_seconds": 1.409,
+          "library_file": "intermediate.epddl",
+          "plan_file": "collaboration_through_communication/problem_3/plan.json",
+          "plan_length": 4,
+          "planner_last_line": ". . Warning: Use of modalities requires ':modal-goals'.",
+          "problem": "instances/cc_2_2_3/problem_3.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "collaboration_through_communication/problem_3/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Collaboration-through-Communication",
+          "elapsed_seconds": 0.854,
+          "library_file": "intermediate.epddl",
+          "plan_file": "collaboration_through_communication/problem_4/plan.json",
+          "plan_length": 4,
+          "planner_last_line": ". . Warning: Use of modalities requires ':modal-goals'.",
+          "problem": "instances/cc_2_2_3/problem_4.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "collaboration_through_communication/problem_4/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Collaboration-through-Communication",
+          "elapsed_seconds": 7.503,
+          "library_file": "intermediate.epddl",
+          "plan_file": "collaboration_through_communication/problem_5/plan.json",
+          "plan_length": 5,
+          "planner_last_line": ". . Warning: Use of modalities requires ':modal-goals'.",
+          "problem": "instances/cc_2_2_3/problem_5.epddl",
+          "returncode": 0,
+          "status": "solved",
+          "validation_file": "collaboration_through_communication/problem_5/validation.json",
+          "validation_result": "true"
+        },
+        {
+          "domain": "Collaboration-through-Communication",
+          "elapsed_seconds": 20.022,
+          "library_file": "intermediate.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": ". . Warning: Use of modalities requires ':modal-goals'.",
+          "problem": "instances/cc_2_2_3/problem_6.epddl",
+          "returncode": 124,
+          "status": "timeout",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": [
+        5,
+        4,
+        4,
+        4,
+        5
+      ]
+    },
+    "Consecutive-Numbers": {
+      "counts": {
+        "timeout": 1
+      },
+      "items": [
+        {
+          "domain": "Consecutive-Numbers",
+          "elapsed_seconds": 20.038,
+          "library_file": "basic.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": "Solving...",
+          "problem": "instances/cn5.epddl",
+          "returncode": 124,
+          "status": "timeout",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    },
+    "Gossip": {
+      "counts": {
+        "timeout": 1
+      },
+      "items": [
+        {
+          "domain": "Gossip",
+          "elapsed_seconds": 20.026,
+          "library_file": "intermediate.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": "Solving...",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 124,
+          "status": "timeout",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    },
+    "Grapevine": {
+      "counts": {
+        "timeout": 1
+      },
+      "items": [
+        {
+          "domain": "Grapevine",
+          "elapsed_seconds": 20.032,
+          "library_file": "intermediate.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": "Solving...",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 124,
+          "status": "timeout",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    },
+    "Selective-Communication": {
+      "counts": {
+        "error": 1
+      },
+      "items": [
+        {
+          "domain": "Selective-Communication",
+          "elapsed_seconds": 0.007,
+          "library_file": "intermediate.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": ". . . . Use of undeclared type name 'ontic'.",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 1,
+          "status": "error",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    },
+    "Tiger": {
+      "counts": {
+        "error": 1
+      },
+      "items": [
+        {
+          "domain": "Tiger",
+          "elapsed_seconds": 0.005,
+          "library_file": "intermediate.epddl",
+          "plan_file": null,
+          "plan_length": null,
+          "planner_last_line": ". . . . . . Syntax error: expected ')' at end of declaration of finitary-S5 theory.",
+          "problem": "instances/problem_1.epddl",
+          "returncode": 1,
+          "status": "error",
+          "validation_file": null,
+          "validation_result": null
+        }
+      ],
+      "solved_lengths": []
+    }
+  },
+  "fpddl_results": {
+    "Active-Muddy-Child": [
+      {
+        "problem_file": "amc_1_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "child3",
+            "child2",
+            "child1",
+            "child5",
+            "t",
+            "child4"
+          ],
+          "avg_branching_factors": 1.0,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "muddy_children",
+          "domain_path": "converted_from_epddl/active_muddy_child/domain.pddl",
+          "epistemic_call_length": 16,
+          "epistemic_call_length_avg": 2.2857142857142856,
+          "epistemic_call_length_max": 2,
+          "epistemic_call_time": 0.001789,
+          "epistemic_call_time_avg": 0.25557142857142856,
+          "epistemic_call_time_max": 0.545,
+          "epistemic_calls": 7,
+          "epistemic_goal_size": 1,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [child1]\") (= (muddy child1) 't')) ep.true)"
+          ],
+          "expanded": 3,
+          "functions": 7,
+          "generated": 4,
+          "goal_agents": [
+            "child1"
+          ],
+          "goal_checked": 4,
+          "goals": [
+            "(= (@ep (\"+ b [child1]\") (= (muddy child1) 't')) ep.true)"
+          ],
+          "init_time": 0.100421,
+          "max_branching_factors": 1,
+          "max_goal_depth": 1,
+          "memoryout": 8192,
+          "num_of_agents": 6,
+          "num_of_goal_agents": 1,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 3,
+          "plan": [
+            "ask t",
+            "ask t",
+            "ask t"
+          ],
+          "problem_name": "amc_1_from_epddl",
+          "problem_path": "converted_from_epddl/active_muddy_child/amc_1_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.005457,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 1
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['ask t', 'ask t', 'ask t'], 'path_length': 3, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 4, 'expanded': 3, 'generated': 4, 'epistemic_calls': 7, 'epistemic_call_time': 0.001789, 'epistemic_call_time_avg': 0.25557142857142856, 'epistemic_call_time_max': 0.545, 'epistemic_call_length': 16, 'epistemic_call_length_avg': 2.2857142857142856, 'epistemic_call_length_max': 2, 'total_goal_size': 1, 'ontic_goal_size': 0, 'epistemic_goal_size': 1, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [child1]\") (= (muddy child1) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [child1]\") (= (muddy child1) \\'t\\')) ep.true)'], 'functions': 7, 'domain_path': 'converted_from_epddl/active_muddy_child/domain.pddl', 'problem_path': 'converted_from_epddl/active_muddy_child/amc_1_from_epddl.pddl', 'max_goal_depth': 1, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 1, 'goal_agents': ['child1'], 'agents': ['child3', 'child2', 'child1', 'child5', 't', 'child4'], 'num_of_agents': 6, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 1.0, 'max_branching_factors': 1, 'domain_name': 'muddy_children', 'problem_name': 'amc_1_from_epddl', 'search': 'greedy', 'init_time': 0.100421, 'search_time': 0.005457}\n"
+      }
+    ],
+    "Coin-in-the-Box": [
+      {
+        "problem_file": "cb_1_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "c",
+            "a",
+            "b"
+          ],
+          "avg_branching_factors": 3.0,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "coin_in_the_box_from_epddl",
+          "domain_path": "converted_from_epddl/coin_in_the_box/domain.pddl",
+          "epistemic_call_length": 16,
+          "epistemic_call_length_avg": 2.2857142857142856,
+          "epistemic_call_length_max": 2,
+          "epistemic_call_time": 0.000858,
+          "epistemic_call_time_avg": 0.12257142857142857,
+          "epistemic_call_time_max": 0.176,
+          "epistemic_calls": 7,
+          "epistemic_goal_size": 1,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (tails) 't')) ep.true)"
+          ],
+          "expanded": 2,
+          "functions": 16,
+          "generated": 7,
+          "goal_agents": [
+            "a"
+          ],
+          "goal_checked": 7,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (tails) 't')) ep.true)"
+          ],
+          "init_time": 0.004844,
+          "max_branching_factors": 3,
+          "max_goal_depth": 1,
+          "memoryout": 8192,
+          "num_of_agents": 3,
+          "num_of_goal_agents": 1,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 2,
+          "plan": [
+            "open_a",
+            "peek_a"
+          ],
+          "problem_name": "cb_1_from_epddl",
+          "problem_path": "converted_from_epddl/coin_in_the_box/cb_1_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.006242,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 1
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['open_a', 'peek_a'], 'path_length': 2, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 7, 'expanded': 2, 'generated': 7, 'epistemic_calls': 7, 'epistemic_call_time': 0.000858, 'epistemic_call_time_avg': 0.12257142857142857, 'epistemic_call_time_max': 0.176, 'epistemic_call_length': 16, 'epistemic_call_length_avg': 2.2857142857142856, 'epistemic_call_length_max': 2, 'total_goal_size': 1, 'ontic_goal_size': 0, 'epistemic_goal_size': 1, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (tails) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (tails) \\'t\\')) ep.true)'], 'functions': 16, 'domain_path': 'converted_from_epddl/coin_in_the_box/domain.pddl', 'problem_path': 'converted_from_epddl/coin_in_the_box/cb_1_from_epddl.pddl', 'max_goal_depth': 1, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 1, 'goal_agents': ['a'], 'agents': ['c', 'a', 'b'], 'num_of_agents': 3, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 3.0, 'max_branching_factors': 3, 'domain_name': 'coin_in_the_box_from_epddl', 'problem_name': 'cb_1_from_epddl', 'search': 'greedy', 'init_time': 0.004844, 'search_time': 0.006242}\n"
+      },
+      {
+        "problem_file": "cb_2_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "b",
+            "c"
+          ],
+          "avg_branching_factors": 4.071428571428571,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "coin_in_the_box_from_epddl",
+          "domain_path": "converted_from_epddl/coin_in_the_box/domain.pddl",
+          "epistemic_call_length": 220,
+          "epistemic_call_length_avg": 3.793103448275862,
+          "epistemic_call_length_max": 4,
+          "epistemic_call_time": 0.006592,
+          "epistemic_call_time_avg": 0.1136551724137931,
+          "epistemic_call_time_max": 0.236,
+          "epistemic_calls": 58,
+          "epistemic_goal_size": 1,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)"
+          ],
+          "expanded": 14,
+          "functions": 16,
+          "generated": 58,
+          "goal_agents": [
+            "b"
+          ],
+          "goal_checked": 58,
+          "goals": [
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)"
+          ],
+          "init_time": 0.003319,
+          "max_branching_factors": 7,
+          "max_goal_depth": 1,
+          "memoryout": 8192,
+          "num_of_agents": 3,
+          "num_of_goal_agents": 1,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 4,
+          "plan": [
+            "open_a",
+            "peek_a",
+            "signal_a_b",
+            "shout_tails_a"
+          ],
+          "problem_name": "cb_2_from_epddl",
+          "problem_path": "converted_from_epddl/coin_in_the_box/cb_2_from_epddl.pddl",
+          "pruned": 6,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 6,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.043553,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 1
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['open_a', 'peek_a', 'signal_a_b', 'shout_tails_a'], 'path_length': 4, 'timeout': 30, 'memoryout': 8192, 'pruned': 6, 'pruned_by_unknown': 0, 'pruned_by_visited': 6, 'goal_checked': 58, 'expanded': 14, 'generated': 58, 'epistemic_calls': 58, 'epistemic_call_time': 0.006592, 'epistemic_call_time_avg': 0.1136551724137931, 'epistemic_call_time_max': 0.236, 'epistemic_call_length': 220, 'epistemic_call_length_avg': 3.793103448275862, 'epistemic_call_length_max': 4, 'total_goal_size': 1, 'ontic_goal_size': 0, 'epistemic_goal_size': 1, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)'], 'functions': 16, 'domain_path': 'converted_from_epddl/coin_in_the_box/domain.pddl', 'problem_path': 'converted_from_epddl/coin_in_the_box/cb_2_from_epddl.pddl', 'max_goal_depth': 1, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 1, 'goal_agents': ['b'], 'agents': ['a', 'b', 'c'], 'num_of_agents': 3, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 4.071428571428571, 'max_branching_factors': 7, 'domain_name': 'coin_in_the_box_from_epddl', 'problem_name': 'cb_2_from_epddl', 'search': 'greedy', 'init_time': 0.003319, 'search_time': 0.043553}\n"
+      },
+      {
+        "problem_file": "cb_3_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "b",
+            "c"
+          ],
+          "avg_branching_factors": 5.428571428571429,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "coin_in_the_box_from_epddl",
+          "domain_path": "converted_from_epddl/coin_in_the_box/domain.pddl",
+          "epistemic_call_length": 223,
+          "epistemic_call_length_avg": 5.717948717948718,
+          "epistemic_call_length_max": 3,
+          "epistemic_call_time": 0.050286,
+          "epistemic_call_time_avg": 1.2893846153846151,
+          "epistemic_call_time_max": 1.706,
+          "epistemic_calls": 39,
+          "epistemic_goal_size": 9,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c] + b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c] + b [b]\") (= (tails) 't')) ep.true)"
+          ],
+          "expanded": 7,
+          "functions": 16,
+          "generated": 39,
+          "goal_agents": [
+            "c",
+            "b",
+            "a"
+          ],
+          "goal_checked": 39,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c] + b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c] + b [b]\") (= (tails) 't')) ep.true)"
+          ],
+          "init_time": 0.003757,
+          "max_branching_factors": 10,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 3,
+          "num_of_goal_agents": 3,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 7,
+          "plan": [
+            "open_a",
+            "peek_a",
+            "shout_tails_a",
+            "signal_a_b",
+            "shout_tails_a",
+            "signal_a_c",
+            "shout_tails_a"
+          ],
+          "problem_name": "cb_3_from_epddl",
+          "problem_path": "converted_from_epddl/coin_in_the_box/cb_3_from_epddl.pddl",
+          "pruned": 1,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 1,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.068874,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 9
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['open_a', 'peek_a', 'shout_tails_a', 'signal_a_b', 'shout_tails_a', 'signal_a_c', 'shout_tails_a'], 'path_length': 7, 'timeout': 30, 'memoryout': 8192, 'pruned': 1, 'pruned_by_unknown': 0, 'pruned_by_visited': 1, 'goal_checked': 39, 'expanded': 7, 'generated': 39, 'epistemic_calls': 39, 'epistemic_call_time': 0.050286, 'epistemic_call_time_avg': 1.2893846153846151, 'epistemic_call_time_max': 1.706, 'epistemic_call_length': 223, 'epistemic_call_length_avg': 5.717948717948718, 'epistemic_call_length_max': 3, 'total_goal_size': 9, 'ontic_goal_size': 0, 'epistemic_goal_size': 9, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b] + b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c] + b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c] + b [b]\") (= (tails) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b] + b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c] + b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c] + b [b]\") (= (tails) \\'t\\')) ep.true)'], 'functions': 16, 'domain_path': 'converted_from_epddl/coin_in_the_box/domain.pddl', 'problem_path': 'converted_from_epddl/coin_in_the_box/cb_3_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 3, 'goal_agents': ['c', 'b', 'a'], 'agents': ['a', 'b', 'c'], 'num_of_agents': 3, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 5.428571428571429, 'max_branching_factors': 10, 'domain_name': 'coin_in_the_box_from_epddl', 'problem_name': 'cb_3_from_epddl', 'search': 'greedy', 'init_time': 0.003757, 'search_time': 0.068874}\n"
+      },
+      {
+        "problem_file": "cb_4_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "c",
+            "b",
+            "a"
+          ],
+          "avg_branching_factors": 4.352941176470588,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "coin_in_the_box_from_epddl",
+          "domain_path": "converted_from_epddl/coin_in_the_box/domain.pddl",
+          "epistemic_call_length": 332,
+          "epistemic_call_length_avg": 4.426666666666667,
+          "epistemic_call_length_max": 4,
+          "epistemic_call_time": 0.050882,
+          "epistemic_call_time_avg": 0.6784266666666666,
+          "epistemic_call_time_max": 1.02,
+          "epistemic_calls": 75,
+          "epistemic_goal_size": 4,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (tails) 't')) ep.true)",
+            "(!= (@ep (\"+ b [b] + b [a] + b [c]\") (= (tails) 't')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [c]\") (= (tails) 't')) ep.true)"
+          ],
+          "expanded": 17,
+          "functions": 16,
+          "generated": 75,
+          "goal_agents": [
+            "c",
+            "b",
+            "a"
+          ],
+          "goal_checked": 75,
+          "goals": [
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (tails) 't')) ep.true)",
+            "(!= (@ep (\"+ b [b] + b [a] + b [c]\") (= (tails) 't')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [c]\") (= (tails) 't')) ep.true)"
+          ],
+          "init_time": 0.005743,
+          "max_branching_factors": 7,
+          "max_goal_depth": 3,
+          "memoryout": 8192,
+          "num_of_agents": 3,
+          "num_of_goal_agents": 3,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 6,
+          "plan": [
+            "open_a",
+            "peek_a",
+            "signal_a_b",
+            "shout_tails_a",
+            "distract_b_a",
+            "peek_c"
+          ],
+          "problem_name": "cb_4_from_epddl",
+          "problem_path": "converted_from_epddl/coin_in_the_box/cb_4_from_epddl.pddl",
+          "pruned": 6,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 6,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.09721,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 4
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['open_a', 'peek_a', 'signal_a_b', 'shout_tails_a', 'distract_b_a', 'peek_c'], 'path_length': 6, 'timeout': 30, 'memoryout': 8192, 'pruned': 6, 'pruned_by_unknown': 0, 'pruned_by_visited': 6, 'goal_checked': 75, 'expanded': 17, 'generated': 75, 'epistemic_calls': 75, 'epistemic_call_time': 0.050882, 'epistemic_call_time_avg': 0.6784266666666666, 'epistemic_call_time_max': 1.02, 'epistemic_call_length': 332, 'epistemic_call_length_avg': 4.426666666666667, 'epistemic_call_length_max': 4, 'total_goal_size': 4, 'ontic_goal_size': 0, 'epistemic_goal_size': 4, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (tails) \\'t\\')) ep.true)', '(!= (@ep (\"+ b [b] + b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (tails) \\'t\\')) ep.true)', '(!= (@ep (\"+ b [b] + b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)'], 'functions': 16, 'domain_path': 'converted_from_epddl/coin_in_the_box/domain.pddl', 'problem_path': 'converted_from_epddl/coin_in_the_box/cb_4_from_epddl.pddl', 'max_goal_depth': 3, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 3, 'goal_agents': ['c', 'b', 'a'], 'agents': ['c', 'b', 'a'], 'num_of_agents': 3, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 4.352941176470588, 'max_branching_factors': 7, 'domain_name': 'coin_in_the_box_from_epddl', 'problem_name': 'cb_4_from_epddl', 'search': 'greedy', 'init_time': 0.005743, 'search_time': 0.09721}\n"
+      },
+      {
+        "problem_file": "cb_5_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "c",
+            "a",
+            "b"
+          ],
+          "avg_branching_factors": 4.411764705882353,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "coin_in_the_box_from_epddl",
+          "domain_path": "converted_from_epddl/coin_in_the_box/domain.pddl",
+          "epistemic_call_length": 361,
+          "epistemic_call_length_avg": 4.75,
+          "epistemic_call_length_max": 8,
+          "epistemic_call_time": 0.041983,
+          "epistemic_call_time_avg": 0.552407894736842,
+          "epistemic_call_time_max": 0.857,
+          "epistemic_calls": 76,
+          "epistemic_goal_size": 4,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c] + b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [c]\") (= (tails) 't')) ep.true)"
+          ],
+          "expanded": 17,
+          "functions": 16,
+          "generated": 76,
+          "goal_agents": [
+            "a",
+            "c",
+            "b"
+          ],
+          "goal_checked": 76,
+          "goals": [
+            "(= (@ep (\"+ b [b]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [c] + b [a]\") (= (tails) 't')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [c]\") (= (tails) 't')) ep.true)"
+          ],
+          "init_time": 0.003614,
+          "max_branching_factors": 7,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 3,
+          "num_of_goal_agents": 3,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 7,
+          "plan": [
+            "open_a",
+            "peek_a",
+            "shout_tails_a",
+            "signal_a_c",
+            "shout_tails_a",
+            "distract_c_a",
+            "peek_b"
+          ],
+          "problem_name": "cb_5_from_epddl",
+          "problem_path": "converted_from_epddl/coin_in_the_box/cb_5_from_epddl.pddl",
+          "pruned": 6,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 6,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.081943,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 4
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['open_a', 'peek_a', 'shout_tails_a', 'signal_a_c', 'shout_tails_a', 'distract_c_a', 'peek_b'], 'path_length': 7, 'timeout': 30, 'memoryout': 8192, 'pruned': 6, 'pruned_by_unknown': 0, 'pruned_by_visited': 6, 'goal_checked': 76, 'expanded': 17, 'generated': 76, 'epistemic_calls': 76, 'epistemic_call_time': 0.041983, 'epistemic_call_time_avg': 0.552407894736842, 'epistemic_call_time_max': 0.857, 'epistemic_call_length': 361, 'epistemic_call_length_avg': 4.75, 'epistemic_call_length_max': 8, 'total_goal_size': 4, 'ontic_goal_size': 0, 'epistemic_goal_size': 4, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c] + b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [b]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c] + b [a]\") (= (tails) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a] + b [c]\") (= (tails) \\'t\\')) ep.true)'], 'functions': 16, 'domain_path': 'converted_from_epddl/coin_in_the_box/domain.pddl', 'problem_path': 'converted_from_epddl/coin_in_the_box/cb_5_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 3, 'goal_agents': ['a', 'c', 'b'], 'agents': ['c', 'a', 'b'], 'num_of_agents': 3, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 4.411764705882353, 'max_branching_factors': 7, 'domain_name': 'coin_in_the_box_from_epddl', 'problem_name': 'cb_5_from_epddl', 'search': 'greedy', 'init_time': 0.003614, 'search_time': 0.081943}\n"
+      }
+    ],
+    "Collaboration-through-Communication": [
+      {
+        "problem_file": "cc_2_2_3_1_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "b",
+            "a"
+          ],
+          "avg_branching_factors": 7.25,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "collaboration_through_communication_from_epddl",
+          "domain_path": "converted_from_epddl/collaboration_through_communication/domain.pddl",
+          "epistemic_call_length": 101,
+          "epistemic_call_length_avg": 3.3666666666666667,
+          "epistemic_call_length_max": 5,
+          "epistemic_call_time": 0.017607,
+          "epistemic_call_time_avg": 0.5869000000000001,
+          "epistemic_call_time_max": 0.8170000000000001,
+          "epistemic_calls": 30,
+          "epistemic_goal_size": 4,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) 'yes')) ep.true)"
+          ],
+          "expanded": 4,
+          "functions": 44,
+          "generated": 30,
+          "goal_agents": [
+            "b",
+            "a"
+          ],
+          "goal_checked": 30,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) 'yes')) ep.true)"
+          ],
+          "init_time": 0.008046,
+          "max_branching_factors": 8,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 2,
+          "num_of_goal_agents": 2,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 4,
+          "plan": [
+            "left_a",
+            "sense_a_box1_room1",
+            "left_b",
+            "tell_a_box1_room1_from_room1"
+          ],
+          "problem_name": "cc_2_2_3_1_from_epddl",
+          "problem_path": "converted_from_epddl/collaboration_through_communication/cc_2_2_3_1_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.038567,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 4
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['left_a', 'sense_a_box1_room1', 'left_b', 'tell_a_box1_room1_from_room1'], 'path_length': 4, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 30, 'expanded': 4, 'generated': 30, 'epistemic_calls': 30, 'epistemic_call_time': 0.017607, 'epistemic_call_time_avg': 0.5869000000000001, 'epistemic_call_time_max': 0.8170000000000001, 'epistemic_call_length': 101, 'epistemic_call_length_avg': 3.3666666666666667, 'epistemic_call_length_max': 5, 'total_goal_size': 4, 'ontic_goal_size': 0, 'epistemic_goal_size': 4, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)'], 'functions': 44, 'domain_path': 'converted_from_epddl/collaboration_through_communication/domain.pddl', 'problem_path': 'converted_from_epddl/collaboration_through_communication/cc_2_2_3_1_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 2, 'goal_agents': ['b', 'a'], 'agents': ['b', 'a'], 'num_of_agents': 2, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 7.25, 'max_branching_factors': 8, 'domain_name': 'collaboration_through_communication_from_epddl', 'problem_name': 'cc_2_2_3_1_from_epddl', 'search': 'greedy', 'init_time': 0.008046, 'search_time': 0.038567}\n"
+      },
+      {
+        "problem_file": "cc_2_2_3_2_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "b",
+            "a"
+          ],
+          "avg_branching_factors": 7.25,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "collaboration_through_communication_from_epddl",
+          "domain_path": "converted_from_epddl/collaboration_through_communication/domain.pddl",
+          "epistemic_call_length": 101,
+          "epistemic_call_length_avg": 3.3666666666666667,
+          "epistemic_call_length_max": 3,
+          "epistemic_call_time": 0.008179,
+          "epistemic_call_time_avg": 0.27263333333333334,
+          "epistemic_call_time_max": 0.377,
+          "epistemic_calls": 30,
+          "epistemic_goal_size": 2,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)"
+          ],
+          "expanded": 4,
+          "functions": 44,
+          "generated": 30,
+          "goal_agents": [
+            "b",
+            "a"
+          ],
+          "goal_checked": 30,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)"
+          ],
+          "init_time": 0.015919,
+          "max_branching_factors": 8,
+          "max_goal_depth": 1,
+          "memoryout": 8192,
+          "num_of_agents": 2,
+          "num_of_goal_agents": 2,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 4,
+          "plan": [
+            "left_a",
+            "sense_a_box1_room1",
+            "left_b",
+            "sense_b_box2_room1"
+          ],
+          "problem_name": "cc_2_2_3_2_from_epddl",
+          "problem_path": "converted_from_epddl/collaboration_through_communication/cc_2_2_3_2_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.029637,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 2
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['left_a', 'sense_a_box1_room1', 'left_b', 'sense_b_box2_room1'], 'path_length': 4, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 30, 'expanded': 4, 'generated': 30, 'epistemic_calls': 30, 'epistemic_call_time': 0.008179, 'epistemic_call_time_avg': 0.27263333333333334, 'epistemic_call_time_max': 0.377, 'epistemic_call_length': 101, 'epistemic_call_length_avg': 3.3666666666666667, 'epistemic_call_length_max': 3, 'total_goal_size': 2, 'ontic_goal_size': 0, 'epistemic_goal_size': 2, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)'], 'functions': 44, 'domain_path': 'converted_from_epddl/collaboration_through_communication/domain.pddl', 'problem_path': 'converted_from_epddl/collaboration_through_communication/cc_2_2_3_2_from_epddl.pddl', 'max_goal_depth': 1, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 2, 'goal_agents': ['b', 'a'], 'agents': ['b', 'a'], 'num_of_agents': 2, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 7.25, 'max_branching_factors': 8, 'domain_name': 'collaboration_through_communication_from_epddl', 'problem_name': 'cc_2_2_3_2_from_epddl', 'search': 'greedy', 'init_time': 0.015919, 'search_time': 0.029637}\n"
+      },
+      {
+        "problem_file": "cc_2_2_3_3_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "b"
+          ],
+          "avg_branching_factors": 6.888888888888889,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "collaboration_through_communication_from_epddl",
+          "domain_path": "converted_from_epddl/collaboration_through_communication/domain.pddl",
+          "epistemic_call_length": 359,
+          "epistemic_call_length_avg": 5.698412698412699,
+          "epistemic_call_length_max": 8,
+          "epistemic_call_time": 0.059369,
+          "epistemic_call_time_avg": 0.9423650793650794,
+          "epistemic_call_time_max": 1.426,
+          "epistemic_calls": 63,
+          "epistemic_goal_size": 7,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)"
+          ],
+          "expanded": 9,
+          "functions": 44,
+          "generated": 63,
+          "goal_agents": [
+            "a",
+            "b"
+          ],
+          "goal_checked": 63,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)"
+          ],
+          "init_time": 0.007782,
+          "max_branching_factors": 9,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 2,
+          "num_of_goal_agents": 2,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 8,
+          "plan": [
+            "right_a",
+            "sense_a_box2_room3",
+            "left_b",
+            "sense_b_box1_room1",
+            "sense_b_box2_room1",
+            "right_b",
+            "right_b",
+            "tell_a_box2_room3_from_room3"
+          ],
+          "problem_name": "cc_2_2_3_3_from_epddl",
+          "problem_path": "converted_from_epddl/collaboration_through_communication/cc_2_2_3_3_from_epddl.pddl",
+          "pruned": 4,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 4,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.123202,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 7
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['right_a', 'sense_a_box2_room3', 'left_b', 'sense_b_box1_room1', 'sense_b_box2_room1', 'right_b', 'right_b', 'tell_a_box2_room3_from_room3'], 'path_length': 8, 'timeout': 30, 'memoryout': 8192, 'pruned': 4, 'pruned_by_unknown': 0, 'pruned_by_visited': 4, 'goal_checked': 63, 'expanded': 9, 'generated': 63, 'epistemic_calls': 63, 'epistemic_call_time': 0.059369, 'epistemic_call_time_avg': 0.9423650793650794, 'epistemic_call_time_max': 1.426, 'epistemic_call_length': 359, 'epistemic_call_length_avg': 5.698412698412699, 'epistemic_call_length_max': 8, 'total_goal_size': 7, 'ontic_goal_size': 0, 'epistemic_goal_size': 7, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)'], 'functions': 44, 'domain_path': 'converted_from_epddl/collaboration_through_communication/domain.pddl', 'problem_path': 'converted_from_epddl/collaboration_through_communication/cc_2_2_3_3_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 2, 'goal_agents': ['a', 'b'], 'agents': ['a', 'b'], 'num_of_agents': 2, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 6.888888888888889, 'max_branching_factors': 9, 'domain_name': 'collaboration_through_communication_from_epddl', 'problem_name': 'cc_2_2_3_3_from_epddl', 'search': 'greedy', 'init_time': 0.007782, 'search_time': 0.123202}\n"
+      },
+      {
+        "problem_file": "cc_2_2_3_4_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "b"
+          ],
+          "avg_branching_factors": 7.8,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "collaboration_through_communication_from_epddl",
+          "domain_path": "converted_from_epddl/collaboration_through_communication/domain.pddl",
+          "epistemic_call_length": 161,
+          "epistemic_call_length_avg": 4.025,
+          "epistemic_call_length_max": 6,
+          "epistemic_call_time": 0.030624,
+          "epistemic_call_time_avg": 0.7656,
+          "epistemic_call_time_max": 0.9460000000000001,
+          "epistemic_calls": 40,
+          "epistemic_goal_size": 7,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 2)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 2)) ep.true)"
+          ],
+          "expanded": 5,
+          "functions": 44,
+          "generated": 40,
+          "goal_agents": [
+            "a",
+            "b"
+          ],
+          "goal_checked": 40,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 2)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 2)) ep.true)"
+          ],
+          "init_time": 0.016836,
+          "max_branching_factors": 10,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 2,
+          "num_of_goal_agents": 2,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 5,
+          "plan": [
+            "left_b",
+            "sense_b_box1_room1",
+            "sense_b_box2_room1",
+            "right_b",
+            "tell_b_box2_room3_from_room2"
+          ],
+          "problem_name": "cc_2_2_3_4_from_epddl",
+          "problem_path": "converted_from_epddl/collaboration_through_communication/cc_2_2_3_4_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.054908,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 7
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['left_b', 'sense_b_box1_room1', 'sense_b_box2_room1', 'right_b', 'tell_b_box2_room3_from_room2'], 'path_length': 5, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 40, 'expanded': 5, 'generated': 40, 'epistemic_calls': 40, 'epistemic_call_time': 0.030624, 'epistemic_call_time_avg': 0.7656, 'epistemic_call_time_max': 0.9460000000000001, 'epistemic_call_length': 161, 'epistemic_call_length_avg': 4.025, 'epistemic_call_length_max': 6, 'total_goal_size': 7, 'ontic_goal_size': 0, 'epistemic_goal_size': 7, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 2)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 2)) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 2)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 2)) ep.true)'], 'functions': 44, 'domain_path': 'converted_from_epddl/collaboration_through_communication/domain.pddl', 'problem_path': 'converted_from_epddl/collaboration_through_communication/cc_2_2_3_4_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 2, 'goal_agents': ['a', 'b'], 'agents': ['a', 'b'], 'num_of_agents': 2, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 7.8, 'max_branching_factors': 10, 'domain_name': 'collaboration_through_communication_from_epddl', 'problem_name': 'cc_2_2_3_4_from_epddl', 'search': 'greedy', 'init_time': 0.016836, 'search_time': 0.054908}\n"
+      },
+      {
+        "problem_file": "cc_2_2_3_5_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "b",
+            "a"
+          ],
+          "avg_branching_factors": 6.8,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "collaboration_through_communication_from_epddl",
+          "domain_path": "converted_from_epddl/collaboration_through_communication/domain.pddl",
+          "epistemic_call_length": 132,
+          "epistemic_call_length_avg": 3.7714285714285714,
+          "epistemic_call_length_max": 2,
+          "epistemic_call_time": 0.021136,
+          "epistemic_call_time_avg": 0.6038857142857142,
+          "epistemic_call_time_max": 1.028,
+          "epistemic_calls": 35,
+          "epistemic_goal_size": 6,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)"
+          ],
+          "expanded": 5,
+          "functions": 44,
+          "generated": 35,
+          "goal_agents": [
+            "b",
+            "a"
+          ],
+          "goal_checked": 35,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)"
+          ],
+          "init_time": 0.010202,
+          "max_branching_factors": 8,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 2,
+          "num_of_goal_agents": 2,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 5,
+          "plan": [
+            "right_a",
+            "sense_a_box2_room3",
+            "left_b",
+            "sense_b_box1_room1",
+            "sense_b_box2_room1"
+          ],
+          "problem_name": "cc_2_2_3_5_from_epddl",
+          "problem_path": "converted_from_epddl/collaboration_through_communication/cc_2_2_3_5_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.045839,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 6
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['right_a', 'sense_a_box2_room3', 'left_b', 'sense_b_box1_room1', 'sense_b_box2_room1'], 'path_length': 5, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 35, 'expanded': 5, 'generated': 35, 'epistemic_calls': 35, 'epistemic_call_time': 0.021136, 'epistemic_call_time_avg': 0.6038857142857142, 'epistemic_call_time_max': 1.028, 'epistemic_call_length': 132, 'epistemic_call_length_avg': 3.7714285714285714, 'epistemic_call_length_max': 2, 'total_goal_size': 6, 'ontic_goal_size': 0, 'epistemic_goal_size': 6, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)'], 'functions': 44, 'domain_path': 'converted_from_epddl/collaboration_through_communication/domain.pddl', 'problem_path': 'converted_from_epddl/collaboration_through_communication/cc_2_2_3_5_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 2, 'goal_agents': ['b', 'a'], 'agents': ['b', 'a'], 'num_of_agents': 2, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 6.8, 'max_branching_factors': 8, 'domain_name': 'collaboration_through_communication_from_epddl', 'problem_name': 'cc_2_2_3_5_from_epddl', 'search': 'greedy', 'init_time': 0.010202, 'search_time': 0.045839}\n"
+      },
+      {
+        "problem_file": "cc_2_2_3_6_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "b"
+          ],
+          "avg_branching_factors": 6.833333333333333,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "collaboration_through_communication_from_epddl",
+          "domain_path": "converted_from_epddl/collaboration_through_communication/domain.pddl",
+          "epistemic_call_length": 179,
+          "epistemic_call_length_avg": 4.261904761904762,
+          "epistemic_call_length_max": 7,
+          "epistemic_call_time": 0.042332,
+          "epistemic_call_time_avg": 1.0079047619047619,
+          "epistemic_call_time_max": 1.381,
+          "epistemic_calls": 42,
+          "epistemic_goal_size": 10,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)"
+          ],
+          "expanded": 6,
+          "functions": 44,
+          "generated": 42,
+          "goal_agents": [
+            "b",
+            "a"
+          ],
+          "goal_checked": 42,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) 'yes')) ep.true)",
+            "(!= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) 'yes')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)"
+          ],
+          "init_time": 0.007391,
+          "max_branching_factors": 8,
+          "max_goal_depth": 2,
+          "memoryout": 8192,
+          "num_of_agents": 2,
+          "num_of_goal_agents": 2,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 6,
+          "plan": [
+            "right_a",
+            "sense_a_box1_room3",
+            "sense_a_box2_room3",
+            "left_b",
+            "sense_b_box1_room1",
+            "sense_b_box2_room1"
+          ],
+          "problem_name": "cc_2_2_3_6_from_epddl",
+          "problem_path": "converted_from_epddl/collaboration_through_communication/cc_2_2_3_6_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.073363,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 10
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['right_a', 'sense_a_box1_room3', 'sense_a_box2_room3', 'left_b', 'sense_b_box1_room1', 'sense_b_box2_room1'], 'path_length': 6, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 42, 'expanded': 6, 'generated': 42, 'epistemic_calls': 42, 'epistemic_call_time': 0.042332, 'epistemic_call_time_avg': 1.0079047619047619, 'epistemic_call_time_max': 1.381, 'epistemic_call_length': 179, 'epistemic_call_length_avg': 4.261904761904762, 'epistemic_call_length_max': 7, 'total_goal_size': 10, 'ontic_goal_size': 0, 'epistemic_goal_size': 10, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [b]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [a] + b [b]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [b] + b [a]\") (= (actual box1 room1) \\'yes\\')) ep.true)', '(!= (@ep (\"+ b [b] + b [a]\") (= (actual box2 room3) \\'yes\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (agent_loc a) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (agent_loc a) 3)) ep.true)'], 'functions': 44, 'domain_path': 'converted_from_epddl/collaboration_through_communication/domain.pddl', 'problem_path': 'converted_from_epddl/collaboration_through_communication/cc_2_2_3_6_from_epddl.pddl', 'max_goal_depth': 2, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 2, 'goal_agents': ['b', 'a'], 'agents': ['a', 'b'], 'num_of_agents': 2, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 6.833333333333333, 'max_branching_factors': 8, 'domain_name': 'collaboration_through_communication_from_epddl', 'problem_name': 'cc_2_2_3_6_from_epddl', 'search': 'greedy', 'init_time': 0.007391, 'search_time': 0.073363}\n"
+      }
+    ],
+    "Gossip": [
+      {
+        "problem_file": "gos_1_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "d",
+            "b",
+            "c",
+            "e"
+          ],
+          "avg_branching_factors": 10.0,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "gossip_from_epddl",
+          "domain_path": "converted_from_epddl/gossip/domain.pddl",
+          "epistemic_call_length": 351,
+          "epistemic_call_length_avg": 4.943661971830986,
+          "epistemic_call_length_max": 8,
+          "epistemic_call_time": 0.096635,
+          "epistemic_call_time_avg": 1.361056338028169,
+          "epistemic_call_time_max": 1.908,
+          "epistemic_calls": 71,
+          "epistemic_goal_size": 25,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret e) 5)) ep.true)"
+          ],
+          "expanded": 7,
+          "functions": 10,
+          "generated": 71,
+          "goal_agents": [
+            "a",
+            "d",
+            "b",
+            "c",
+            "e"
+          ],
+          "goal_checked": 71,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret a) 1)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret b) 2)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret c) 3)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret d) 4)) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (secret e) 5)) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (secret e) 5)) ep.true)"
+          ],
+          "init_time": 0.067234,
+          "max_branching_factors": 10,
+          "max_goal_depth": 1,
+          "memoryout": 8192,
+          "num_of_agents": 5,
+          "num_of_goal_agents": 5,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 7,
+          "plan": [
+            "calling_a_b",
+            "calling_a_c",
+            "calling_a_d",
+            "calling_a_e",
+            "calling_a_b",
+            "calling_a_c",
+            "calling_a_d"
+          ],
+          "problem_name": "gos_1_from_epddl",
+          "problem_path": "converted_from_epddl/gossip/gos_1_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.110653,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 25
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['calling_a_b', 'calling_a_c', 'calling_a_d', 'calling_a_e', 'calling_a_b', 'calling_a_c', 'calling_a_d'], 'path_length': 7, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 71, 'expanded': 7, 'generated': 71, 'epistemic_calls': 71, 'epistemic_call_time': 0.096635, 'epistemic_call_time_avg': 1.361056338028169, 'epistemic_call_time_max': 1.908, 'epistemic_call_length': 351, 'epistemic_call_length_avg': 4.943661971830986, 'epistemic_call_length_max': 8, 'total_goal_size': 25, 'ontic_goal_size': 0, 'epistemic_goal_size': 25, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret e) 5)) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret a) 1)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret b) 2)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret c) 3)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret d) 4)) ep.true)', '(= (@ep (\"+ b [a]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [b]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [c]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [d]\") (= (secret e) 5)) ep.true)', '(= (@ep (\"+ b [e]\") (= (secret e) 5)) ep.true)'], 'functions': 10, 'domain_path': 'converted_from_epddl/gossip/domain.pddl', 'problem_path': 'converted_from_epddl/gossip/gos_1_from_epddl.pddl', 'max_goal_depth': 1, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 5, 'goal_agents': ['a', 'd', 'b', 'c', 'e'], 'agents': ['a', 'd', 'b', 'c', 'e'], 'num_of_agents': 5, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 10.0, 'max_branching_factors': 10, 'domain_name': 'gossip_from_epddl', 'problem_name': 'gos_1_from_epddl', 'search': 'greedy', 'init_time': 0.067234, 'search_time': 0.110653}\n"
+      }
+    ],
+    "Grapevine": [
+      {
+        "problem_file": "gra_1_from_epddl.pddl",
+        "returncode": 0,
+        "solver_result": {
+          "agents": [
+            "a",
+            "b",
+            "d",
+            "e",
+            "c"
+          ],
+          "avg_branching_factors": 6.7894736842105265,
+          "common_average": 0,
+          "common_calls": 0,
+          "common_max": 0,
+          "common_total": 0,
+          "domain_name": "grapevine",
+          "domain_path": "converted_from_epddl/grapevine/domain.pddl",
+          "epistemic_call_length": 1190,
+          "epistemic_call_length_avg": 6.8,
+          "epistemic_call_length_max": 10,
+          "epistemic_call_time": 0.227957,
+          "epistemic_call_time_avg": 1.3026114285714285,
+          "epistemic_call_time_max": 3.009,
+          "epistemic_calls": 175,
+          "epistemic_goal_size": 25,
+          "epistemic_goals": [
+            "(= (@ep (\"+ b [a]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value es) 't')) ep.true)"
+          ],
+          "expanded": 19,
+          "functions": 51,
+          "generated": 130,
+          "goal_agents": [
+            "a",
+            "b",
+            "d",
+            "e",
+            "c"
+          ],
+          "goal_checked": 130,
+          "goals": [
+            "(= (@ep (\"+ b [a]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value as) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value bs) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value cs) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value ds) 't')) ep.true)",
+            "(= (@ep (\"+ b [a]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [b]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [c]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [d]\") (= (shared_value es) 't')) ep.true)",
+            "(= (@ep (\"+ b [e]\") (= (shared_value es) 't')) ep.true)"
+          ],
+          "init_time": 0.013626,
+          "max_branching_factors": 31,
+          "max_goal_depth": 1,
+          "memoryout": 8192,
+          "num_of_agents": 5,
+          "num_of_goal_agents": 5,
+          "num_of_unknown_goals": 0,
+          "ontic_goal_size": 0,
+          "ontic_goals": [],
+          "path_length": 9,
+          "plan": [
+            "sharing_own_secret a as",
+            "quiet as",
+            "sharing_own_secret b bs",
+            "quiet bs",
+            "sharing_own_secret c cs",
+            "quiet cs",
+            "sharing_own_secret d ds",
+            "quiet ds",
+            "sharing_own_secret e es"
+          ],
+          "problem_name": "gra_1_from_epddl",
+          "problem_path": "converted_from_epddl/grapevine/gra_1_from_epddl.pddl",
+          "pruned": 0,
+          "pruned_by_unknown": 0,
+          "pruned_by_visited": 0,
+          "running": "SUCC",
+          "search": "greedy",
+          "search_time": 0.267391,
+          "solvable": true,
+          "timeout": 30,
+          "total_goal_size": 25
+        },
+        "status": "solved",
+        "stderr": "",
+        "stdout": "loading search algorithm: [jp/search_algorithms/greedy.py]\nloading search module from: [jp.search_algorithms.greedy]\n{'solvable': True, 'running': 'SUCC', 'plan': ['sharing_own_secret a as', 'quiet as', 'sharing_own_secret b bs', 'quiet bs', 'sharing_own_secret c cs', 'quiet cs', 'sharing_own_secret d ds', 'quiet ds', 'sharing_own_secret e es'], 'path_length': 9, 'timeout': 30, 'memoryout': 8192, 'pruned': 0, 'pruned_by_unknown': 0, 'pruned_by_visited': 0, 'goal_checked': 130, 'expanded': 19, 'generated': 130, 'epistemic_calls': 175, 'epistemic_call_time': 0.227957, 'epistemic_call_time_avg': 1.3026114285714285, 'epistemic_call_time_max': 3.009, 'epistemic_call_length': 1190, 'epistemic_call_length_avg': 6.8, 'epistemic_call_length_max': 10, 'total_goal_size': 25, 'ontic_goal_size': 0, 'epistemic_goal_size': 25, 'ontic_goals': [], 'epistemic_goals': ['(= (@ep (\"+ b [a]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value es) \\'t\\')) ep.true)'], 'goals': ['(= (@ep (\"+ b [a]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value as) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value bs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value cs) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value ds) \\'t\\')) ep.true)', '(= (@ep (\"+ b [a]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [b]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [c]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [d]\") (= (shared_value es) \\'t\\')) ep.true)', '(= (@ep (\"+ b [e]\") (= (shared_value es) \\'t\\')) ep.true)'], 'functions': 51, 'domain_path': 'converted_from_epddl/grapevine/domain.pddl', 'problem_path': 'converted_from_epddl/grapevine/gra_1_from_epddl.pddl', 'max_goal_depth': 1, 'num_of_unknown_goals': 0, 'num_of_goal_agents': 5, 'goal_agents': ['a', 'b', 'd', 'e', 'c'], 'agents': ['a', 'b', 'd', 'e', 'c'], 'num_of_agents': 5, 'common_calls': 0, 'common_total': 0, 'common_max': 0, 'common_average': 0, 'avg_branching_factors': 6.7894736842105265, 'max_branching_factors': 31, 'domain_name': 'grapevine', 'problem_name': 'gra_1_from_epddl', 'search': 'greedy', 'init_time': 0.013626, 'search_time': 0.267391}\n"
+      }
+    ]
+  },
+  "fpddl_timeout_seconds": 30,
+  "generated_on": "2026-05-10"
+}

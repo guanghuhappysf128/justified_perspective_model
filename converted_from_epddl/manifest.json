@@ -1,0 +1,145 @@
+{
+  "domains": [
+    {
+      "generated_problem_files": [
+        "amc_1_from_epddl.pddl"
+      ],
+      "grounded_json_files": [
+        "problem_1.json"
+      ],
+      "grounding_failures": [],
+      "notes": "Converted to the muddy_children F-PDDL family with generated problems.",
+      "source_domain": "Active-Muddy-Child",
+      "support_level": "supported",
+      "target_dir": "active_muddy_child"
+    },
+    {
+      "grounded_json_files": [
+        "problem_1.json"
+      ],
+      "grounding_failures": [],
+      "notes": "No corresponding F-PDDL benchmark family is present yet.",
+      "source_domain": "Blocks-World",
+      "source_problem_files": [
+        "benchmarks/domains/Blocks-World/instances/problem_1.epddl"
+      ],
+      "support_level": "unsupported",
+      "target_dir": "blocks_world"
+    },
+    {
+      "generated_problem_files": [
+        "cb_1_from_epddl.pddl",
+        "cb_2_from_epddl.pddl",
+        "cb_3_from_epddl.pddl",
+        "cb_4_from_epddl.pddl",
+        "cb_5_from_epddl.pddl"
+      ],
+      "grounded_json_files": [
+        "problem_1.json",
+        "problem_2.json",
+        "problem_3.json",
+        "problem_4.json",
+        "problem_5.json"
+      ],
+      "grounding_failures": [],
+      "notes": "Converted to a generated Coin-in-the-Box F-PDDL family with event-based visibility. The core open/signal/distract/peek/shout structure is preserved, while the common and higher-order modal goals are approximated with the closest JPM-expressible belief formulas.",
+      "source_domain": "Coin-in-the-Box",
+      "support_level": "supported",
+      "target_dir": "coin_in_the_box"
+    },
+    {
+      "generated_problem_files": [
+        "cc_2_2_3_1_from_epddl.pddl",
+        "cc_2_2_3_2_from_epddl.pddl",
+        "cc_2_2_3_3_from_epddl.pddl",
+        "cc_2_2_3_4_from_epddl.pddl",
+        "cc_2_2_3_5_from_epddl.pddl",
+        "cc_2_2_3_6_from_epddl.pddl"
+      ],
+      "grounded_json_files": [
+        "problem_1.json",
+        "problem_2.json",
+        "problem_3.json",
+        "problem_4.json",
+        "problem_5.json",
+        "problem_6.json"
+      ],
+      "grounding_failures": [],
+      "notes": "Converted to a generated Collaboration-through-Communication F-PDDL family with explicit per-agent box beliefs and second-order meta-belief state. The converter targets the bundled 2-agent, 2-box, 3-room instance family and bakes the room-elimination sanity check into sensing and telling updates.",
+      "source_domain": "Collaboration-through-Communication",
+      "support_level": "supported",
+      "target_dir": "collaboration_through_communication"
+    },
+    {
+      "grounded_json_files": [
+        "cn5.json"
+      ],
+      "grounding_failures": [],
+      "notes": "No corresponding F-PDDL benchmark family is present yet.",
+      "source_domain": "Consecutive-Numbers",
+      "source_problem_files": [
+        "benchmarks/domains/Consecutive-Numbers/instances/cn5.epddl"
+      ],
+      "support_level": "unsupported",
+      "target_dir": "consecutive_numbers"
+    },
+    {
+      "generated_problem_files": [
+        "gos_1_from_epddl.pddl"
+      ],
+      "grounded_json_files": [
+        "problem_1.json"
+      ],
+      "grounding_failures": [],
+      "notes": "Converted to a generated gossip-call F-PDDL domain with gossip4 visibility semantics.",
+      "source_domain": "Gossip",
+      "support_level": "supported",
+      "target_dir": "gossip"
+    },
+    {
+      "generated_problem_files": [
+        "gra_1_from_epddl.pddl"
+      ],
+      "grounded_json_files": [
+        "problem_1.json"
+      ],
+      "grounding_failures": [],
+      "notes": "Converted to the existing grapevine-style F-PDDL family.",
+      "source_domain": "Grapevine",
+      "support_level": "supported",
+      "target_dir": "grapevine"
+    },
+    {
+      "grounded_json_files": [],
+      "grounding_failures": [
+        {
+          "error": "plank export did not create problem_1.json for /home/guangh_ubuntu/projects/competition/iepc/plank/benchmarks/domains/Selective-Communication/instances/problem_1.epddl: [===] plank 1.0 - The DEL-based epistemic planning toolkit.\n[===]\nParsing...\nIn file '/home/guangh_ubuntu/projects/competition/iepc/plank/benchmarks/domains/Selective-Communication/sc.epddl' at (44:23):\n. . In declaration of domain 'selective-communication':\n. . . . Use of undeclared type name 'ontic'.",
+          "problem": "benchmarks/domains/Selective-Communication/instances/problem_1.epddl"
+        }
+      ],
+      "notes": "The bundled EPDDL domain currently has action-type parse issues and no F-PDDL mapping yet.",
+      "source_domain": "Selective-Communication",
+      "source_problem_files": [
+        "benchmarks/domains/Selective-Communication/instances/problem_1.epddl"
+      ],
+      "support_level": "unsupported",
+      "target_dir": "selective_communication"
+    },
+    {
+      "grounded_json_files": [],
+      "grounding_failures": [
+        {
+          "error": "plank export did not create problem_1.json for /home/guangh_ubuntu/projects/competition/iepc/plank/benchmarks/domains/Tiger/instances/problem_1.epddl: [===] plank 1.0 - The DEL-based epistemic planning toolkit.\n[===]\nParsing...\nIn file '/home/guangh_ubuntu/projects/competition/iepc/plank/benchmarks/domains/Tiger/instances/problem_1.epddl' at (37:14):\n. . In declaration of problem 'tig-5-3':\n. . . . In declaration of finitary-S5 theory:\n. . . . . . Syntax error: expected ')' at end of declaration of finitary-S5 theory.",
+          "problem": "benchmarks/domains/Tiger/instances/problem_1.epddl"
+        }
+      ],
+      "notes": "The bundled EPDDL problem file currently fails to parse in plank and has no F-PDDL mapping yet.",
+      "source_domain": "Tiger",
+      "source_problem_files": [
+        "benchmarks/domains/Tiger/instances/problem_1.epddl"
+      ],
+      "support_level": "unsupported",
+      "target_dir": "tiger"
+    }
+  ]
+}
