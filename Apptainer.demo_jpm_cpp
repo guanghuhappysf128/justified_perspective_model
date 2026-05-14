@@ -55,7 +55,6 @@ Stage: build
 
     install -Dm755 cpp/build/jpm_cpp_solver /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver
     install -Dm755 tools/export_jpm_ir.py /opt/jpm_cpp/app/tools/export_jpm_ir.py
-    install -Dm755 tools/run_jpm_cpp_solver.py /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py
     cp -r jp /opt/jpm_cpp/app/jp
     mkdir -p /opt/jpm_cpp/app/logs
 
@@ -89,7 +88,6 @@ Stage: run
 
     chmod +x /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver
     chmod +x /opt/jpm_cpp/app/tools/export_jpm_ir.py
-    chmod +x /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py
 
     rm -rf /var/lib/apt/lists/*
 
@@ -121,22 +119,23 @@ Stage: run
     TIMEOUT_SECONDS="${TIMEOUT:-30}"
     MAX_EXPANDED_NODES="${MAX_EXPANDED:-1000000}"
 
+    python3 /opt/jpm_cpp/app/tools/export_jpm_ir.py \
+        -d "$DOMAINFILE" \
+        -p "$PROBLEMFILE" \
+        -o "$IR_OUTPUT_PATH"
+
     if [ -n "${SEARCH_OPTIONS_JSON:-}" ]; then
-        exec python3 /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py \
-            -d "$DOMAINFILE" \
-            -p "$PROBLEMFILE" \
-            -o "$IR_OUTPUT_PATH" \
-            -s "$SEARCH_NAME" \
+        exec /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver \
+            --task "$IR_OUTPUT_PATH" \
+            --search "$SEARCH_NAME" \
             --timeout "$TIMEOUT_SECONDS" \
             --max-expanded "$MAX_EXPANDED_NODES" \
             --search-options-json "$SEARCH_OPTIONS_JSON"
     fi
 
-    exec python3 /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py \
-        -d "$DOMAINFILE" \
-        -p "$PROBLEMFILE" \
-        -o "$IR_OUTPUT_PATH" \
-        -s "$SEARCH_NAME" \
+    exec /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver \
+        --task "$IR_OUTPUT_PATH" \
+        --search "$SEARCH_NAME" \
         --timeout "$TIMEOUT_SECONDS" \
         --max-expanded "$MAX_EXPANDED_NODES"
 
