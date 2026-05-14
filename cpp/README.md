@@ -94,6 +94,12 @@ Available switches:
 | `JPM_CPP_ENABLE_SEARCH_BFSDCU` | `src/search_algorithms/bfsdcu.cpp` |
 | `JPM_CPP_ENABLE_SEARCH_ASTAR` | `src/search_algorithms/astar.cpp` |
 | `JPM_CPP_ENABLE_SEARCH_GREEDY` | `src/search_algorithms/greedy.cpp` |
+| `JPM_CPP_ENABLE_SEARCH_BESTFIRST` | `src/search_algorithms/best_first.cpp` |
+| `JPM_CPP_ENABLE_SEARCH_CBFS` | `src/search_algorithms/cbfs.cpp` |
+| `JPM_CPP_ENABLE_SEARCH_ACPS` | `src/search_algorithms/acps.cpp` |
+| `JPM_CPP_ENABLE_SEARCH_BEAMSEARCH` | `src/search_algorithms/beam_search.cpp` |
+| `JPM_CPP_ENABLE_SEARCH_CABS` | `src/search_algorithms/cabs.cpp` |
+| `JPM_CPP_ENABLE_SEARCH_LNBS` | `src/search_algorithms/lnbs.cpp` |
 
 ## Run The Smoke Example
 
@@ -137,7 +143,7 @@ Expected result: the C++ solver returns `running: "SUCC"` with a plan using `sha
 ```bash
 cpp/build/jpm_cpp_solver \
   --task output/cpp_ir/grid_nonep1.json \
-  --search greedy \
+  --search cbfs \
   --timeout 30 \
   --max-expanded 200000
 ```
@@ -146,15 +152,73 @@ cpp/build/jpm_cpp_solver \
 
 The C++ solver mirrors the Python `jp/search_algorithms` split. The compiled binary only accepts algorithms enabled by the CMake switches above:
 
-| CLI value | Ordering | Duplicate check | Unknown-goal pruning |
-|---|---:|---:|---:|
-| `bfs` | `g` | no | no |
-| `bfsdc` | `g` | yes | no |
-| `bfsdcu` | `g` | yes | yes |
-| `astar` | `g + h` | yes | yes |
-| `greedy` | `h` | yes | yes |
+| CLI value | Search style | Solver-specific options |
+|---|---|---|
+| `bfs` | breadth-first on `g` | none |
+| `bfsdc` | breadth-first with duplicate checking | none |
+| `bfsdcu` | breadth-first with duplicate checking and unknown-goal pruning | none |
+| `astar` | `g + h` best-first | none |
+| `greedy` | `h` best-first | none |
+| `bestfirst` | novelty-guided best-first | none |
+| `cbfs` | novelty-guided layered round-robin search | none |
+| `acps` | novelty-guided progressive-width search | `init`, `step`, `width_bound`, `reset` |
+| `beamsearch` | novelty-guided beam search | `beam_size`, `keep_all_layers` |
+| `cabs` | adaptive beam wrapper over `beamsearch` | `initial_beam_size`, `max_beam_size`, `keep_all_layers` |
+| `lnbs` | `cabs` warm start plus repair beam search | `initial_beam_size`, `max_beam_size`, `keep_all_layers`, `seed`, `use_cost_weight`, `max_repair_attempts`, `cabs_initial_beam_size`, `cabs_max_beam_size` |
 
-The heuristic `h` is the number of unsatisfied goals, matching the current Python `goal_counting` heuristic. Duplicate checking uses the global state together with the last state of every generated observation/perspective entry, which is the C++ analogue of Python's `p_dict`-based duplicate key.
+The heuristic `h` is the number of unsatisfied goals, matching the current Python `goal_counting` heuristic. Novelty-guided solvers combine that goal distance with the Python `iw_gc` novelty score. Duplicate checking uses the global state together with the last state of every generated observation/perspective entry, which is the C++ analogue of Python's `p_dict`-based duplicate key.
+
+Solver-specific options are passed through `--search-options-json`, for example:
+
+```bash
+cpp/build/jpm_cpp_solver \
+  --task output/cpp_ir/grid_nonep1.json \
+  --search acps \
+  --search-options-json '{"init":1,"step":1,"width_bound":16,"reset":false}'
+```
+
+## Apptainer Runner
+
+The repository root now includes [Apptainer.demo_jpm_cpp](../Apptainer.demo_jpm_cpp), a multi-stage Apptainer definition for the C++ runner.
+
+Build it from the repository root:
+
+```bash
+apptainer build jpm_cpp.sif Apptainer.demo_jpm_cpp
+```
+
+Run it with a domain/problem pair. The runscript exports JPM IR internally and defaults to `cbfs`, which is currently the best default among the ported C++ solvers under the existing benchmark ranking:
+
+```bash
+apptainer run jpm_cpp.sif benchmarks/bbl/domain.pddl benchmarks/bbl/problem01.pddl
+```
+
+The runscript accepts an optional third positional argument for the IR output path. You can override the default search and limits with environment variables such as `SEARCH`, `TIMEOUT`, `MAX_EXPANDED`, and `SEARCH_OPTIONS_JSON`.
+
+## Language Support Snapshot
+
+The C++ runtime is a restricted JPM/F-PDDL execution slice, not a full native EPDDL runtime.
+
+Supported today:
+
+- finite-domain F-PDDL tasks after Python-side export to JPM IR
+- typed variables with boolean, enumerate, integer, and string domains
+- conjunctive preconditions and conjunctive goals
+- ontic equality, inequality, and integer comparisons
+- assign, increase, and decrease effects on compatible finite-domain variables
+- individual `@ep` and `@jp` queries with `k`, `s`, and `b` modalities
+- `@jp` reads in conditions and assignment effects
+- `@ep` assignment effects to compatible boolean/ternary target domains
+- partial observability through registered visibility models
+- search algorithms `bfs`, `bfsdc`, `bfsdcu`, `astar`, `greedy`, `bestfirst`, `cbfs`, `acps`, `beamsearch`, `cabs`, and `lnbs`
+
+Not yet supported in the C++ runtime:
+
+- native EPDDL specification loading or action-type-library execution
+- group modalities, common knowledge, or multi-agent modal tokens like `[a,b]`
+- disjunctive, existential, or universal preconditions and goals
+- conditional effects
+- general epistemic comparisons beyond equality and inequality
 
 ## Old Benchmark Results
 
@@ -169,7 +233,7 @@ Implemented:
 - assign/increase/decrease effects
 - state registry with duplicate detection for path-independent runs
 - path-preserving search nodes for epistemic formulas
-- selectable `bfs`, `bfsdc`, `bfsdcu`, `astar`, and `greedy` search
+- selectable `bfs`, `bfsdc`, `bfsdcu`, `astar`, `greedy`, `bestfirst`, `cbfs`, `acps`, `beamsearch`, `cabs`, and `lnbs` search
 - perspective-dictionary duplicate checking
 - unknown-goal pruning
 - individual `@ep` evaluation for `k`, `s`, and `b`

@@ -1,0 +1,183 @@
+# Apptainer multi-stage definition for the JPM C++ runner
+# Build from the repository root:
+#   apptainer build jpm_cpp.sif Apptainer.demo_jpm_cpp
+#
+# Default runscript:
+#   apptainer run jpm_cpp.sif <domain.pddl> <problem.pddl> [ir-output.json]
+#
+# Runtime environment overrides:
+#   SEARCH=cbfs
+#   TIMEOUT=30
+#   MAX_EXPANDED=1000000
+#   SEARCH_OPTIONS_JSON='{"beam_size": 16}'
+#   IR_OUTPUT=/tmp/jpm_task.json
+
+Bootstrap: docker
+From: ubuntu:24.04
+Stage: build
+
+%labels
+    Name JPM-CPP-build
+
+%files
+    cpp /src/cpp
+    jp /src/jp
+    tools /src/tools
+    benchmarks /src/benchmarks
+    converted_from_epddl /src/converted_from_epddl
+    pyproject.toml /src/pyproject.toml
+    README.md /src/README.md
+
+%post
+    set -eux
+    export DEBIAN_FRONTEND=noninteractive
+
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        build-essential \
+        cmake \
+        gcc-14 \
+        g++-14
+
+    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 200 || true
+    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 200 || true
+
+    export CC=/usr/bin/gcc-14
+    export CXX=/usr/bin/g++-14
+
+    cd /src
+    rm -rf cpp/build
+    cmake -S cpp -B cpp/build \
+        -DCMAKE_C_COMPILER=/usr/bin/gcc-14 \
+        -DCMAKE_CXX_COMPILER=/usr/bin/g++-14
+    cmake --build cpp/build -j"$(nproc)"
+
+    install -Dm755 cpp/build/jpm_cpp_solver /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver
+    install -Dm755 tools/export_jpm_ir.py /opt/jpm_cpp/app/tools/export_jpm_ir.py
+    install -Dm755 tools/run_jpm_cpp_solver.py /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py
+    cp -r jp /opt/jpm_cpp/app/jp
+    mkdir -p /opt/jpm_cpp/app/logs
+
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export PATH=/opt/jpm_cpp/app/cpp/build:$PATH
+    export JPM_CPP_APP=/opt/jpm_cpp/app
+
+
+Bootstrap: docker
+From: ubuntu:24.04
+Stage: run
+
+%labels
+    Name JPM-CPP-runtime
+
+%files from build
+    /opt/jpm_cpp/app /opt/jpm_cpp/app
+
+%post
+    set -eux
+    export DEBIAN_FRONTEND=noninteractive
+
+    apt-get update
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        libstdc++6 \
+        python3 \
+        python3-pytz
+
+    chmod +x /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver
+    chmod +x /opt/jpm_cpp/app/tools/export_jpm_ir.py
+    chmod +x /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py
+
+    rm -rf /var/lib/apt/lists/*
+
+%environment
+    export PATH=/opt/jpm_cpp/app/cpp/build:$PATH
+    export JPM_CPP_APP=/opt/jpm_cpp/app
+    export SEARCH=cbfs
+    export TIMEOUT=30
+    export MAX_EXPANDED=1000000
+
+%runscript
+    set -eu
+
+    if [ "$#" -lt 2 ]; then
+        echo "usage: apptainer run IMAGE.sif <domain.pddl> <problem.pddl> [ir-output.json]" >&2
+        echo "env overrides: SEARCH, TIMEOUT, MAX_EXPANDED, SEARCH_OPTIONS_JSON, IR_OUTPUT" >&2
+        echo "tip: use 'apptainer exec IMAGE.sif /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver --help' for direct IR solving" >&2
+        exit 2
+    fi
+
+    DOMAINFILE="$1"
+    PROBLEMFILE="$2"
+    IR_OUTPUT_PATH="${3:-${IR_OUTPUT:-}}"
+    if [ -z "$IR_OUTPUT_PATH" ]; then
+        IR_OUTPUT_PATH="$(mktemp /tmp/jpm_cpp_task.XXXXXX.json)"
+    fi
+
+    SEARCH_NAME="${SEARCH:-cbfs}"
+    TIMEOUT_SECONDS="${TIMEOUT:-30}"
+    MAX_EXPANDED_NODES="${MAX_EXPANDED:-1000000}"
+
+    if [ -n "${SEARCH_OPTIONS_JSON:-}" ]; then
+        exec python3 /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py \
+            -d "$DOMAINFILE" \
+            -p "$PROBLEMFILE" \
+            -o "$IR_OUTPUT_PATH" \
+            -s "$SEARCH_NAME" \
+            --timeout "$TIMEOUT_SECONDS" \
+            --max-expanded "$MAX_EXPANDED_NODES" \
+            --search-options-json "$SEARCH_OPTIONS_JSON"
+    fi
+
+    exec python3 /opt/jpm_cpp/app/tools/run_jpm_cpp_solver.py \
+        -d "$DOMAINFILE" \
+        -p "$PROBLEMFILE" \
+        -o "$IR_OUTPUT_PATH" \
+        -s "$SEARCH_NAME" \
+        --timeout "$TIMEOUT_SECONDS" \
+        --max-expanded "$MAX_EXPANDED_NODES"
+
+## Define meta data
+%labels
+Name                            JPM-CPP
+Description                     JPM C++ runner for finite-domain F-PDDL tasks with default CBFS search
+DefaultSearch                   cbfs
+AvailableSearchAlgorithms       bfs,bfsdc,bfsdcu,astar,greedy,bestfirst,cbfs,acps,beamsearch,cabs,lnbs
+InputFormat                     F-PDDL domain/problem via Python-side export to JPM IR
+SupportsFPPDDL                  yes
+SupportsNativeEPDDL             no
+SupportsJPMIR                   yes
+SupportsTyping                  yes
+SupportsFiniteDomainState       yes
+SupportsConjunctivePreconditions yes
+SupportsConjunctiveGoals        yes
+SupportsOnticActions            yes
+SupportsAssignEffects           yes
+SupportsIncreaseDecrease        yes
+SupportsEquality                yes
+SupportsInequality              yes
+SupportsPartialObservability    yes
+SupportsVisibilityModels        yes
+SupportsModalPreconditions      limited
+SupportsModalGoals              limited
+SupportsModalEffects            limited
+SupportsIndividualKnowledge     yes
+SupportsIndividualSeeing        yes
+SupportsIndividualBelief        yes
+SupportsJPReads                 yes
+SupportsJPAssignments           yes
+SupportsEPAssignments           yes
+SupportsGroupModalities         no
+SupportsCommonKnowledge         no
+SupportsMultiAgentEpQueries     no
+SupportsConditionalEffects      no
+SupportsDisjunctivePreconditions no
+SupportsDisjunctiveGoals        no
+SupportsExistentialPreconditions no
+SupportsUniversalPreconditions  no
+SupportsExistentialGoals        no
+SupportsUniversalGoals          no
+SupportsActionTypeLibraries     no
