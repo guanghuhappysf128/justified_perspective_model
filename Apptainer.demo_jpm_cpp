@@ -1,16 +1,16 @@
-# Apptainer multi-stage definition for the JPM C++ runner
+# Apptainer multi-stage definition for the JPM C++ EPDDL bridge runner
 # Build from the repository root:
 #   apptainer build jpm_cpp.sif Apptainer.demo_jpm_cpp
 #
-# Default runscript:
-#   apptainer run jpm_cpp.sif <domain.pddl> <problem.pddl> [ir-output.json]
+# Default runscript, matching the plank demo planner style:
+#   apptainer run jpm_cpp.sif <specification.json> <plan.json>
 #
 # Runtime environment overrides:
 #   SEARCH=cbfs
-#   TIMEOUT=30
+#   TIMEOUT=300
 #   MAX_EXPANDED=1000000
 #   SEARCH_OPTIONS_JSON='{"beam_size": 16}'
-#   IR_OUTPUT=/tmp/jpm_task.json
+#   PLANK_BINARY=/opt/jpm_cpp/app/plank/build/plank
 
 Bootstrap: docker
 From: ubuntu:24.04
@@ -25,6 +25,7 @@ Stage: build
     tools /src/tools
     benchmarks /src/benchmarks
     converted_from_epddl /src/converted_from_epddl
+    ../plank/build/plank /src/plank/build/plank
     pyproject.toml /src/pyproject.toml
     README.md /src/README.md
 
@@ -54,7 +55,11 @@ Stage: build
     cmake --build cpp/build -j"$(nproc)"
 
     install -Dm755 cpp/build/jpm_cpp_solver /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver
+    install -Dm755 plank/build/plank /opt/jpm_cpp/app/plank/build/plank
     install -Dm755 tools/export_jpm_ir.py /opt/jpm_cpp/app/tools/export_jpm_ir.py
+    install -Dm755 tools/run_epddl_jpm_planner.py /opt/jpm_cpp/app/tools/run_epddl_jpm_planner.py
+    cp -r tools/epddl_to_fpddl /opt/jpm_cpp/app/tools/epddl_to_fpddl
+    cp -r converted_from_epddl /opt/jpm_cpp/app/converted_from_epddl
     cp -r jp /opt/jpm_cpp/app/jp
     mkdir -p /opt/jpm_cpp/app/logs
 
@@ -84,16 +89,19 @@ Stage: run
         ca-certificates \
         libstdc++6 \
         python3 \
-        python3-pytz
+        python3-tz
 
     chmod +x /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver
+    chmod +x /opt/jpm_cpp/app/plank/build/plank
     chmod +x /opt/jpm_cpp/app/tools/export_jpm_ir.py
+    chmod +x /opt/jpm_cpp/app/tools/run_epddl_jpm_planner.py
 
     rm -rf /var/lib/apt/lists/*
 
 %environment
     export PATH=/opt/jpm_cpp/app/cpp/build:$PATH
     export JPM_CPP_APP=/opt/jpm_cpp/app
+    export PLANK_BINARY=/opt/jpm_cpp/app/plank/build/plank
     export SEARCH=cbfs
     export TIMEOUT=300
     export MAX_EXPANDED=1000000
@@ -101,43 +109,23 @@ Stage: run
 %runscript
     set -eu
 
-    if [ "$#" -lt 2 ]; then
-        echo "usage: apptainer run IMAGE.sif <domain.pddl> <problem.pddl> [ir-output.json]" >&2
-        echo "env overrides: SEARCH, TIMEOUT, MAX_EXPANDED, SEARCH_OPTIONS_JSON, IR_OUTPUT" >&2
+    if [ "$#" -eq 2 ] && [ "${1#-}" = "$1" ] && [ "${2#-}" = "$2" ]; then
+        SPECFILE="$1"
+        PLANFILE="$2"
+        exec python3 /opt/jpm_cpp/app/tools/run_epddl_jpm_planner.py \
+            --spec "$SPECFILE" \
+            --plan-file "$PLANFILE"
+    fi
+
+    if [ "$#" -eq 0 ]; then
+        echo "usage: apptainer run IMAGE.sif <specification.json> <plan.json>" >&2
+        echo "   or: apptainer run IMAGE.sif -d DOMAIN -p PROBLEM [-l LIBS ...] --plan-file PLAN.json" >&2
+        echo "env overrides: SEARCH, TIMEOUT, MAX_EXPANDED, SEARCH_OPTIONS_JSON, PLANK_BINARY" >&2
         echo "tip: use 'apptainer exec IMAGE.sif /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver --help' for direct IR solving" >&2
         exit 2
     fi
 
-    DOMAINFILE="$1"
-    PROBLEMFILE="$2"
-    IR_OUTPUT_PATH="${3:-${IR_OUTPUT:-}}"
-    if [ -z "$IR_OUTPUT_PATH" ]; then
-        IR_OUTPUT_PATH="$(mktemp /tmp/jpm_cpp_task.XXXXXX.json)"
-    fi
-
-    SEARCH_NAME="${SEARCH:-cbfs}"
-    TIMEOUT_SECONDS="${TIMEOUT:-30}"
-    MAX_EXPANDED_NODES="${MAX_EXPANDED:-1000000}"
-
-    python3 /opt/jpm_cpp/app/tools/export_jpm_ir.py \
-        -d "$DOMAINFILE" \
-        -p "$PROBLEMFILE" \
-        -o "$IR_OUTPUT_PATH"
-
-    if [ -n "${SEARCH_OPTIONS_JSON:-}" ]; then
-        exec /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver \
-            --task "$IR_OUTPUT_PATH" \
-            --search "$SEARCH_NAME" \
-            --timeout "$TIMEOUT_SECONDS" \
-            --max-expanded "$MAX_EXPANDED_NODES" \
-            --search-options-json "$SEARCH_OPTIONS_JSON"
-    fi
-
-    exec /opt/jpm_cpp/app/cpp/build/jpm_cpp_solver \
-        --task "$IR_OUTPUT_PATH" \
-        --search "$SEARCH_NAME" \
-        --timeout "$TIMEOUT_SECONDS" \
-        --max-expanded "$MAX_EXPANDED_NODES"
+    exec python3 /opt/jpm_cpp/app/tools/run_epddl_jpm_planner.py "$@"
 
 ## Define meta data
 %labels

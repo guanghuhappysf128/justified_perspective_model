@@ -139,6 +139,7 @@ temp/
 
 
 *.xlsx
+*.sif
 
 epistemic_pddl_domains
 
