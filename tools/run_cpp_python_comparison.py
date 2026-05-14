@@ -565,16 +565,22 @@ def run_python_job(job: ComparisonJob, output_path: Path) -> dict[str, Any]:
         finished_at = _now()
         wallclock_time = time.perf_counter() - started_perf
         raw_result = read_result_json(expected_result_path)
+        completion_status = resolve_completion_status(raw_result, completed.returncode)
         return build_result_record(
             job=job,
             output_path=output_path,
             raw_result=raw_result,
-            completion_status=resolve_completion_status(raw_result, completed.returncode),
+            completion_status=completion_status,
             wallclock_time=wallclock_time,
             returncode=completed.returncode,
             stdout=completed.stdout,
             stderr=completed.stderr,
-            error_message=None if completed.returncode == 0 else "Solver process exited with a non-zero status",
+            error_message=resolve_process_error_message(
+                "Solver",
+                completion_status,
+                completed.returncode,
+                raw_result,
+            ),
             started_at=started_at,
             finished_at=finished_at,
             ir_json_path=None,
@@ -680,16 +686,22 @@ def run_cpp_job(job: ComparisonJob, output_path: Path, cpp_solver_path: Path) ->
                     handle.write("\n")
                 handle.write(completed.stderr)
 
+        completion_status = resolve_completion_status(raw_result, completed.returncode)
         return build_result_record(
             job=job,
             output_path=output_path,
             raw_result=raw_result,
-            completion_status=resolve_completion_status(raw_result, completed.returncode),
+            completion_status=completion_status,
             wallclock_time=wallclock_time,
             returncode=completed.returncode,
             stdout=completed.stdout,
             stderr=completed.stderr,
-            error_message=None if completed.returncode == 0 else "C++ solver process exited with a non-zero status",
+            error_message=resolve_process_error_message(
+                "C++ solver",
+                completion_status,
+                completed.returncode,
+                raw_result,
+            ),
             started_at=started_at,
             finished_at=finished_at,
             ir_json_path=_to_repo_string(ir_output_path),
@@ -820,17 +832,33 @@ def build_error_record(
 
 
 def resolve_completion_status(raw_result: dict[str, Any] | None, returncode: int | None) -> str:
+    if raw_result is not None:
+        # The C++ solver returns exit code 1 for UNSOLVED/TIMEOUT, so the
+        # structured payload is more reliable than the process status.
+        raw_status = raw_result.get("running")
+        if isinstance(raw_status, str) and raw_status:
+            return raw_status
+        if raw_result.get("solvable"):
+            return "SUCC"
+        return "UNSOLVED"
     if returncode not in {None, 0}:
         return "ERROR"
-    if raw_result is None:
-        return "ERROR"
+    return "ERROR"
 
-    raw_status = raw_result.get("running")
-    if isinstance(raw_status, str) and raw_status:
-        return raw_status
-    if raw_result.get("solvable"):
-        return "SUCC"
-    return "UNSOLVED"
+
+def resolve_process_error_message(
+    process_label: str,
+    completion_status: str,
+    returncode: int | None,
+    raw_result: dict[str, Any] | None,
+) -> str | None:
+    if completion_status != "ERROR":
+        return None
+    if returncode not in {None, 0}:
+        return f"{process_label} process exited with a non-zero status"
+    if raw_result is None:
+        return f"{process_label} process did not produce a parseable result"
+    return f"{process_label} reported an error result"
 
 
 def read_result_json(result_path: Path) -> dict[str, Any] | None:
