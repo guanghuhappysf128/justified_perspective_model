@@ -5,7 +5,7 @@
 
 namespace {
 
-class Greedy final : public SearchAlgorithm {
+class Greedy final : public PrioritySearchAlgorithm {
 public:
     const std::string &name() const override {
         static const std::string value = "greedy";

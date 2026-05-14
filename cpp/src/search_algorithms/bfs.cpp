@@ -5,7 +5,7 @@
 
 namespace {
 
-class Bfs final : public SearchAlgorithm {
+class Bfs final : public PrioritySearchAlgorithm {
 public:
     const std::string &name() const override {
         static const std::string value = "bfs";

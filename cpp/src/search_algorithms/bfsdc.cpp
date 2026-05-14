@@ -5,7 +5,7 @@
 
 namespace {
 
-class BfsDuplicateCheck final : public SearchAlgorithm {
+class BfsDuplicateCheck final : public PrioritySearchAlgorithm {
 public:
     const std::string &name() const override {
         static const std::string value = "bfsdc";

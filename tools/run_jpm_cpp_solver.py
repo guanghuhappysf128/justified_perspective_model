@@ -28,10 +28,14 @@ def main() -> int:
     parser.add_argument("--timeout", type=int, default=30, help="solver timeout in seconds")
     parser.add_argument("--max-expanded", type=int, default=1_000_000, help="expansion limit")
     parser.add_argument(
+        "--search-options-json",
+        default="",
+        help="optional JSON object with solver-specific search options",
+    )
+    parser.add_argument(
         "-s",
         "--search",
         default="greedy",
-        choices=["bfs", "bfsdc", "bfsdcu", "astar", "greedy"],
         help="C++ search algorithm/configuration",
     )
     args = parser.parse_args()
@@ -64,6 +68,8 @@ def main() -> int:
         "--search",
         args.search,
     ]
+    if args.search_options_json:
+        solve_cmd.extend(["--search-options-json", args.search_options_json])
     result = subprocess.run(solve_cmd, cwd=JPM_ROOT, check=False, text=True, capture_output=True)
     print(result.stdout, end="")
     if result.stderr:

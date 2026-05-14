@@ -4,6 +4,7 @@
 #include <optional>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 enum class VarType { Enumerate, Integer, Boolean, String, Float, Unknown };
@@ -71,6 +72,7 @@ struct Task {
     std::string problem;
     std::vector<Variable> variables;
     std::unordered_map<std::string, int> var_to_id;
+    std::unordered_set<std::string> agent_names;
     std::vector<int> initial_state;
     std::vector<Condition> goals;
     std::vector<Action> actions;

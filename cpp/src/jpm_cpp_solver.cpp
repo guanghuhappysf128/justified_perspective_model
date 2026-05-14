@@ -1,6 +1,7 @@
 #include "jpm/search.hpp"
 #include "jpm/search_algorithm.hpp"
 #include "jpm/task.hpp"
+#include "jpm/json.hpp"
 
 #include <cstdlib>
 #include <exception>
@@ -38,10 +39,16 @@ int main(int argc, char **argv) {
                 options.max_expanded = std::atoi(argv[++i]);
             } else if ((arg == "--search" || arg == "-s") && i + 1 < argc) {
                 options.algorithm = argv[++i];
+            } else if (arg == "--search-options-json" && i + 1 < argc) {
+                json::Value parsed = json::Parser(argv[++i]).parse();
+                if (!parsed.is_object()) {
+                    throw std::runtime_error("--search-options-json must decode to a JSON object");
+                }
+                options.search_options = parsed.as_object();
             } else if (arg == "--help" || arg == "-h") {
                 std::cout << "usage: jpm_cpp_solver --task TASK.json [--search "
                           << join_names(available_search_algorithm_names())
-                          << "] [--timeout SEC] [--max-expanded N]\n";
+                          << "] [--search-options-json JSON] [--timeout SEC] [--max-expanded N]\n";
                 return 0;
             } else {
                 throw std::runtime_error("unknown or incomplete argument: " + arg);

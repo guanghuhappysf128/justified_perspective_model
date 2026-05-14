@@ -5,7 +5,7 @@
 
 namespace {
 
-class AStar final : public SearchAlgorithm {
+class AStar final : public PrioritySearchAlgorithm {
 public:
     const std::string &name() const override {
         static const std::string value = "astar";

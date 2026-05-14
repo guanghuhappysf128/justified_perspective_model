@@ -182,7 +182,160 @@ std::string json_escape(const std::string &input) {
     return out;
 }
 
+SearchResult make_result(
+    bool solvable,
+    const std::string &running,
+    std::vector<std::string> plan,
+    const SearchStats &stats,
+    const SearchAlgorithm &algorithm,
+    const std::string &message = "") {
+    SearchResult result;
+    result.solvable = solvable;
+    result.running = running;
+    result.plan = std::move(plan);
+    result.expanded = stats.expanded;
+    result.generated = stats.generated;
+    result.pruned = stats.pruned();
+    result.pruned_by_unknown = stats.pruned_by_unknown;
+    result.pruned_by_visited = stats.pruned_by_visited;
+    result.goal_checked = stats.goal_checked;
+    result.search = algorithm.name();
+    result.message = message;
+    return result;
+}
+
+SearchResult run_priority_search(
+    Task &task,
+    const SearchOptions &options,
+    const PrioritySearchAlgorithm &algorithm) {
+    const std::vector<bool> unknown_sensitive = unknown_sensitive_goals(task);
+    std::vector<Node> nodes;
+    nodes.push_back({task.initial_state, -1, -1, 0});
+
+    std::priority_queue<QueueItem> open;
+    SearchStats stats;
+    int order = 0;
+    {
+        StateSequence initial_sequence{task.initial_state};
+        EvalContext initial_context;
+        GoalEvaluation initial_goals = evaluate_goals(task, initial_sequence, initial_context);
+        ++stats.goal_checked;
+        open.push({
+            algorithm.primary_priority(initial_goals.remaining, 0),
+            algorithm.secondary_priority(initial_goals.remaining, 0),
+            order++,
+            0});
+    }
+
+    std::unordered_set<std::string> visited;
+    auto start = std::chrono::steady_clock::now();
+
+    while (!open.empty()) {
+        auto now = std::chrono::steady_clock::now();
+        if (std::chrono::duration_cast<std::chrono::seconds>(now - start).count() >=
+            options.timeout_seconds) {
+            return make_result(false, "TIMEOUT", {}, stats, algorithm);
+        }
+        if (stats.expanded >= options.max_expanded) {
+            return make_result(false, "EXPANSION_LIMIT", {}, stats, algorithm);
+        }
+
+        QueueItem item = open.top();
+        open.pop();
+
+        StateSequence state_sequence = reconstruct_state_sequence(nodes, item.node_id);
+        EvalContext current_context;
+        GoalEvaluation current_goals = evaluate_goals(task, state_sequence, current_context);
+        ++stats.goal_checked;
+        if (current_goals.remaining == 0) {
+            return make_result(
+                true,
+                "SUCC",
+                extract_plan(nodes, task, item.node_id),
+                stats,
+                algorithm);
+        }
+
+        std::vector<int> legal_actions;
+        legal_actions.reserve(task.actions.size());
+        for (int action_id = 0; action_id < static_cast<int>(task.actions.size()); ++action_id) {
+            if (is_applicable(task, state_sequence, task.actions[action_id], current_context)) {
+                legal_actions.push_back(action_id);
+            }
+        }
+
+        if (algorithm.duplicate_check()) {
+            std::string key = duplicate_key(nodes[item.node_id].state, current_context);
+            if (!visited.insert(std::move(key)).second) {
+                ++stats.pruned_by_visited;
+                continue;
+            }
+        }
+
+        ++stats.expanded;
+        for (int action_id : legal_actions) {
+            EvalContext successor_context;
+            auto maybe_successor =
+                successor(task, state_sequence, task.actions[action_id], successor_context);
+            if (!maybe_successor) {
+                continue;
+            }
+
+            Node successor_node;
+            successor_node.state = std::move(*maybe_successor);
+            successor_node.parent = item.node_id;
+            successor_node.action = action_id;
+            successor_node.g = nodes[item.node_id].g + 1;
+
+            StateSequence successor_sequence = state_sequence;
+            successor_sequence.push_back(successor_node.state);
+            EvalContext goal_context;
+            GoalEvaluation successor_goals = evaluate_goals(task, successor_sequence, goal_context);
+            ++stats.goal_checked;
+
+            if (algorithm.unknown_pruning() &&
+                !passes_unknown_pruning(successor_goals, unknown_sensitive)) {
+                ++stats.pruned_by_unknown;
+                continue;
+            }
+
+            int h = successor_goals.remaining;
+            int g = successor_node.g;
+            int node_id = static_cast<int>(nodes.size());
+            nodes.push_back(std::move(successor_node));
+            ++stats.generated;
+            open.push({
+                algorithm.primary_priority(h, g),
+                algorithm.secondary_priority(h, g),
+                order++,
+                node_id});
+        }
+    }
+
+    return make_result(false, "FAILED", {}, stats, algorithm);
+}
+
 }  // namespace
+
+SearchResult PrioritySearchAlgorithm::search(Task &task, const SearchOptions &options) const {
+    return run_priority_search(task, options, *this);
+}
+
+void print_result(const SearchResult &result) {
+    print_result(
+        result.solvable,
+        result.running,
+        result.plan,
+        result.expanded,
+        result.generated,
+        result.pruned,
+        result.pruned_by_unknown,
+        result.pruned_by_visited,
+        result.goal_checked,
+        result.search,
+    result.message,
+    result.path_length);
+}
 
 void print_result(
     bool solvable,
@@ -195,7 +348,8 @@ void print_result(
     int pruned_by_visited,
     int goal_checked,
     const std::string &search,
-    const std::string &message) {
+    const std::string &message,
+    int path_length) {
     std::cout << "{\n";
     std::cout << "  \"solvable\": " << (solvable ? "true" : "false") << ",\n";
     std::cout << "  \"running\": \"" << json_escape(running) << "\",\n";
@@ -205,7 +359,8 @@ void print_result(
         std::cout << "\"" << json_escape(plan[i]) << "\"";
     }
     std::cout << "],\n";
-    std::cout << "  \"path_length\": " << plan.size() << ",\n";
+    std::cout << "  \"path_length\": "
+              << (path_length >= 0 ? path_length : static_cast<int>(plan.size())) << ",\n";
     std::cout << "  \"expanded\": " << expanded << ",\n";
     std::cout << "  \"generated\": " << generated << ",\n";
     std::cout << "  \"pruned\": " << pruned << ",\n";
@@ -223,149 +378,12 @@ void print_result(
 
 int solve(Task &task, const SearchOptions &options) {
     std::unique_ptr<SearchAlgorithm> algorithm = make_search_algorithm(options.algorithm);
-    const std::vector<bool> unknown_sensitive = unknown_sensitive_goals(task);
-    std::vector<Node> nodes;
-    nodes.push_back({task.initial_state, -1, -1, 0});
-
-    std::priority_queue<QueueItem> open;
-    SearchStats stats;
-    int order = 0;
-    {
-        StateSequence initial_sequence{task.initial_state};
-        EvalContext initial_context;
-        GoalEvaluation initial_goals = evaluate_goals(task, initial_sequence, initial_context);
-        ++stats.goal_checked;
-        open.push({
-            algorithm->primary_priority(initial_goals.remaining, 0),
-            algorithm->secondary_priority(initial_goals.remaining, 0),
-            order++,
-            0});
+    SearchResult result = algorithm->search(task, options);
+    if (result.search.empty()) {
+        result.search = algorithm->name();
     }
-
-    std::unordered_set<std::string> visited;
-    auto start = std::chrono::steady_clock::now();
-
-    while (!open.empty()) {
-        auto now = std::chrono::steady_clock::now();
-        if (std::chrono::duration_cast<std::chrono::seconds>(now - start).count() >=
-            options.timeout_seconds) {
-            print_result(
-                false,
-                "TIMEOUT",
-                {},
-                stats.expanded,
-                stats.generated,
-                stats.pruned(),
-                stats.pruned_by_unknown,
-                stats.pruned_by_visited,
-                stats.goal_checked,
-                algorithm->name());
-            return 1;
-        }
-        if (stats.expanded >= options.max_expanded) {
-            print_result(
-                false,
-                "EXPANSION_LIMIT",
-                {},
-                stats.expanded,
-                stats.generated,
-                stats.pruned(),
-                stats.pruned_by_unknown,
-                stats.pruned_by_visited,
-                stats.goal_checked,
-                algorithm->name());
-            return 1;
-        }
-
-        QueueItem item = open.top();
-        open.pop();
-
-        StateSequence state_sequence = reconstruct_state_sequence(nodes, item.node_id);
-        EvalContext current_context;
-        GoalEvaluation current_goals = evaluate_goals(task, state_sequence, current_context);
-        ++stats.goal_checked;
-        if (current_goals.remaining == 0) {
-            print_result(
-                true,
-                "SUCC",
-                extract_plan(nodes, task, item.node_id),
-                stats.expanded,
-                stats.generated,
-                stats.pruned(),
-                stats.pruned_by_unknown,
-                stats.pruned_by_visited,
-                stats.goal_checked,
-                algorithm->name());
-            return 0;
-        }
-
-        std::vector<int> legal_actions;
-        legal_actions.reserve(task.actions.size());
-        for (int action_id = 0; action_id < static_cast<int>(task.actions.size()); ++action_id) {
-            if (is_applicable(task, state_sequence, task.actions[action_id], current_context)) {
-                legal_actions.push_back(action_id);
-            }
-        }
-
-        if (algorithm->duplicate_check()) {
-            std::string key = duplicate_key(nodes[item.node_id].state, current_context);
-            if (!visited.insert(std::move(key)).second) {
-                ++stats.pruned_by_visited;
-                continue;
-            }
-        }
-
-        ++stats.expanded;
-        for (int action_id : legal_actions) {
-            EvalContext successor_context;
-            auto maybe_successor = successor(task, state_sequence, task.actions[action_id], successor_context);
-            if (!maybe_successor) {
-                continue;
-            }
-
-            Node successor_node;
-            successor_node.state = std::move(*maybe_successor);
-            successor_node.parent = item.node_id;
-            successor_node.action = action_id;
-            successor_node.g = nodes[item.node_id].g + 1;
-
-            StateSequence successor_sequence = state_sequence;
-            successor_sequence.push_back(successor_node.state);
-            EvalContext goal_context;
-            GoalEvaluation successor_goals = evaluate_goals(task, successor_sequence, goal_context);
-            ++stats.goal_checked;
-
-            if (algorithm->unknown_pruning() &&
-                !passes_unknown_pruning(successor_goals, unknown_sensitive)) {
-                ++stats.pruned_by_unknown;
-                continue;
-            }
-
-            int h = successor_goals.remaining;
-            int g = successor_node.g;
-            int node_id = static_cast<int>(nodes.size());
-            nodes.push_back(std::move(successor_node));
-            ++stats.generated;
-            open.push({
-                algorithm->primary_priority(h, g),
-                algorithm->secondary_priority(h, g),
-                order++,
-                node_id});
-        }
-    }
-
-    print_result(
-        false,
-        "FAILED",
-        {},
-        stats.expanded,
-        stats.generated,
-        stats.pruned(),
-        stats.pruned_by_unknown,
-        stats.pruned_by_visited,
-        stats.goal_checked,
-        algorithm->name());
-    return 1;
+    print_result(result);
+    return result.solvable ? 0 : 1;
 }
 
 int solve(Task &task, int timeout_seconds, int max_expanded) {

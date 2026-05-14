@@ -11,6 +11,12 @@ option(JPM_CPP_ENABLE_SEARCH_BFSDC "Build BFS with duplicate checking" ON)
 option(JPM_CPP_ENABLE_SEARCH_BFSDCU "Build BFS with duplicate and unknown pruning" ON)
 option(JPM_CPP_ENABLE_SEARCH_ASTAR "Build A* search" ON)
 option(JPM_CPP_ENABLE_SEARCH_GREEDY "Build greedy search" ON)
+option(JPM_CPP_ENABLE_SEARCH_BESTFIRST "Build novelty-guided best-first search" ON)
+option(JPM_CPP_ENABLE_SEARCH_CBFS "Build novelty-guided CBFS search" ON)
+option(JPM_CPP_ENABLE_SEARCH_ACPS "Build novelty-guided ACPS search" ON)
+option(JPM_CPP_ENABLE_SEARCH_BEAMSEARCH "Build novelty-guided beam search" ON)
+option(JPM_CPP_ENABLE_SEARCH_CABS "Build novelty-guided CABS search" ON)
+option(JPM_CPP_ENABLE_SEARCH_LNBS "Build novelty-guided LNBS search" ON)
 
 set(JPM_CPP_SEARCH_SOURCES)
 if(JPM_CPP_ENABLE_SEARCH_BFS)
@@ -28,6 +34,24 @@ endif()
 if(JPM_CPP_ENABLE_SEARCH_GREEDY)
     list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/greedy.cpp)
 endif()
+if(JPM_CPP_ENABLE_SEARCH_BESTFIRST)
+    list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/best_first.cpp)
+endif()
+if(JPM_CPP_ENABLE_SEARCH_CBFS)
+    list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/cbfs.cpp)
+endif()
+if(JPM_CPP_ENABLE_SEARCH_ACPS)
+    list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/acps.cpp)
+endif()
+if(JPM_CPP_ENABLE_SEARCH_BEAMSEARCH)
+    list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/beam_search.cpp)
+endif()
+if(JPM_CPP_ENABLE_SEARCH_CABS)
+    list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/cabs.cpp)
+endif()
+if(JPM_CPP_ENABLE_SEARCH_LNBS)
+    list(APPEND JPM_CPP_SEARCH_SOURCES src/search_algorithms/lnbs.cpp)
+endif()
 if(NOT JPM_CPP_SEARCH_SOURCES)
     message(FATAL_ERROR "At least one JPM C++ search algorithm must be enabled")
 endif()
@@ -37,6 +61,7 @@ add_executable(jpm_cpp_solver
     src/evaluator.cpp
     src/search.cpp
     src/search_algorithm.cpp
+    src/search_support.cpp
     src/task.cpp
     src/task_loader.cpp
     src/transition.cpp

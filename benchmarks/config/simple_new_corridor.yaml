@@ -1,0 +1,23 @@
+suite_name: smoke_new_corridor
+cores: 1
+
+defaults:
+  time_limit_seconds: 60
+  memory_limit_gb: 8
+
+solvers:
+  - name: bestfirst
+    search_path: jp/search_algorithms/best_first.py
+  - name: weightedastar
+    search_path: jp/search_algorithms/weighted_astar.py
+  - name: dfbb
+  - name: beamsearch
+    search_path: jp/search_algorithms/beam_search.py
+  - name: cabs
+
+domains:
+  - name: new_corridor
+    instances:
+      - problem01_3ag_2g_1d.pddl
+      - problem05_5ag_2g_3d.pddl
+      - problem09_7ag_2g_5d.pddl

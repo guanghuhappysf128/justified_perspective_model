@@ -1,0 +1,30 @@
+suite_name: cpp_python_comparison_smoke
+cores: 4
+
+defaults:
+  time_limit_seconds: 30
+  memory_limit_gb: 8
+  cpp_max_expanded: 300000
+
+solvers:
+  - name: bestfirst
+    python_search_path: jp/search_algorithms/best_first.py
+    cpp_search: bestfirst
+  - name: lnbs
+    python_search_path: jp/search_algorithms/lnbs.py
+    cpp_search: lnbs
+    search_options:
+      base_heuristic: goal_counting
+      novelty_heuristic: iw_gc
+      initial_beam_size: 4
+      max_beam_size: 16
+      keep_all_layers: true
+      seed: 2023
+      max_repair_attempts: 6
+      cabs_initial_beam_size: 1
+      cabs_max_beam_size: 16
+
+domains:
+  - name: bbl
+    instances:
+      - problem01.pddl

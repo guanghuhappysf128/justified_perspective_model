@@ -147,6 +147,14 @@ Task load_task(const std::string &path) {
         task.var_to_id[var.name] = var_id;
         task.variables.push_back(std::move(var));
     }
+    if (auto entities_value = json::maybe_at(root, "entities")) {
+        for (const auto &[name, entity_value] : (*entities_value)->as_object()) {
+            const auto &entity = entity_value.as_object();
+            if (json::at(entity, "kind").as_string() == "agent") {
+                task.agent_names.insert(name);
+            }
+        }
+    }
     bool has_visibility_metadata = false;
     if (auto metadata_value = json::maybe_at(root, "metadata")) {
         const auto &metadata = (*metadata_value)->as_object();
