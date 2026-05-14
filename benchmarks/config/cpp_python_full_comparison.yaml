@@ -2,7 +2,7 @@ suite_name: cpp_python_full_comparison
 cores: 30
 
 defaults:
-  time_limit_seconds: 30
+  time_limit_seconds: 100 
   memory_limit_gb: 8
   cpp_max_expanded: 300000
 
