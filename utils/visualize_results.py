@@ -15,39 +15,50 @@ DEFAULT_REPORT_NAME = "results_report.html"
 
 
 def main() -> int:
-    parser = build_parser()
-    args = parser.parse_args()
+  parser = build_parser()
+  args = parser.parse_args()
 
-    output_dir = Path(args.output_dir).expanduser().resolve()
-    if not output_dir.is_dir():
-        raise FileNotFoundError(f"Output directory does not exist: {output_dir}")
+  output_dir = Path(args.output_dir).expanduser().resolve()
+  if not output_dir.is_dir():
+    raise FileNotFoundError(f"Output directory does not exist: {output_dir}")
 
-    report_title = args.title or f"Results Report: {output_dir.name}"
-    records, metadata = load_records(output_dir)
-    report_path = resolve_report_path(output_dir, args.output)
-    render_report(report_path, report_title, output_dir, records, metadata)
+  results_dir = resolve_results_dir(output_dir, args.engine)
+  report_title = args.title or f"Results Report: {results_dir.name}"
+  records, metadata = load_records(
+    results_dir,
+    requested_root=output_dir,
+    selected_engine=args.engine,
+  )
+  report_path = resolve_report_path(results_dir, args.output)
+  render_report(report_path, report_title, results_dir, records, metadata)
 
-    print(f"Wrote report to {report_path}")
-    return 0
+  print(f"Wrote report to {report_path}")
+  return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Generate a simple HTML report for a benchmark output directory"
-    )
-    parser.add_argument("output_dir", help="Path to a benchmark output directory")
-    parser.add_argument(
-        "-o",
-        "--output",
-        default="",
-        help=f"Optional HTML output path (default: <output_dir>/{DEFAULT_REPORT_NAME})",
-    )
-    parser.add_argument(
-        "--title",
-        default="",
-        help="Optional report title override",
-    )
-    return parser
+  parser = argparse.ArgumentParser(
+    description="Generate a simple HTML report for a benchmark output directory"
+  )
+  parser.add_argument("output_dir", help="Path to a benchmark output directory")
+  parser.add_argument(
+    "-o",
+    "--output",
+    default="",
+    help=f"Optional HTML output path (default: <output_dir>/{DEFAULT_REPORT_NAME})",
+  )
+  parser.add_argument(
+    "--title",
+    default="",
+    help="Optional report title override",
+  )
+  parser.add_argument(
+    "--engine",
+    choices=("cpp", "python"),
+    default="",
+    help="When pointing at a comparison-runner root, select which engine's benchmark_results.json to render",
+  )
+  return parser
 
 
 def resolve_report_path(output_dir: Path, output_arg: str) -> Path:
@@ -60,7 +71,36 @@ def resolve_report_path(output_dir: Path, output_arg: str) -> Path:
     return (Path.cwd() / output_path).resolve()
 
 
-def load_records(output_dir: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def resolve_results_dir(output_dir: Path, engine: str) -> Path:
+  direct_results_path = output_dir / "benchmark_results.json"
+  if direct_results_path.is_file():
+    return output_dir
+
+  requested_engine = engine.strip() if engine else ""
+  if requested_engine:
+    engine_results_path = output_dir / requested_engine / "benchmark_results.json"
+    if not engine_results_path.is_file():
+      raise FileNotFoundError(
+        f"No benchmark_results.json found for engine '{requested_engine}' under {output_dir}"
+      )
+    return engine_results_path.parent
+
+  cpp_results_path = output_dir / "cpp" / "benchmark_results.json"
+  python_results_path = output_dir / "python" / "benchmark_results.json"
+  if cpp_results_path.is_file() and python_results_path.is_file():
+    return cpp_results_path.parent
+  if cpp_results_path.is_file():
+    return cpp_results_path.parent
+  if python_results_path.is_file():
+    return python_results_path.parent
+  return output_dir
+
+
+def load_records(
+  output_dir: Path,
+  requested_root: Path | None = None,
+  selected_engine: str = "",
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     benchmark_results_path = output_dir / "benchmark_results.json"
     if benchmark_results_path.is_file():
         with benchmark_results_path.open("r", encoding="utf-8") as handle:
@@ -73,6 +113,8 @@ def load_records(output_dir: Path) -> tuple[list[dict[str, Any]], dict[str, Any]
         normalized_records = [normalize_benchmark_record(record) for record in results]
         metadata = {
             "source": str(benchmark_results_path),
+            "requested_root": str(requested_root) if requested_root else str(output_dir),
+            "engine": selected_engine or output_dir.name,
             "suite_name": payload.get("suite_name"),
             "config_path": payload.get("config_path"),
             "started_at": payload.get("started_at"),
@@ -81,7 +123,8 @@ def load_records(output_dir: Path) -> tuple[list[dict[str, Any]], dict[str, Any]
         }
         return normalized_records, metadata
 
-    json_paths = sorted(path for path in output_dir.glob("*.json") if path.name != "benchmark_manifest.json")
+    ignored_json_names = {"benchmark_manifest.json", "comparison_manifest.json", "summary.json"}
+    json_paths = sorted(path for path in output_dir.glob("*.json") if path.name not in ignored_json_names)
     if not json_paths:
         raise FileNotFoundError(
             f"No benchmark_results.json or per-instance JSON files found in {output_dir}"
@@ -96,6 +139,8 @@ def load_records(output_dir: Path) -> tuple[list[dict[str, Any]], dict[str, Any]
 
     metadata = {
         "source": "per-instance JSON files",
+        "requested_root": str(requested_root) if requested_root else str(output_dir),
+        "engine": selected_engine or None,
         "suite_name": None,
         "config_path": None,
         "started_at": None,
@@ -381,6 +426,8 @@ def build_html_document(
       <h1>{escape(report_title)}</h1>
       <p>Visual summary for <span class=\"mono\">{escape(str(output_dir))}</span></p>
       <div class=\"meta-grid\">
+        {build_meta_card('Requested Root', metadata.get('requested_root'))}
+        {build_meta_card('Engine', metadata.get('engine'))}
         {build_meta_card('Source', metadata.get('source'))}
         {build_meta_card('Config', metadata.get('config_path'))}
         {build_meta_card('Started', metadata.get('started_at'))}
