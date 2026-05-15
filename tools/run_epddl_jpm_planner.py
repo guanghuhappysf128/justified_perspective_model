@@ -32,6 +32,7 @@ DEFAULT_PLANK_BINARY = Path(
 
 SUPPORTED_DOMAINS = {
     "active-muddy-child": "active-muddy-child",
+    "blocks-world": "blocks-world",
     "coin-in-the-box": "coin-in-the-box",
     "collaboration-through-communication": "collaboration-through-communication",
     "gossip": "gossip",
@@ -40,6 +41,7 @@ SUPPORTED_DOMAINS = {
 
 TEMPLATE_DIRS = {
     "active-muddy-child": "active_muddy_child",
+    "blocks-world": "blocks_world",
     "coin-in-the-box": "coin_in_the_box",
     "collaboration-through-communication": "collaboration_through_communication",
     "gossip": "gossip",
@@ -207,7 +209,11 @@ def export_ground_task(
         )
     ground_path = json_outputs[0]
     print("done.")
-    return load_json(ground_path)
+    task = load_json(ground_path)
+    task["_source_domain_path"] = str(domain_path)
+    task["_source_problem_path"] = str(problem_path)
+    task["_source_libraries"] = [str(path) for path in libraries]
+    return task
 
 
 def task_problem_name(task: dict[str, Any]) -> str:
@@ -348,6 +354,8 @@ def translate_grapevine_action(action: str) -> str | None:
 
 
 def deterministic_translation(domain_key: str, plan: list[str]) -> list[str] | None:
+    if domain_key == "blocks-world":
+        return list(plan)
     if domain_key == "coin-in-the-box":
         return [translate_coin_action(action) for action in plan]
     if domain_key == "collaboration-through-communication":

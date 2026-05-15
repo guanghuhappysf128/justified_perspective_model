@@ -69,9 +69,14 @@ DOMAIN_SPECS = {
     "Blocks-World": DomainSpec(
         source_dir="Blocks-World",
         library_file="basic.epddl",
-        support_level="unsupported",
-        notes="No corresponding F-PDDL benchmark family is present yet.",
+        support_level="supported",
+        notes=(
+            "Converted to a generated fully observable F-PDDL family with grounded move actions "
+            "and direct on/clear state variables. The exported JPM model uses all-visible "
+            "observations, matching the single-agent ontic benchmark semantics."
+        ),
         target_dir="blocks_world",
+        converter_name="blocks-world",
     ),
     "Consecutive-Numbers": DomainSpec(
         source_dir="Consecutive-Numbers",
@@ -181,9 +186,9 @@ def export_groundings(
     problem_paths: list[Path],
     grounded_dir: Path,
     plank_binary: Path,
-) -> tuple[list[Path], list[dict[str, str]]]:
+) -> tuple[list[tuple[Path, Path]], list[dict[str, str]]]:
     grounded_dir.mkdir(parents=True, exist_ok=True)
-    grounded_paths: list[Path] = []
+    grounded_records: list[tuple[Path, Path]] = []
     failures: list[dict[str, str]] = []
 
     with tempfile.TemporaryDirectory(prefix="epddl_to_fpddl_") as tmp_str:
@@ -212,9 +217,9 @@ def export_groundings(
 
             grounded_copy = grounded_dir / json_path.name
             copy_tree_file(json_path, grounded_copy)
-            grounded_paths.append(grounded_copy)
+            grounded_records.append((grounded_copy, problem_path))
 
-    return grounded_paths, failures
+    return grounded_records, failures
 
 
 def convert_supported_domain(
@@ -226,7 +231,7 @@ def convert_supported_domain(
 ) -> dict[str, Any]:
     converter = CONVERTERS[spec.converter_name]
     grounded_dir = target_dir / "grounded"
-    grounded_paths, failures = export_groundings(
+    grounded_records, failures = export_groundings(
         spec=spec,
         domain_path=domain_path,
         problem_paths=problem_paths,
@@ -234,8 +239,11 @@ def convert_supported_domain(
         plank_binary=plank_binary,
     )
     generated_problem_files: list[str] = []
-    for grounded_path in grounded_paths:
+    for grounded_path, source_problem_path in grounded_records:
         task = load_json(grounded_path)
+        task["_source_domain_path"] = str(domain_path)
+        task["_source_problem_path"] = str(source_problem_path)
+        task["_source_libraries"] = [str(PLANK_ROOT / "benchmarks" / "libraries" / spec.library_file)] if spec.library_file else []
         info = task["planning-task-info"]
         problem_name = f"{fpddl_name(info['problem'])}_from_epddl"
         result = converter(task, target_dir, problem_name)
@@ -246,7 +254,7 @@ def convert_supported_domain(
         "support_level": spec.support_level,
         "notes": spec.notes,
         "generated_problem_files": sorted(set(generated_problem_files)),
-        "grounded_json_files": sorted(path.name for path in grounded_paths),
+        "grounded_json_files": sorted(path.name for path, _ in grounded_records),
         "grounding_failures": failures,
     }
     write_json(target_dir / "conversion.json", metadata)
@@ -265,13 +273,14 @@ def convert_domain(spec: DomainSpec, plank_binary: Path, output_root: Path) -> d
     if spec.support_level == "supported":
         metadata = convert_supported_domain(spec, domain_path, problem_paths, target_dir, plank_binary)
     else:
-        grounded_paths, failures = export_groundings(
+        grounded_records, failures = export_groundings(
             spec=spec,
             domain_path=domain_path,
             problem_paths=problem_paths,
             grounded_dir=target_dir / "grounded",
             plank_binary=plank_binary,
         )
+        grounded_paths = [path for path, _ in grounded_records]
         write_status_markdown(
             target_dir / "STATUS.md",
             spec,

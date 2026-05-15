@@ -83,7 +83,15 @@
       }
     },
     "labels": {
-      "w": []
+      "w": [
+        "clear_b2",
+        "clear_b3",
+        "clear_b4",
+        "on_b1_c1",
+        "on_b2_b1",
+        "on_b3_c2",
+        "on_b4_c3"
+      ]
     },
     "designated": [
       "w"

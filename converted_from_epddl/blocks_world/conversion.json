@@ -1,12 +1,12 @@
 {
+  "generated_problem_files": [
+    "bw_1_from_epddl.pddl"
+  ],
   "grounded_json_files": [
     "problem_1.json"
   ],
   "grounding_failures": [],
-  "notes": "No corresponding F-PDDL benchmark family is present yet.",
+  "notes": "Converted to a generated fully observable F-PDDL family with grounded move actions and direct on/clear state variables. The exported JPM model uses all-visible observations, matching the single-agent ontic benchmark semantics.",
   "source_domain": "Blocks-World",
-  "source_problem_files": [
-    "benchmarks/domains/Blocks-World/instances/problem_1.epddl"
-  ],
-  "support_level": "unsupported"
+  "support_level": "supported"
 }

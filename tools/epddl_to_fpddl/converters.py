@@ -276,6 +276,221 @@ def convert_gossip(task: dict[str, Any], output_dir: Path, problem_name: str) ->
     return {"problem_files": [problem_path.name], "support_files": ["domain.pddl", "gossip.py"]}
 
 
+def source_path(task: dict[str, Any], key: str) -> Path:
+    raw = task.get(key)
+    if not raw:
+        raise ValueError(f"task is missing required source metadata {key!r}")
+    return Path(raw)
+
+
+def conjunction_atoms(formula: dict[str, Any] | str) -> list[str]:
+    if isinstance(formula, str):
+        if formula == "true":
+            return []
+        if formula == "false":
+            raise ValueError("unexpected false formula in conjunction context")
+        return [formula]
+
+    connective = formula.get("connective")
+    if connective != "and":
+        raise ValueError(f"unsupported conjunction formula {formula!r}")
+
+    atoms: list[str] = []
+    for item in formula.get("formulas", []):
+        atoms.extend(conjunction_atoms(item))
+    return atoms
+
+
+def parse_blocks_world_initial_labels(task: dict[str, Any]) -> set[str]:
+    designated = designated_labels(task)
+    if designated:
+        return designated
+
+    text = source_path(task, "_source_problem_path").read_text()
+    match = re.search(r":labels\s*\(\s*\w+\s*\(:and(?P<body>.*?)\)\s*\)\s*:designated", text, re.DOTALL)
+    if not match:
+        raise ValueError("could not recover Blocks-World initial labels from source problem")
+
+    body = match.group("body")
+    atoms: set[str] = set()
+    for name, first, second in re.findall(
+        r"\((clear|on)\s+([A-Za-z0-9_-]+)(?:\s+([A-Za-z0-9_-]+))?\)",
+        body,
+    ):
+        if name == "clear":
+            atoms.add(f"clear_{first}")
+        elif second:
+            atoms.add(f"on_{first}_{second}")
+        else:
+            raise ValueError(f"malformed Blocks-World atom in source problem: {(name, first, second)!r}")
+
+    if not atoms:
+        raise ValueError("source problem did not yield any Blocks-World initial atoms")
+    return atoms
+
+
+def eval_blocks_world_effect_formula(formula: dict[str, Any] | str, *, atom: str, value: bool) -> bool:
+    if isinstance(formula, str):
+        if formula == "true":
+            return True
+        if formula == "false":
+            return False
+        if formula == atom:
+            return value
+        raise ValueError(f"unexpected atom reference {formula!r} in Blocks-World effect for {atom!r}")
+
+    connective = formula.get("connective")
+    if connective == "and":
+        return all(eval_blocks_world_effect_formula(item, atom=atom, value=value) for item in formula["formulas"])
+    if connective == "or":
+        return any(eval_blocks_world_effect_formula(item, atom=atom, value=value) for item in formula["formulas"])
+    if connective == "not":
+        return not eval_blocks_world_effect_formula(formula["formula"], atom=atom, value=value)
+    raise ValueError(f"unsupported Blocks-World effect connective {connective!r}")
+
+
+def constant_blocks_world_effect(effect: dict[str, Any], atom: str) -> bool:
+    formula = effect["formula"]
+    false_case = eval_blocks_world_effect_formula(formula, atom=atom, value=False)
+    true_case = eval_blocks_world_effect_formula(formula, atom=atom, value=True)
+    if false_case != true_case:
+        raise ValueError(f"non-constant Blocks-World effect for {atom!r}: {effect!r}")
+    return false_case
+
+
+def render_all_visible_external(logger_name: str) -> str:
+    return f"""import logging
+import typing
+
+from util import Entity, EntityType, Function, FunctionSchema, Type, setup_logger
+
+
+LOGGER_NAME = "{logger_name}"
+LOGGER_LEVEL = logging.INFO
+
+
+class ExternalFunction:
+    logger = None
+
+    def __init__(self, handlers):
+        self.logger = setup_logger(LOGGER_NAME, handlers, logger_level=LOGGER_LEVEL)
+
+    def checkVisibility(
+        self,
+        state,
+        agent_index,
+        var_name,
+        entities: typing.Dict[str, Entity],
+        functions: typing.Dict[str, Function],
+        function_schemas: typing.Dict[str, FunctionSchema],
+        types: typing.Dict[str, Type],
+    ):
+        if agent_index not in entities:
+            raise ValueError(f"agent_index [{{agent_index}}] not found in entities")
+        if entities[agent_index].entity_type != EntityType.AGENT:
+            raise ValueError(f"agent_index [{{agent_index}}] is not an agent")
+        if var_name not in functions:
+            raise ValueError(f"var_name [{{var_name}}] not found in functions")
+        return True
+"""
+
+
+def render_blocks_world_domain(task: dict[str, Any]) -> str:
+    atoms = list(task["language"]["atoms"])
+    action_lines: list[str] = []
+
+    for action_name, action in sorted(task["actions"].items()):
+        event_name = action["events"][0]
+        precondition_formula = action["preconditions"][event_name]["formula"]
+        precondition_atoms = conjunction_atoms(precondition_formula)
+        effect_lines: list[str] = []
+        for atom, effect in sorted(action["effects"][event_name].items()):
+            truth = constant_blocks_world_effect(effect, atom)
+            effect_lines.append(f"            (assign ({atom}) {quoted_tf(truth)})")
+
+        action_lines.extend(
+            [
+                f"    (:action {action_name}",
+                "        :parameters ()",
+                "        :precondition (and",
+                *[f"            (= ({atom}) 't')" for atom in precondition_atoms],
+                "        )",
+                "        :effect (and",
+                *effect_lines,
+                "        )",
+                "    )",
+                "",
+            ]
+        )
+
+    lines: list[str] = [
+        "(define",
+        "    (domain blocks_world_from_epddl)",
+        "",
+        "    (:types",
+        "        agent",
+        "    )",
+        "",
+        "    (:functions",
+        *[f"        ({atom})" for atom in atoms],
+        "    )",
+        "",
+        *action_lines,
+        ")",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def render_blocks_world_problem(task: dict[str, Any], problem_name: str) -> str:
+    atoms = list(task["language"]["atoms"])
+    initial_labels = parse_blocks_world_initial_labels(task)
+    goal_atoms = conjunction_atoms(task["goal"]["formula"])
+    agents = lower_agents(task)
+
+    lines: list[str] = [
+        "(define",
+        f"    (problem {problem_name})",
+        "    (:domain blocks_world_from_epddl)",
+        "",
+        "    (:agents",
+        f"        {' '.join(agents)} - agent",
+        "    )",
+        "",
+        "    (:objects",
+        "    )",
+        "",
+        "    (:init",
+        *[f"        (assign ({atom}) {quoted_tf(atom in initial_labels)})" for atom in atoms],
+        "    )",
+        "",
+        "    (:goal (and",
+        *[f"        (= ({atom}) 't')" for atom in goal_atoms],
+        "    ))",
+        "",
+        "    (:ranges",
+        *[f"        ({atom} enumerate ['t','f'])" for atom in atoms],
+        "    )",
+        "",
+        "    (:rules",
+        "    )",
+        ")",
+        "",
+    ]
+    return "\n".join(lines)
+
+
+def convert_blocks_world(task: dict[str, Any], output_dir: Path, problem_name: str) -> dict[str, Any]:
+    (output_dir / "domain.pddl").write_text(render_blocks_world_domain(task))
+    (output_dir / "blocks_world.py").write_text(render_all_visible_external("blocks_world_from_epddl"))
+    problem_path = output_dir / f"{problem_name}.pddl"
+    problem_path.write_text(render_blocks_world_problem(task, problem_name))
+    return {
+        "problem_files": [problem_path.name],
+        "support_files": ["domain.pddl", "blocks_world.py"],
+    }
+
+
 def render_amc_problem(task: dict[str, Any], problem_name: str) -> str:
     agents = list(task["language"]["agents"])
     labels = designated_labels(task)
@@ -1117,6 +1332,7 @@ def convert_collaboration_through_communication(
 
 
 CONVERTERS = {
+    "blocks-world": convert_blocks_world,
     "grapevine": convert_grapevine,
     "gossip": convert_gossip,
     "active-muddy-child": convert_active_muddy_child,
