@@ -6,137 +6,206 @@
     )
 
     (:functions
-        (called ?i - agent)
-        (secret ?i - agent)
+        (delivered ?receiver - agent ?owner - agent)
     )
 
-    (:action calling_a_b
+    (:action tell_a_b
         :parameters ()
         :precondition (and
+            (= (delivered b a) 0)
         )
         :effect (and
-            (increase (called a) '-b')
-            (increase (called b) '-a')
-            (increase (called c) '-0')
-            (increase (called d) '-0')
-            (increase (called e) '-0')
+            (assign (delivered b a) 1)
         )
     )
 
-    (:action calling_a_c
+    (:action tell_a_c
         :parameters ()
         :precondition (and
+            (= (delivered c a) 0)
         )
         :effect (and
-            (increase (called a) '-c')
-            (increase (called b) '-0')
-            (increase (called c) '-a')
-            (increase (called d) '-0')
-            (increase (called e) '-0')
+            (assign (delivered c a) 1)
         )
     )
 
-    (:action calling_a_d
+    (:action tell_a_d
         :parameters ()
         :precondition (and
+            (= (delivered d a) 0)
         )
         :effect (and
-            (increase (called a) '-d')
-            (increase (called b) '-0')
-            (increase (called c) '-0')
-            (increase (called d) '-a')
-            (increase (called e) '-0')
+            (assign (delivered d a) 1)
         )
     )
 
-    (:action calling_a_e
+    (:action tell_a_e
         :parameters ()
         :precondition (and
+            (= (delivered e a) 0)
         )
         :effect (and
-            (increase (called a) '-e')
-            (increase (called b) '-0')
-            (increase (called c) '-0')
-            (increase (called d) '-0')
-            (increase (called e) '-a')
+            (assign (delivered e a) 1)
         )
     )
 
-    (:action calling_b_c
+    (:action tell_b_a
         :parameters ()
         :precondition (and
+            (= (delivered a b) 0)
         )
         :effect (and
-            (increase (called a) '-0')
-            (increase (called b) '-c')
-            (increase (called c) '-b')
-            (increase (called d) '-0')
-            (increase (called e) '-0')
+            (assign (delivered a b) 1)
         )
     )
 
-    (:action calling_b_d
+    (:action tell_b_c
         :parameters ()
         :precondition (and
+            (= (delivered c b) 0)
         )
         :effect (and
-            (increase (called a) '-0')
-            (increase (called b) '-d')
-            (increase (called c) '-0')
-            (increase (called d) '-b')
-            (increase (called e) '-0')
+            (assign (delivered c b) 1)
         )
     )
 
-    (:action calling_b_e
+    (:action tell_b_d
         :parameters ()
         :precondition (and
+            (= (delivered d b) 0)
         )
         :effect (and
-            (increase (called a) '-0')
-            (increase (called b) '-e')
-            (increase (called c) '-0')
-            (increase (called d) '-0')
-            (increase (called e) '-b')
+            (assign (delivered d b) 1)
         )
     )
 
-    (:action calling_c_d
+    (:action tell_b_e
         :parameters ()
         :precondition (and
+            (= (delivered e b) 0)
         )
         :effect (and
-            (increase (called a) '-0')
-            (increase (called b) '-0')
-            (increase (called c) '-d')
-            (increase (called d) '-c')
-            (increase (called e) '-0')
+            (assign (delivered e b) 1)
         )
     )
 
-    (:action calling_c_e
+    (:action tell_c_a
         :parameters ()
         :precondition (and
+            (= (delivered a c) 0)
         )
         :effect (and
-            (increase (called a) '-0')
-            (increase (called b) '-0')
-            (increase (called c) '-e')
-            (increase (called d) '-0')
-            (increase (called e) '-c')
+            (assign (delivered a c) 1)
         )
     )
 
-    (:action calling_d_e
+    (:action tell_c_b
         :parameters ()
         :precondition (and
+            (= (delivered b c) 0)
         )
         :effect (and
-            (increase (called a) '-0')
-            (increase (called b) '-0')
-            (increase (called c) '-0')
-            (increase (called d) '-e')
-            (increase (called e) '-d')
+            (assign (delivered b c) 1)
+        )
+    )
+
+    (:action tell_c_d
+        :parameters ()
+        :precondition (and
+            (= (delivered d c) 0)
+        )
+        :effect (and
+            (assign (delivered d c) 1)
+        )
+    )
+
+    (:action tell_c_e
+        :parameters ()
+        :precondition (and
+            (= (delivered e c) 0)
+        )
+        :effect (and
+            (assign (delivered e c) 1)
+        )
+    )
+
+    (:action tell_d_a
+        :parameters ()
+        :precondition (and
+            (= (delivered a d) 0)
+        )
+        :effect (and
+            (assign (delivered a d) 1)
+        )
+    )
+
+    (:action tell_d_b
+        :parameters ()
+        :precondition (and
+            (= (delivered b d) 0)
+        )
+        :effect (and
+            (assign (delivered b d) 1)
+        )
+    )
+
+    (:action tell_d_c
+        :parameters ()
+        :precondition (and
+            (= (delivered c d) 0)
+        )
+        :effect (and
+            (assign (delivered c d) 1)
+        )
+    )
+
+    (:action tell_d_e
+        :parameters ()
+        :precondition (and
+            (= (delivered e d) 0)
+        )
+        :effect (and
+            (assign (delivered e d) 1)
+        )
+    )
+
+    (:action tell_e_a
+        :parameters ()
+        :precondition (and
+            (= (delivered a e) 0)
+        )
+        :effect (and
+            (assign (delivered a e) 1)
+        )
+    )
+
+    (:action tell_e_b
+        :parameters ()
+        :precondition (and
+            (= (delivered b e) 0)
+        )
+        :effect (and
+            (assign (delivered b e) 1)
+        )
+    )
+
+    (:action tell_e_c
+        :parameters ()
+        :precondition (and
+            (= (delivered c e) 0)
+        )
+        :effect (and
+            (assign (delivered c e) 1)
+        )
+    )
+
+    (:action tell_e_d
+        :parameters ()
+        :precondition (and
+            (= (delivered d e) 0)
+        )
+        :effect (and
+            (assign (delivered d e) 1)
         )
     )
 

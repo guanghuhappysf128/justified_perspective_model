@@ -59,6 +59,7 @@ Stage: build
     install -Dm755 tools/export_jpm_ir.py /opt/jpm_cpp/app/tools/export_jpm_ir.py
     install -Dm755 tools/run_epddl_jpm_planner.py /opt/jpm_cpp/app/tools/run_epddl_jpm_planner.py
     cp -r tools/epddl_to_fpddl /opt/jpm_cpp/app/tools/epddl_to_fpddl
+    cp -r benchmarks /opt/jpm_cpp/app/benchmarks
     cp -r converted_from_epddl /opt/jpm_cpp/app/converted_from_epddl
     cp -r jp /opt/jpm_cpp/app/jp
     mkdir -p /opt/jpm_cpp/app/logs

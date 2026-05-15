@@ -146,31 +146,29 @@ def render_gossip_domain(task: dict[str, Any]) -> str:
         "    )",
         "",
         "    (:functions",
-        "        (called ?i - agent)",
-        "        (secret ?i - agent)",
+        "        (delivered ?receiver - agent ?owner - agent)",
         "    )",
         "",
     ]
 
-    for a, b in itertools.combinations(agents, 2):
-        lines.extend(
-            [
-                f"    (:action calling_{a}_{b}",
-                "        :parameters ()",
-                "        :precondition (and",
-                "        )",
-                "        :effect (and",
-            ]
-        )
-        for agent in agents:
-            if agent == a:
-                update = f"'-{b}'"
-            elif agent == b:
-                update = f"'-{a}'"
-            else:
-                update = "'-0'"
-            lines.append(f"            (increase (called {agent}) {update})")
-        lines.extend(["        )", "    )", ""])
+    for owner in agents:
+        for receiver in agents:
+            if owner == receiver:
+                continue
+            lines.extend(
+                [
+                    f"    (:action tell_{owner}_{receiver}",
+                    "        :parameters ()",
+                    "        :precondition (and",
+                    f"            (= (delivered {receiver} {owner}) 0)",
+                    "        )",
+                    "        :effect (and",
+                    f"            (assign (delivered {receiver} {owner}) 1)",
+                    "        )",
+                    "    )",
+                    "",
+                ]
+            )
 
     lines.append(")")
     lines.append("")
@@ -188,12 +186,10 @@ def render_gossip_problem(task: dict[str, Any], problem_name: str) -> str:
         suffix = atom_suffix(item["formula"], "secret_")
         if suffix is None:
             raise ValueError(f"unsupported gossip goal atom {item['formula']!r}")
-        target_value = agents.index(suffix) + 1
+        if f"secret_{suffix}" not in labels:
+            raise ValueError("gossip converter expects each source secret atom to hold initially")
         for agent in item["modality-index"]:
-            goal_lines.append(
-                f'            (= (@ep ("+ b [{fpddl_name(agent)}]") '
-                f"(= (secret {fpddl_name(suffix)}) {target_value})) ep.true)"
-            )
+            goal_lines.append(f"            (= (delivered {fpddl_name(agent)} {fpddl_name(suffix)}) 1)")
 
     lines: list[str] = [
         "(define",
@@ -209,12 +205,10 @@ def render_gossip_problem(task: dict[str, Any], problem_name: str) -> str:
         "",
         "    (:init",
     ]
-    for agent in lower:
-        lines.append(f"        (assign (called {agent}) '0')")
-    for idx, agent in enumerate(lower, start=1):
-        if f"secret_{agents[idx - 1]}" not in labels:
-            raise ValueError("gossip converter expects each source secret atom to hold initially")
-        lines.append(f"        (assign (secret {agent}) {idx})")
+    for receiver in lower:
+        for owner in lower:
+            initial_value = 1 if receiver == owner else 0
+            lines.append(f"        (assign (delivered {receiver} {owner}) {initial_value})")
 
     lines.extend(
         [
@@ -225,8 +219,7 @@ def render_gossip_problem(task: dict[str, Any], problem_name: str) -> str:
             "    ))",
             "",
             "    (:ranges",
-            "        (called string None)",
-            f"        (secret integer [0,{len(lower)}])",
+            "        (delivered integer [0,1])",
             "    )",
             "",
             "    (:rules",
@@ -238,9 +231,46 @@ def render_gossip_problem(task: dict[str, Any], problem_name: str) -> str:
     return "\n".join(lines)
 
 
+def render_gossip_external() -> str:
+    return """import logging
+import typing
+
+from util import Entity, EntityType, Function, FunctionSchema, Type, setup_logger
+
+
+LOGGER_NAME = "gossip_from_epddl"
+LOGGER_LEVEL = logging.INFO
+
+
+class ExternalFunction:
+    logger = None
+
+    def __init__(self, handlers):
+        self.logger = setup_logger(LOGGER_NAME, handlers, logger_level=LOGGER_LEVEL)
+
+    def checkVisibility(
+        self,
+        state,
+        agent_index,
+        var_name,
+        entities: typing.Dict[str, Entity],
+        functions: typing.Dict[str, Function],
+        function_schemas: typing.Dict[str, FunctionSchema],
+        types: typing.Dict[str, Type],
+    ):
+        if agent_index not in entities:
+            raise ValueError(f"agent_index [{agent_index}] not found in entities")
+        if entities[agent_index].entity_type != EntityType.AGENT:
+            raise ValueError(f"agent_index [{agent_index}] is not an agent")
+        if var_name not in functions:
+            raise ValueError(f"var_name [{var_name}] not found in functions")
+        return True
+"""
+
+
 def convert_gossip(task: dict[str, Any], output_dir: Path, problem_name: str) -> dict[str, Any]:
     (output_dir / "domain.pddl").write_text(render_gossip_domain(task))
-    shutil.copy2(JPM_ROOT / "benchmarks" / "gossip4" / "gossip.py", output_dir / "gossip.py")
+    (output_dir / "gossip.py").write_text(render_gossip_external())
     problem_path = output_dir / f"{problem_name}.pddl"
     problem_path.write_text(render_gossip_problem(task, problem_name))
     return {"problem_files": [problem_path.name], "support_files": ["domain.pddl", "gossip.py"]}

@@ -60,7 +60,6 @@ Supported models:
 | `thief` | `../benchmarks/thief/visibility.cpp` |
 | `converted_muddy_children` | `../converted_from_epddl/active_muddy_child/visibility.cpp` |
 | `collaboration_through_communication` | `../converted_from_epddl/collaboration_through_communication/visibility.cpp` |
-| `converted_gossip` | `../converted_from_epddl/gossip/visibility.cpp` |
 
 Each custom file registers itself with `VisibilityModelRegistration`, so the core solver does not need domain-specific visibility branches.
 

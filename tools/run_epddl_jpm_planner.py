@@ -186,14 +186,24 @@ def export_ground_task(
     if libraries:
         cmd.extend(["-l", *[str(path) for path in libraries]])
     cmd.extend(["-o", str(output_dir)])
-    run_checked(cmd)
+    result = run_checked(cmd)
     json_outputs = sorted(output_dir.glob("*.json"))
     if not json_outputs:
-        raise PlannerFailure(f"plank export did not create a grounded JSON file in {output_dir}")
+        output = "\n".join(
+            part.strip() for part in [result.stdout, result.stderr] if part.strip()
+        )
+        detail = f"\n{output}" if output else ""
+        raise PlannerFailure(
+            f"plank export did not create a grounded JSON file in {output_dir}{detail}"
+        )
     if len(json_outputs) != 1:
         names = ", ".join(path.name for path in json_outputs)
+        output = "\n".join(
+            part.strip() for part in [result.stdout, result.stderr] if part.strip()
+        )
+        detail = f"\n{output}" if output else ""
         raise PlannerFailure(
-            f"expected exactly one grounded JSON file in {output_dir}, found: {names}"
+            f"expected exactly one grounded JSON file in {output_dir}, found: {names}{detail}"
         )
     ground_path = json_outputs[0]
     print("done.")

@@ -80,7 +80,6 @@ add_executable(jpm_cpp_solver
     ../converted_from_epddl/active_muddy_child/visibility.cpp
     ../converted_from_epddl/coin_in_the_box/visibility.cpp
     ../converted_from_epddl/collaboration_through_communication/visibility.cpp
-    ../converted_from_epddl/gossip/visibility.cpp
     ../converted_from_epddl/grapevine/visibility.cpp
 )
 

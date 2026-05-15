@@ -35,7 +35,13 @@ DOMAIN_SPECS = {
         source_dir="Gossip",
         library_file="intermediate.epddl",
         support_level="supported",
-        notes="Converted to a generated gossip-call F-PDDL domain with gossip4 visibility semantics.",
+        notes=(
+            "Converted to a simplified directed-tell F-PDDL family for competition use. "
+            "The native gossip4 phone-call benchmark remains unchanged; this converted "
+            "family instead tracks whether each receiver has directly learned each agent's "
+            "secret, matching the EPDDL tell semantics closely enough for validator-based "
+            "round-tripping."
+        ),
         target_dir="gossip",
         converter_name="gossip",
     ),
